@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Website of qAIRa Drones" />
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+		/>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+		<title>qAIRa Map</title>
+	</head>
+
+	<body>
+		<header></header>
+
+		<main>
+			<!-- Spinner -->
+
+			<div class="center" id="loader">
+				<div class="preloader-wrapper active">
+					<div class="spinner-layer spinner-green-only">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="content-page"></div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="page-footer center">© 2020 Grupo Qaira S.A.C.</footer>
+
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqrNaRtt0c6vhC55vQ9v12nhqt-rDhREg"
+			type="text/javascript"
+			defer=""
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+			type="text/javascript"
+			defer=""
+		></script>
+		<script type="module" src="index.bundle.js"></script>
+	</body>
+</html>

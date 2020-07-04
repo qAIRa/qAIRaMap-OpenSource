@@ -1,0 +1,46 @@
+{
+	"name": "qairamap",
+	"version": "1.0.0",
+	"description": "Real-time website for monitoring air quality",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest --coverage",
+		"serve": "webpack-dev-server -p",
+		"webpack": "webpack -d --watch",
+		"start": "npm run webpack",
+		"doc": "jsdoc -c jsdoc.json"
+	},
+	"jest": {
+		"verbose": true,
+		"moduleDirectories": [
+			"node_modules",
+			"src"
+		],
+		"moduleFileExtensions": [
+			"js"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/qAIRa/qAIRaMap.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/qAIRa/qAIRaMap/issues"
+	},
+	"homepage": "https://github.com/qAIRa/qAIRaMap#readme",
+	"dependencies": {
+		"babel-jest": "^25.3.0",
+		"webpack": "^4.41.6",
+		"webpack-cli": "^3.3.11",
+		"webpack-dev-server": "^3.11.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.9.0",
+		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
+		"babel-core": "^6.26.3",
+		"jest": "^25.3.0",
+		"jsdoc": "^3.6.4"
+	}
+}
