@@ -23,10 +23,10 @@ const requestStatus = async (ID) =>{
     return await response.text()
 };
 
-export { requestAllQhawaxByCompany,
+export { 
+    requestAllQhawaxByCompany,
     requestAverageMeasurement,
     requestAllQhawax,
     requestBinnacle,
     requestStatus
-
 }

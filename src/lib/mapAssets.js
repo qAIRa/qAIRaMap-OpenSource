@@ -56,43 +56,6 @@ const formatDateDB = timestamp => {
 	);
 };
 
-const mapCenter = company => {
-	switch (company) {
-		case 0:
-			return {
-				lat: -12.04318,
-				lng: -77.02824,
-			};
-		case 1:
-			return {
-				lat: -12.04318,
-				lng: -77.02824,
-			};
-		case 3:
-			return {
-				lat: -12.04388888,
-				lng: -77.05055555,
-			};
-		case 4:
-			return {
-				lat: -12.09678,
-				lng: -76.98924,
-			};
-		case 8:
-			return {
-				lat: -12.1097222222,
-				lng: -77.05194444444,
-			};
-		case 9:
-			return {
-				lat: -12.0598871,
-				lng: -77.0906558,
-			};
-		default:
-			break;
-	}
-};
-
 
 const ECAlimits = sensor => {
 	switch (sensor) {
@@ -447,12 +410,12 @@ const airQuality = data => {
 
 const qhawaxLeaf = inca => {
 	let leaf = '';
-	inca === -1
+	inca === -1 || inca===null
 		? (leaf =
 				'/img/leafs/leaf_out_of_service.png')
-		: inca === 0 || inca === 1 || inca === -2
+		: inca === 0 || inca === 1 || inca === -2 ||inca === -3
 		? (leaf =
-				'/img/leafs/leaf_inca_limbo.gif')
+				'/img/leafs/leaf_helmet.png')
 		: inca === 50
 		? (leaf =
 				'/img/leafs/leaf_inca_good.png')
@@ -798,22 +761,9 @@ const drawQhawaxMap = (map, qhawax, company) => {
 	map.markers.push(qhawax_marker);
 };
 
-const zoomByCompany = company => {
-	switch (company) {
-		case 0:
-			return 12;
-		case 1:
-			return 12;
-
-		default:
-			return 14;
-	}
-};
 
 export {
 	drawQhawaxMap,
-	mapCenter,
-	zoomByCompany,
 	drawChart,
 	airQuality,
 	qhawaxLeaf,

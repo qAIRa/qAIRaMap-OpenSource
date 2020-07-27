@@ -1,4 +1,4 @@
-import { drawQhawaxMap, mapCenter, zoomByCompany } from '../lib/mapAssets.js';
+import { drawQhawaxMap, mapCenter } from '../lib/mapAssets.js';
 import {navBarClient} from '../lib/navBarClient.js';
 import {viewMap} from '../lib/HtmlComponents.js';
 import { requestAllQhawaxByCompany} from '../requests/get.js';
@@ -18,8 +18,11 @@ const viewFreeMap = company => {
 	navBarClient(mapElem, viewMap);
 
 	const map = new google.maps.Map(mapElem.querySelector('#map'), {
-		center: mapCenter(company),
-		zoom: zoomByCompany(company),
+		center: {
+			lat: -12.04318,
+			lng: -77.02824,
+		},
+		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 	});
 
