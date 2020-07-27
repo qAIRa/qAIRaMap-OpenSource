@@ -5,6 +5,8 @@
  */
 import { viewFreeMap } from '../views/freeMapView.js';
 import { downloadView } from '../views/downloadView.js';
+import { viewDashboard } from '../views/dashboardView.js';
+import { viewGraphics } from '../views/graphicsView.js';
 
 
 
@@ -14,14 +16,6 @@ import { downloadView } from '../views/downloadView.js';
  */
 const container = document.getElementById('content-page');
 
-/**
- * Company ID - Client ID
- * @type {number}
- */
-const company_id = Number(sessionStorage.getItem('companyID'));
-const user_name = sessionStorage.getItem('companyName');
-const user_id = Number(sessionStorage.getItem('user_id'));
-const username = sessionStorage.getItem('username');
 
 /**
  * View Controller alouds to change html on Hash Change
@@ -33,15 +27,27 @@ const changeView = router => {
 	container.innerHTML = '';
 	switch (router) {
 		case '':
-			return container.appendChild(viewFreeMap(0));
+			return container.appendChild(viewFreeMap());
 
 		case '#/':
-			return container.appendChild(viewFreeMap(0));
+			return container.appendChild(viewFreeMap());
 
 		case '#/download':
-			return container.appendChild(downloadView(company_id))
+			return container.appendChild(downloadView());
 
+		case '#/dashboard':
+			return  container.appendChild(viewDashboard());
+		
+		case '#/graphics':
+			return  container.appendChild(viewGraphics());
+		default:
+			return container.appendChild(viewFreeMap());
 	}
 };
 
-export { changeView };
+const goTo = (location)=>{
+    window.location.assign(`..#/${location}`);
+    window.location.reload();
+}
+
+export { changeView , goTo};

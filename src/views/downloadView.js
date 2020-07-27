@@ -33,73 +33,22 @@ const waitingLoader = `
 `;
 
 const optionsDatePicker = {
-	format: 'dd/mm/yyyy',
-	i18n: {
-		months: [
-			'Enero',
-			'Febrero',
-			'Marzo',
-			'Abril',
-			'Mayo',
-			'Junio',
-			'Julio',
-			'Agosto',
-			'Septiembre',
-			'Octubre',
-			'Noviembre',
-			'Diciembre',
-		],
-		monthsShort: [
-			'Ene',
-			'Feb',
-			'Mar',
-			'Abr',
-			'May',
-			'Jun',
-			'Jul',
-			'Ago',
-			'Set',
-			'Oct',
-			'Nov',
-			'Dic',
-		],
-		weekdays: [
-			'Domingo',
-			'Lunes',
-			'Martes',
-			'Miércoles',
-			'Jueves',
-			'Viernes',
-			'Sábado',
-		],
-		weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-		weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-		selectMonths: true,
-		cancel: 'Cancelar',
-		clear: 'Limpiar',
-		today: 'hoy',
-		done: 'Ok',
-	},
+	format: 'dd-mm-yyyy',
 };
 
 const optionsTimePicker = {
-	i18n: {
-		cancel: 'Cancelar',
-		done: 'Ok',
-	},
 	twelveHour: false,
-	vibrate: false,
 };
 
 
-const downloadView = company => {
-	
-	M.toast({ html: '¡Primero selecciona un Módulo!' });
-	M.toast({ html: 'Por favor ingresa todos los campos' });
+const downloadView =() => {
+
+	M.toast({ html: '¡First select a Module!' });
+	M.toast({ html: 'Please complete all fields.' });
 
 	const downloadElem = document.createElement('div');
 
-		navBarClient(downloadElem, viewDownload, company);
+		navBarClient(downloadElem, viewDownload);
 	
 	const selection = downloadElem.querySelectorAll('select');
 	M.FormSelect.init(selection);
@@ -109,8 +58,8 @@ const downloadView = company => {
 	let array_qhawax = [];
 
 		const request = async () => {
-   
-			const qhawax_list = await requestAllQhawaxByCompany(company);
+   //COMPANY
+			const qhawax_list = await requestAllQhawaxByCompany(1);
 		
 			const addOptions = downloadElem.querySelector('#selectQhawax');
 
@@ -126,9 +75,7 @@ const downloadView = company => {
 
 		request();
 
-	let selectedParameters = {
-		company,
-	};
+	let selectedParameters = {};
 
 	selection[0].onchange = () => {
 		fetch(
@@ -136,6 +83,7 @@ const downloadView = company => {
 		)
 			.then(res => res.text())
 			.then(installationDate => {
+				const datePicker = downloadElem.querySelectorAll('.datepicker');
 				selectedParameters.id = selection[0].value;
 
 				optionsDatePicker.minDate = new Date(installationDate);
@@ -147,10 +95,14 @@ const downloadView = company => {
 				optionsTimePicker.onCloseEnd = () => {
 					selectedParameters.initHour = timePicker[0].value;
 					selectedParameters.endHour = timePicker[1].value;
+					console.log(selectedParameters);
+					
 				};
 
-				const datePicker = downloadElem.querySelectorAll('.datepicker');
+				
 				M.Datepicker.init(datePicker, optionsDatePicker);
+				
+				
 
 				const timePicker = downloadElem.querySelectorAll('.timepicker');
 				M.Timepicker.init(timePicker, optionsTimePicker);
@@ -199,8 +151,8 @@ const downloadView = company => {
 				openModalDateAlert();
 			} else {
 				const URL = switchData.checked
-					? `https://qairamapnapi-dev.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`
-					: `https://qairamapnapi-dev.qairadrones.com/api/average_valid_processed_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`;
+					? `https://qairamapnapi-dev-opensource.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`
+					: `https://qairamapnapi-dev-opensource.qairadrones.com/api/average_valid_processed_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`;
 
 				const request = async () => {
 					let filename = switchData.checked
@@ -230,11 +182,11 @@ const downloadView = company => {
 
 				request();
 				M.toast({
-					html: 'La descarga puede demorar unos 5 minutos...',
+					html: 'The download may take 5 minutes...',
 					displayLength: 10000,
 				});
 				M.toast({
-					html: '¡Estamos preparando la data!',
+					html: '¡We are preparing the data!',
 					displayLength: 6000,
 				});
 

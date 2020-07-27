@@ -11,7 +11,7 @@ const modalDateAlert = `
 <div id="modalDate" class="modal data">
   <div class="modal-content center-align">
     <h5>Error de Fecha</h5>
-    <p>La fecha de Inicio debe ser menor a la fecha de Fin</p>
+    <p>	The initial date must be smaller than the final date</p>
     <i class="large material-icons">block</i>
   </div>
   <div class="modal-footer">
@@ -28,8 +28,8 @@ const modalEmptyAlert = `
 <!-- Modal Structure -->
 <div id="modalEmpty" class="modal empty">
   <div class="modal-content center-align">
-    <h5>Falta Información</h5>
-    <p>Por favor seleccionar todos los campos</p>
+    <h5>Information is missing</h5>
+    <p>Please complete all fields</p>
     <i class="large material-icons">block</i>
   </div>
   <div class="modal-footer">

@@ -1,29 +1,33 @@
-import {navbar, 
-    } from '../lib/navMenus.js';
+import {navbar} from '../lib/HtmlComponents.js';
 
-const navBarClient = (element, display, company)=>{
+import {goTo } from '../lib/viewController.js';
+
+const navBarClient = (element, display) =>{
     const menuNavBar = document.querySelector('header');
-	menuNavBar.innerHTML = navbar(dropdownConfig);
 
-	const menulist = document.querySelector('#menu-list-bar');
-	const menuleft = document.querySelector('#menu-left-bar');
-	const menuNavMobile= document.querySelector('#mobile-nav');
-
-	menulist.innerHTML = config +logout;
-	menuleft.innerHTML = returnArrow;
-	menuNavMobile.innerHTML = configMobile+ returnArrowMob;
-	
-	element.innerHTML = display ;
+    menuNavBar.innerHTML = navbar;
+  
+    element.innerHTML = display ;
 	
 	const dropMenu = document.querySelectorAll('.dropdown-trigger');
 	M.Dropdown.init(dropMenu,{coverTrigger:false});
-
+	
 	const mobileMenu = document.getElementById('mobile-nav');
-	M.Sidenav.init(mobileMenu);
-	
-	const modal = element.querySelectorAll('.modal');
+    M.Sidenav.init(mobileMenu);
+   
+	const modal = document.querySelectorAll('.modal');
 	M.Modal.init(modal);
-	
-}
+    
+    document.querySelector('#return-menu').addEventListener('click', () => goTo(''));
+    document.querySelector('#return-menu-mobile').addEventListener('click', () =>goTo(''));
+    document.querySelector('#download-menu').addEventListener('click', () => goTo('download'));
+    document.querySelector('#download-mob-menu').addEventListener('click', () => goTo('download'));
+    document.querySelector('#dashboard-menu').addEventListener('click', () => goTo('dashboard'));
+    document.querySelector('#dashboard-menu-mob').addEventListener('click', () => goTo('dashboard'));
+    document.querySelector('#graphics-menu').addEventListener('click', () => goTo('graphics'));
+    document.querySelector('#graphics-menu-mob').addEventListener('click', () => goTo('graphics'));
 
-export {navBarClient}
+
+};
+
+export {navBarClient};

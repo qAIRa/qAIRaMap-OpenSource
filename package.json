@@ -1,5 +1,5 @@
 {
-	"name": "qairamap",
+	"name": "qairamapos",
 	"version": "1.0.0",
 	"description": "Real-time website for monitoring air quality",
 	"main": "index.js",
@@ -22,14 +22,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/qAIRa/qAIRaMap.git"
+		"url": "git+https://github.com/qAIRa/qAIRaMap-OpenSource.git"
 	},
 	"author": "",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/qAIRa/qAIRaMap/issues"
+		"url": "https://github.com/qAIRa/qAIRaMap-OpenSource/issues"
 	},
-	"homepage": "https://github.com/qAIRa/qAIRaMap#readme",
+	"homepage": "https://github.com/qAIRa/qAIRaMap-OpenSource#readme",
 	"dependencies": {
 		"babel-jest": "^25.3.0",
 		"webpack": "^4.41.6",
