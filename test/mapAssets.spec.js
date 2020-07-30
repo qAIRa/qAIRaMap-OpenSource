@@ -23,7 +23,7 @@ const dataAirQuality = {
 	main_inca: 600,
 	qhawax_id: 8,
 	qhawax_name: "qH008",
-	timestamp: "2020-07-29 23:53:19"
+	timestamp: "2020-07-29 23:00:00.0-05:00"
 };
 
 const resultAirQuality = {
