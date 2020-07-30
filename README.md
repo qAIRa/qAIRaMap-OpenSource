@@ -1,5 +1,9 @@
 ## qAIRaMap
 
+[![Coverage Status](https://coveralls.io/repos/github/qAIRa/qAIRaMap-OpenSource/badge.svg)](https://coveralls.io/github/qAIRa/qAIRaMap-OpenSource)
+
+[![Build Status](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource.svg?branch=master)](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource)
+
 Open source real-time website for monitoring air quality.
 
 Real-time data from qHAWAX modules and Andean drones.
