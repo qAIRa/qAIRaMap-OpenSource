@@ -1,6 +1,8 @@
 
 language: node_js
 
+dist: bionic
+
 node_js:
   - node
 
@@ -9,6 +11,10 @@ include:
   name: 'Unit tests'
   script: npm run test:coveralls
 
+after_success: "sbt coveralls"
+
 notifications:
-  email:false
+  email:
+    recipients:
+      - s.campos@qairadrones.com
 
