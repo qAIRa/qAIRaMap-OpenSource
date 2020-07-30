@@ -11,19 +11,6 @@ import {
 	addZero
 } from '../src/lib/mapAssets';
 
-const data = {
-	CO: 8,
-	H2S: 15,
-	NO2: 0,
-	O3: 61,
-	PM10: 4,
-	PM25: 9,
-	SO2: 0,
-	main_inca: 100,
-	qhawax_id: 12,
-	qhawax_name: 'qH012',
-	timestamp: 'Thu, 23 Apr 2020 11:00:00 GMT',
-};
 
 const dataAirQuality = {
 	CO: 3,
