@@ -160,7 +160,7 @@ const airQuality = data => {
 	const newDate = new Date(data.timestamp);
 
 	const time =
-		addZero(newDate.getHours()) + ':' + addZero(newDate.getMinutes());
+		addZero(newDate.getHours() + 5) + ':' + addZero(newDate.getMinutes());
 
 	const qPM10 =
 		PM10 >= 0 && PM10 <= 50
@@ -488,13 +488,13 @@ const indexValue = data => {
 	const newDate = new Date(data.timestamp);
 
 	const time =
-		(newDate.getDate()-1) +
+		newDate.getDate() +
 		' de ' +
 		months[newDate.getMonth()] +
 		' de ' +
 		newDate.getFullYear() +
 		', ' +
-		(newDate.getHours()+19) +
+		newDate.getHours() +
 		':' +
 		newDate.getMinutes();
 

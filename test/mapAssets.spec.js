@@ -63,7 +63,7 @@ const dataIndexValue = {
 	pressure: 99655.75,
 	spl: 50.4,
 	temperature: 14.5,
-	timestamp: "2020-07-29 23:53:19.0-05:00",
+	timestamp: "2020-07-29 23:53:19",
 	zone: "Zona Residencial"
 };
 
