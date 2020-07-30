@@ -10,7 +10,7 @@ install:
   - npm install
 
 include:
-  - stage: 'Fundamental build'
+  stage: 'Fundamental build'
   name: 'Unit tests'
   script: npm run test:coveralls
 
