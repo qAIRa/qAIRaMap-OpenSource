@@ -432,23 +432,135 @@ const qhawaxLeaf = inca => {
 	return leaf;
 };
 
-const zoneColorNoise = data =>{
-	const newDate = new Date(data.timestamp);
-	let colorData = {color:null, zone:data.zone}
+// const zoneColorNoise = data =>{
+// 	const newDate = new Date(data.timestamp);
+// 	let colorData = {color:null, zone:data.zone}
 
-	if (newDate.getHours() <= 22 &&  newDate.getHours() >= 7) {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 50? colorData.color='green':
-		data.zone==='Zona Residencial'&&data.spl <= 60? colorData.color='green':
-		data.zone==='Zona Comercial'&&data.spl <= 70? colorData.color='green':
-		data.zone==='Zona Industrial'&&data.spl <= 80? colorData.color='green':colorData.color='red';
-	} else {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 40? colorData.color='green':
-		data.zone==='Zona Residencial'&&data.spl <= 50? colorData.color='green':
-		data.zone==='Zona Comercial'&&data.spl <= 60? colorData.color='green':
-		data.zone==='Zona Industrial'&&data.spl <= 70? colorData.color='green':colorData.color='red';
+// 	if (newDate.getHours() <= 22 &&  newDate.getHours() >= 7) {
+// 		data.zone==='Zona de Protección Especial'&&data.spl <= 50? colorData.color='green':
+// 		data.zone==='Zona Residencial'&&data.spl <= 60? colorData.color='green':
+// 		data.zone==='Zona Comercial'&&data.spl <= 70? colorData.color='green':
+// 		data.zone==='Zona Industrial'&&data.spl <= 80? colorData.color='green':colorData.color='red';
+// 	} else {
+// 		data.zone==='Zona de Protección Especial'&&data.spl <= 40? colorData.color='green':
+// 		data.zone==='Zona Residencial'&&data.spl <= 50? colorData.color='green':
+// 		data.zone==='Zona Comercial'&&data.spl <= 60? colorData.color='green':
+// 		data.zone==='Zona Industrial'&&data.spl <= 70? colorData.color='green':colorData.color='red';
 		
+// 	}
+// 	return colorData;
+// };
+const zoneColorNoise = data => {
+	const newDate = new Date(data.timestamp);
+
+	if (7 <= newDate.getHours() && newDate.getHours()<= 22) {
+		switch (data.zone) {
+			case 'Zona de Protección Especial':
+				if (data.spl <= 50) {
+					return {
+						color: 'green',
+						zone: 'Zona de Protección Especial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona de Protección Especial',
+					};
+				}
+			case 'Zona Residencial':
+				if (data.spl <= 60) {
+					return {
+						color: 'green',
+						zone: 'Zona Residencial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Residencial',
+					};
+				}
+			case 'Zona Comercial':
+				if (data.spl <= 70) {
+					return {
+						color: 'green',
+						zone: 'Zona Comercial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Comercial',
+					};
+				}
+			case 'Zona Industrial':
+				if (data.spl <= 80) {
+					return {
+						color: 'green',
+						zone: 'Zona Industrial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Industrial',
+					};
+				}
+
+			default:
+				break;
+		}
+	} else {
+		switch (data.zone) {
+			case 'Zona de Protección Especial':
+				if (data.spl <= 40) {
+					return {
+						color: 'green',
+						zone: 'Zona de Protección Especial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona de Protección Especial',
+					};
+				}
+			case 'Zona Residencial':
+				if (data.spl <= 50) {
+					return {
+						color: 'green',
+						zone: 'Zona Residencial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Residencial',
+					};
+				}
+			case 'Zona Comercial':
+				if (data.spl <= 60) {
+					return {
+						color: 'green',
+						zone: 'Zona Comercial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Comercial',
+					};
+				}
+			case 'Zona Industrial':
+				if (data.spl <= 70) {
+					return {
+						color: 'green',
+						zone: 'Zona Industrial',
+					};
+				} else {
+					return {
+						color: 'red',
+						zone: 'Zona Industrial',
+					};
+				}
+			default:
+				break;
+		}
 	}
-	return colorData;
 };
 
 const uvColor = uvValue => {
