@@ -6,6 +6,9 @@ dist: bionic
 node_js:
   - node
 
+install:
+  - npm install
+
 include:
   - stage: 'Fundamental build'
   name: 'Unit tests'
