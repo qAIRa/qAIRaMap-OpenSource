@@ -63,7 +63,7 @@ const dataIndexValue = {
 	pressure: 99655.75,
 	spl: 50.4,
 	temperature: 14.5,
-	timestamp: "2020-07-29 23:53:19.0-05:00",
+	timestamp: "2020-07-29 18:53:19.0-05:00",
 	zone: "Zona Residencial"
 };
 
@@ -91,7 +91,7 @@ const resultIndexValue = {
 	pressure: 99.7,
 	spl: 50.4,
 	temperature: 14.5,
-	time: "29 de Julio de 2020, 23:53"
+	time: "29 de Julio de 2020, 18:53"
 };
 
 const resultZoneColorNoise = {
@@ -147,13 +147,13 @@ test('uvColor', () => {
 	});
 });
 
-// test('airQuality', () =>{
-// 	expect(airQuality(dataAirQuality)).toStrictEqual(resultAirQuality);
-// });
+test('airQuality', () =>{
+	expect(airQuality(dataAirQuality)).toStrictEqual(resultAirQuality);
+});
 
-// test('indexValue', () =>{
-// 	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
-// });
+test('indexValue', () =>{
+	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
+});
 
 test('zoneColorNoise', () =>{
 	expect(zoneColorNoise(dataIndexValue)).toStrictEqual(resultZoneColorNoise);
