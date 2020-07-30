@@ -494,7 +494,7 @@ const indexValue = data => {
 		' de ' +
 		newDate.getFullYear() +
 		', ' +
-		newDate.getHours() +
+		(newDate.getHours() -5)+
 		':' +
 		newDate.getMinutes();
 

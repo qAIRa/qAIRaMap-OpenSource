@@ -151,9 +151,9 @@ test('airQuality', () =>{
 	expect(airQuality(dataAirQuality)).toStrictEqual(resultAirQuality);
 });
 
-// test('indexValue', () =>{
-// 	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
-// });
+test('indexValue', () =>{
+	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
+});
 
 test('zoneColorNoise', () =>{
 	expect(zoneColorNoise(dataIndexValue)).toStrictEqual(resultZoneColorNoise);
