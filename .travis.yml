@@ -9,10 +9,7 @@ node_js:
 install:
   - npm install
 
-include:
-  stage: 'Fundamental build'
-  name: 'Unit tests'
-  script: npm run test:coveralls
+script: npm run test:coveralls
 
 after_success: "sbt coveralls"
 
