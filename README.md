@@ -15,7 +15,7 @@ Data available: modules and drone in Madre de Dios (UNICEF project) and any othe
 Clone or download the project to the device where it will be used.
 
 ```
-git clone https://github.com/qAIRa/qAIRaMap.git
+git clone https://github.com/qAIRa/qAIRaMap-Opensoure.git
 ```
 
 ### Prerequisites

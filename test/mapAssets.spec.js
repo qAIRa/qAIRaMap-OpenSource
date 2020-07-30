@@ -9,6 +9,14 @@ import {
 	uvColor,
 } from '../src/lib/mapAssets';
 
+import {
+	requestAllQhawaxByCompany,
+    requestAverageMeasurement,
+    requestAllQhawax,
+    requestBinnacle,
+    requestStatus
+
+} from '../src/requests/get.js';
 const data = {
 	CO: 8,
 	H2S: 15,
