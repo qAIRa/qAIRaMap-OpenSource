@@ -488,13 +488,13 @@ const indexValue = data => {
 	const newDate = new Date(data.timestamp);
 
 	const time =
-		newDate.getDate() +
+		(newDate.getDate()-1) +
 		' de ' +
 		months[newDate.getMonth()] +
 		' de ' +
 		newDate.getFullYear() +
 		', ' +
-		(newDate.getHours() +5)+
+		(newDate.getHours()-5) +
 		':' +
 		newDate.getMinutes();
 
