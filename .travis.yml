@@ -13,6 +13,10 @@ include:
 
 after_success: "sbt coveralls"
 
+env:
+  global:
+    - COVERALLS_PARALLEL=true
+
 notifications:
   email:
     recipients:
