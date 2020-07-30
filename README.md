@@ -1,6 +1,6 @@
 <p align="center"> 
 
-[![Build Status](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource.svg?branch=master)](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource)   [![Coverage Status](https://coveralls.io/repos/github/qAIRa/qAIRaMap-OpenSource/badge.svg?branch=master)](https://coveralls.io/github/qAIRa/qAIRaMap-OpenSource?branch=master&kill_cache=1&service=github)   [![Maintainability](https://api.codeclimate.com/v1/badges/5369a31696dfd8243c97/maintainability)](https://codeclimate.com/github/qAIRa/qAIRaMap-OpenSource/maintainability)
+[![Build Status](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource.svg?branch=master)](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource)   [![Coverage Status](https://coveralls.io/repos/github/qAIRa/qAIRaMap-OpenSource/badge.svg?branch=master&kill_cache=1&service=github)](https://coveralls.io/github/qAIRa/qAIRaMap-OpenSource?branch=master)   [![Maintainability](https://api.codeclimate.com/v1/badges/5369a31696dfd8243c97/maintainability)](https://codeclimate.com/github/qAIRa/qAIRaMap-OpenSource/maintainability)
 
 </p>
 
