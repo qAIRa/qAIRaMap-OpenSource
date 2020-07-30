@@ -1,8 +1,10 @@
-## qAIRaMap
-
+<p align="center"> 
 [![Coverage Status](https://coveralls.io/repos/github/qAIRa/qAIRaMap-OpenSource/badge.svg)](https://coveralls.io/github/qAIRa/qAIRaMap-OpenSource)
 
 [![Build Status](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource.svg?branch=master)](https://travis-ci.org/qAIRa/qAIRaMap-OpenSource)
+</p>
+## qAIRaMap
+
 
 Open source real-time website for monitoring air quality.
 
