@@ -27,14 +27,13 @@ const dataAirQuality = {
 };
 
 const resultAirQuality = {
-	airColor: "transparent",
-	qCO: {color: "green", label: "Buena"},
-	qH2S: {color: "green", label: "Buena"},
-	qNO2: {color: "red", label: "Cuidado"},
-	qO3: {color: "yellow", label: "Moderada"},
-	qPM10: {color: "green", label: "Buena"},
-	qPM25: {color: "yellow", label: "Moderada"},
-	qSO2: {color: "green", label: "Buena"},
+	qCO: {color: "green", label: "Good"},
+	qH2S: {color: "green", label: "Good"},
+	qNO2: {color: "red", label: "Danger"},
+	qO3: {color: "yellow", label: "Moderate"},
+	qPM10: {color: "green", label: "Good"},
+	qPM25: {color: "yellow", label: "Moderate"},
+	qSO2: {color: "green", label: "Good"},
 	qUV: "transparent",
 	time: "23:00"
 };

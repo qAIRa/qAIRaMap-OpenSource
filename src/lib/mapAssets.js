@@ -159,190 +159,91 @@ const airQuality = data => {
 
 	const newDate = new Date(data.timestamp);
 
+	const good = {color: 'green',label: 'Good' };
+	const moderate ={color: 'yellow',label: 'Moderate'};
+	const bad= {color: 'orange',label: 'Bad'};
+	const hazardous={color: 'red',label: 'Danger' };
+	const noinfo ={	color: 'transparent',label: '' };
+
 	const time =
 		addZero(newDate.getHours()) + ':' + addZero(newDate.getMinutes());
 
 	const qPM10 =
 		PM10 >= 0 && PM10 <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: PM10 > 50 && PM10 <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: PM10 > 100 && PM10 <= 167
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: PM10 > 167
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qSO2 =
 		SO2 >= 0 && SO2 <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: SO2 > 50 && SO2 <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: SO2 > 100 && SO2 <= 625
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: SO2 > 625
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qCO =
 		CO >= 0 && CO <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: CO > 50 && CO <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: CO > 100 && CO <= 150
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: CO > 150
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qH2S =
 		H2S >= 0 && H2S <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: H2S > 50 && H2S <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: H2S > 100 && H2S <= 1000
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: H2S > 1000
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qPM25 =
 		PM25 >= 0 && PM25 <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: PM25 > 50 && PM25 <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: PM25 > 100 && PM25 <= 500
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: PM25 > 500
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qO3 =
 		O3 >= 0 && O3 <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: O3 > 50 && O3 <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: O3 > 100 && O3 <= 175
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: O3 > 175
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qNO2 =
 		NO2 >= 0 && NO2 <= 50
-			? {
-					color: 'green',
-					label: 'Buena',
-			  }
+			? good
 			: NO2 > 50 && NO2 <= 100
-			? {
-					color: 'yellow',
-					label: 'Moderada',
-			  }
+			? moderate
 			: NO2 > 100 && NO2 <= 150
-			? {
-					color: 'orange',
-					label: 'Mala',
-			  }
+			? bad
 			: NO2 > 150
-			? {
-					color: 'red',
-					label: 'Cuidado',
-			  }
-			: {
-					color: 'transparent',
-					label: '',
-			  };
+			? hazardous
+			: noinfo
 
 	const qUV =
 		0 <= UV && UV < 3
@@ -359,41 +260,6 @@ const airQuality = data => {
 			? 'blueviolet'
 			: 'transparent';
 
-	const airColor =
-		qPM10 === 'red' ||
-		qSO2 === 'red' ||
-		qCO === 'red' ||
-		qH2S === 'red' ||
-		qPM25 === 'red' ||
-		qO3 === 'red' ||
-		qNO2 === 'red'
-			? 'red'
-			: qPM10 === 'orange' ||
-			  qSO2 === 'orange' ||
-			  qCO === 'orange' ||
-			  qH2S === 'orange' ||
-			  qPM25 === 'orange' ||
-			  qO3 === 'orange' ||
-			  qNO2 === 'orange'
-			? 'orange'
-			: qPM10 === 'yellow' ||
-			  qSO2 === 'yellow' ||
-			  qCO === 'yellow' ||
-			  qH2S === 'yellow' ||
-			  qPM25 === 'yellow' ||
-			  qO3 === 'yellow' ||
-			  qNO2 === 'yellow'
-			? 'yellow'
-			: qPM10 === 'green' ||
-			  qSO2 === 'green' ||
-			  qCO === 'green' ||
-			  qH2S === 'green' ||
-			  qPM25 === 'green' ||
-			  qO3 === 'green' ||
-			  qNO2 === 'green'
-			? 'green'
-			: 'transparent';
-
 	return {
 		time,
 		qPM10,
@@ -403,8 +269,7 @@ const airQuality = data => {
 		qPM25,
 		qO3,
 		qNO2,
-		qUV,
-		airColor,
+		qUV
 	};
 };
 
@@ -542,16 +407,16 @@ const indexValue = data => {
 const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 	const socket = io.connect('https://qairamapnapi.qairadrones.com/');
 
-	let content = 'Cargando...';
+	let content = 'Loading...';
 	infoWindow.setContent(content);
 	if (qhawax.main_inca === -1) {
-		content = `Módulo ${qhawax.name} Apagado.`;
+		content = `Module ${qhawax.name} OFF.`;
 		infoWindow.setContent(content);
 	} else if (qhawax.main_inca === -2) {
-		content = `Módulo ${qhawax.name} en Calibración.`;
+		content = `Module ${qhawax.name} in Calibration.`;
 		infoWindow.setContent(content);
 	} else if (qhawax.main_inca === 0) {
-		content = `Módulo ${qhawax.name} a la espera de data válida.`;
+		content = `Module ${qhawax.name} waiting for valid data.`;
 		infoWindow.setContent(content);
 	} else if (qhawax.main_inca === 1) {
 		socket.on('new_data_summary_valid', res => {
