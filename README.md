@@ -59,11 +59,11 @@ Dont hesitate to contact us in [qAIRa Public Slack Channel](https://join.slack.c
 
 ## Issues 
 
-If you have found a bug in the project, you can file it here under the [“issues” tab](https://github.com/qAIRa/qAIRaMap/issues). You can also request new features here. A set of templates for reporting issues and requesting features are provided to assist you (and us!).
+If you have found a bug in the project, you can file it here under the [“issues” tab](https://github.com/qAIRa/qAIRaMap-OpenSource/issues). You can also request new features here. A set of templates for reporting issues and requesting features are provided to assist you (and us!).
 
 ## Pull Requests 
 
-If you have received a confirmation about your issue, you can file a pull request under the [“pull request” tab](https://github.com/qAIRa/qAIRaMap/pulls), please use the PR [“template”](https://github.com/qAIRa/qAIRaMap/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md). 
+If you have received a confirmation about your issue, you can file a pull request under the [“pull request” tab](https://github.com/qAIRa/qAIRaMap-OpenSource/pulls), please use the PR [“template”](https://github.com/qAIRa/qAIRaMap-OpenSource/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md). 
 You can also request new features here. 
 
 ## License
