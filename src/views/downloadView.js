@@ -8,6 +8,10 @@ import { navBarClient} from '../lib/navBarClient.js';
 import { viewDownload} from '../lib/HtmlComponents.js';
 import { requestAllQhawaxByCompany} from '../requests/get.js';
 
+let array_qhawax = [];
+let selectedParameters = {company:18};
+const reorderDate = (str) =>str.split("-").reverse().join("-");
+
 const csvFields = [
 	'CO (ug/m3)',
 	'H2S (ug/m3)',
@@ -40,6 +44,47 @@ const optionsTimePicker = {
 	twelveHour: false,
 };
 
+const requestQhawaxList = async (element) => {
+	//COMPANY
+			 const qhawax_list = await requestAllQhawaxByCompany(1);
+		 
+			 const addOptions = element.querySelector('#selectQhawax');
+ 
+			 qhawax_list.forEach(qhawax => {
+				 const option = document.createElement('option');
+				 option.setAttribute('value', qhawax.qhawax_id);
+				 option.innerText =
+					 qhawax.name + ': ' + qhawax.comercial_name;
+				 array_qhawax.push(qhawax);
+				 addOptions.appendChild(option);
+			 });
+		 };
+
+const requestData = async () => {
+			let filename = switchData.checked
+				? 'Data Cruda-'
+				: 'Promedio Horario-';
+			const response = await fetch(URL);
+			const json = await response.json();
+
+			array_qhawax.forEach(qhawax => {
+				filename +=
+					Number(selectedParameters.id) ===
+					Number(qhawax.qhawax_id)
+						? `${qhawax.name}` +
+						  '-' +
+						  `${qhawax.comercial_name}`
+						: '';
+			});
+
+			const csvContent = json2csv(json, csvFields);
+			download(
+				csvContent,
+				`${filename}.csv`,
+				'text/csv;encoding:utf-8'
+			);
+			window.location.reload();
+		};
 
 const downloadView =() => {
 
@@ -48,34 +93,14 @@ const downloadView =() => {
 
 	const downloadElem = document.createElement('div');
 
-		navBarClient(downloadElem, viewDownload);
+	navBarClient(downloadElem, viewDownload);
 	
 	const selection = downloadElem.querySelectorAll('select');
 	M.FormSelect.init(selection);
 
 	const switchData = downloadElem.querySelector('#select-data');
 
-	let array_qhawax = [];
-
-		const request = async () => {
-   //COMPANY
-			const qhawax_list = await requestAllQhawaxByCompany(1);
-		
-			const addOptions = downloadElem.querySelector('#selectQhawax');
-
-			qhawax_list.forEach(qhawax => {
-				const option = document.createElement('option');
-				option.setAttribute('value', qhawax.qhawax_id);
-				option.innerText =
-					qhawax.name + ': ' + qhawax.comercial_name;
-				array_qhawax.push(qhawax);
-				addOptions.appendChild(option);
-			});
-		};
-
-		request();
-
-	let selectedParameters = {};
+	requestQhawaxList(downloadElem);
 
 	selection[0].onchange = () => {
 		fetch(
@@ -101,8 +126,6 @@ const downloadView =() => {
 
 				
 				M.Datepicker.init(datePicker, optionsDatePicker);
-				
-				
 
 				const timePicker = downloadElem.querySelectorAll('.timepicker');
 				M.Timepicker.init(timePicker, optionsTimePicker);
@@ -111,76 +134,23 @@ const downloadView =() => {
 	const downloadBtn = downloadElem.querySelector('#submit-btn');
 	downloadBtn.addEventListener('click', (e) => {
 		e.preventDefault()
-		const arrayInitDate =
-			typeof selectedParameters.initDate === 'undefined'
-				? false
-				: selectedParameters.initDate.split('/');
-		const arrayEndDate =
-			typeof selectedParameters.endDate === 'undefined'
-				? false
-				: selectedParameters.endDate.split('/');
-		const arrayInitTime =
-			typeof selectedParameters.initHour === 'undefined' ||
-			selectedParameters.initHour === ''
-				? false
-				: selectedParameters.initHour.split(':');
-		const arrayEndTime =
-			typeof selectedParameters.endHour === 'undefined' ||
-			selectedParameters.endHour === ''
-				? false
-				: selectedParameters.endHour.split(':');
 
-		const initial_timestamp = toTimestamp(
-			arrayInitDate,
-			arrayInitTime
-		).toUTCString();
-		const final_timestamp = toTimestamp(
-			arrayEndDate,
-			arrayEndTime
-		).toUTCString();
+		const initial_timestamp = String(selectedParameters.initDate+' '+selectedParameters.initHour+':00');
+		const final_timestamp = String(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
+		const initial_value = reorderDate(selectedParameters.initDate) + ' '+selectedParameters.initHour;
+		const final_value= reorderDate(selectedParameters.endDate) + ' '+selectedParameters.endHour;
 
-		if (
-			!arrayInitDate ||
-			!arrayEndDate ||
-			!arrayInitTime ||
-			!arrayEndTime
-		) {
+		if (Object.values(selectedParameters).includes("")||Object.values(selectedParameters).length<5) {
 			openModalEmptyAlert();
 		} else {
-			if (Date.parse(initial_timestamp) >= Date.parse(final_timestamp)) {
+			if (Date.parse(initial_value) >= Date.parse(final_value)) {
 				openModalDateAlert();
 			} else {
 				const URL = switchData.checked
-					? `https://qairamapnapi-dev-opensource.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`
-					: `https://qairamapnapi-dev-opensource.qairadrones.com/api/average_valid_processed_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`;
+					? `https://qairamapnapi-dev.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`
+					: `https://qairamapnapi-dev.qairadrones.com/api/average_valid_processed_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`;
 
-				const request = async () => {
-					let filename = switchData.checked
-						? 'Data Cruda-'
-						: 'Promedio Horario-';
-					const response = await fetch(URL);
-					const json = await response.json();
-
-					array_qhawax.forEach(qhawax => {
-						filename +=
-							Number(selectedParameters.id) ===
-							Number(qhawax.qhawax_id)
-								? `${qhawax.name}` +
-								  '-' +
-								  `${qhawax.comercial_name}`
-								: '';
-					});
-
-					const csvContent = json2csv(json, csvFields);
-					download(
-						csvContent,
-						`${filename}.csv`,
-						'text/csv;encoding:utf-8'
-					);
-					window.location.reload();
-				};
-
-				request();
+				requestData();
 				M.toast({
 					html: 'The download may take 5 minutes...',
 					displayLength: 10000,
