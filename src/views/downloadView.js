@@ -1,16 +1,19 @@
+
 import {
 	openModalDateAlert,
-	openModalEmptyAlert,
-	toTimestamp,
+	openModalEmptyAlert
 } from '../lib/pickerErrors.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { navBarClient} from '../lib/navBarClient.js';
 import { viewDownload} from '../lib/HtmlComponents.js';
-import { requestAllQhawaxByCompany} from '../requests/get.js';
-
-let array_qhawax = [];
-let selectedParameters = {company:18};
+import { requestAllQhawax, downloadData, requestInstallationDate} from '../requests/get.js';
+import { optionsDatePicker, optionsTimePicker} from '../lib/mapAssets.js';
 const reorderDate = (str) =>str.split("-").reverse().join("-");
+
+const withLocalTime = (date) =>{
+	const local_time = new Date(date).toJSON();
+	return local_time?reorderDate(local_time.slice(0,10)) + ' '+ local_time.slice(11,19):'';
+}
 
 const csvFields = [
 	'CO (ug/m3)',
@@ -20,14 +23,14 @@ const csvFields = [
 	'PM10 (ug/m3)',
 	'PM2.5 (ug/m3)',
 	'SO2 (ug/m3)',
-	'Ruido (dB)',
+	'Noise (dB)',
 	'UV',
-	'Humedad (%)',
-	'Latitud',
-	'Longitud',
-	'Presion (Pa)',
-	'Temperatura (C)',
-	'Fecha',
+	'Humidity (%)',
+	'Latitude',
+	'Longitude',
+	'Pressure (Pa)',
+	'Temperature (C)',
+	'Date',
 ];
 
 const waitingLoader = `
@@ -35,108 +38,104 @@ const waitingLoader = `
       <div class="indeterminate"></div>
   </div>
 `;
+let array_qhawax = [];
+let selectedParameters = {};
 
-const optionsDatePicker = {
-	format: 'dd-mm-yyyy',
+
+
+const requestQhawaxs = async (element, company) => {
+	const qhawax_list = await requestAllQhawax();
+	const addOptions = element.querySelector('#selectQhawax');
+	qhawax_list.forEach(qhawax => {
+		const option = document.createElement('option');
+		option.setAttribute('value', qhawax.qhawax_id);
+		option.innerText =	qhawax.name + ': ' + qhawax.comercial_name;
+		array_qhawax.push(qhawax);
+		addOptions.appendChild(option);
+	});
 };
 
-const optionsTimePicker = {
-	twelveHour: false,
+const requestDownload = async (switchData,init, end) => {
+	let filename = '';
+	const json = await downloadData(switchData.checked,selectedParameters,init,end)
+	array_qhawax.forEach(qhawax => {
+		filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
+				? `${qhawax.name}` +
+				  '-' +
+				  `${qhawax.comercial_name}`
+				: '';});
+
+	const csvContent = json2csv(json, csvFields);
+	download(csvContent,`${filename}.csv`,'text/csv;encoding:utf-8');
+	window.location.reload();
 };
 
-const requestQhawaxList = async (element) => {
-	//COMPANY
-			 const qhawax_list = await requestAllQhawaxByCompany(1);
-		 
-			 const addOptions = element.querySelector('#selectQhawax');
- 
-			 qhawax_list.forEach(qhawax => {
-				 const option = document.createElement('option');
-				 option.setAttribute('value', qhawax.qhawax_id);
-				 option.innerText =
-					 qhawax.name + ': ' + qhawax.comercial_name;
-				 array_qhawax.push(qhawax);
-				 addOptions.appendChild(option);
-			 });
-		 };
 
-const requestData = async () => {
-			let filename = switchData.checked
-				? 'Data Cruda-'
-				: 'Promedio Horario-';
-			const response = await fetch(URL);
-			const json = await response.json();
+const installationDateReq = async (selection, element)=>{
+	const installationDate = await requestInstallationDate(selection[0].value)
+	
+			selectedParameters.id = selection[0].value;
+			optionsDatePicker.minDate = new Date(installationDate);
+			optionsDatePicker.maxDate = new Date(Date.now());
+			optionsDatePicker.onClose = () => {
+				selectedParameters.initDate = datePicker[0].value;
+				selectedParameters.endDate = datePicker[1].value;
+			};
+			optionsTimePicker.onCloseEnd = () => {
+				selectedParameters.initHour = timePicker[0].value;
+				selectedParameters.endHour = timePicker[1].value;
+			};
 
-			array_qhawax.forEach(qhawax => {
-				filename +=
-					Number(selectedParameters.id) ===
-					Number(qhawax.qhawax_id)
-						? `${qhawax.name}` +
-						  '-' +
-						  `${qhawax.comercial_name}`
-						: '';
-			});
+			const datePicker = element.querySelectorAll('.datepicker');
+			M.Datepicker.init(datePicker, optionsDatePicker);
 
-			const csvContent = json2csv(json, csvFields);
-			download(
-				csvContent,
-				`${filename}.csv`,
-				'text/csv;encoding:utf-8'
-			);
-			window.location.reload();
-		};
+			const timePicker = element.querySelectorAll('.timepicker');
+			M.Timepicker.init(timePicker, optionsTimePicker);
+};
 
-const downloadView =() => {
-
-	M.toast({ html: '¡First select a Module!' });
+const initialToast = ()=>{
+	M.toast({ html: 'First select a module!' });
 	M.toast({ html: 'Please complete all fields.' });
+}
+
+const finalToast=()=>{
+	M.toast({
+		html: 'The date may take 5 minutes...',
+		displayLength: 10000,
+	});
+	M.toast({
+		html: 'We are preparing your data!',
+		displayLength: 6000,
+	});
+}
+
+const downloadView = company => {
+	initialToast()
 
 	const downloadElem = document.createElement('div');
 
-	navBarClient(downloadElem, viewDownload);
-	
+	navBarClient(downloadElem, viewDownload, company);
+
+
+	requestQhawaxs(downloadElem, company);
+
 	const selection = downloadElem.querySelectorAll('select');
 	M.FormSelect.init(selection);
 
 	const switchData = downloadElem.querySelector('#select-data');
-
-	requestQhawaxList(downloadElem);
-
+	selectedParameters.company = company;
+	
 	selection[0].onchange = () => {
-		fetch(
-			`https://qairamapnapi-dev.qairadrones.com/api/GetInstallationDate/?qhawax_id=${selection[0].value}`
-		)
-			.then(res => res.text())
-			.then(installationDate => {
-				const datePicker = downloadElem.querySelectorAll('.datepicker');
-				selectedParameters.id = selection[0].value;
-
-				optionsDatePicker.minDate = new Date(installationDate);
-				optionsDatePicker.maxDate = new Date(Date.now());
-				optionsDatePicker.onClose = () => {
-					selectedParameters.initDate = datePicker[0].value;
-					selectedParameters.endDate = datePicker[1].value;
-				};
-				optionsTimePicker.onCloseEnd = () => {
-					selectedParameters.initHour = timePicker[0].value;
-					selectedParameters.endHour = timePicker[1].value;
-					console.log(selectedParameters);
-					
-				};
-
-				
-				M.Datepicker.init(datePicker, optionsDatePicker);
-
-				const timePicker = downloadElem.querySelectorAll('.timepicker');
-				M.Timepicker.init(timePicker, optionsTimePicker);
-			});
+		installationDateReq(selection, downloadElem)
 	};
+
 	const downloadBtn = downloadElem.querySelector('#submit-btn');
+	
 	downloadBtn.addEventListener('click', (e) => {
 		e.preventDefault()
 
-		const initial_timestamp = String(selectedParameters.initDate+' '+selectedParameters.initHour+':00');
-		const final_timestamp = String(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
+		const initial_timestamp = withLocalTime(selectedParameters.initDate+' '+selectedParameters.initHour+':00');
+		const final_timestamp = withLocalTime(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
 		const initial_value = reorderDate(selectedParameters.initDate) + ' '+selectedParameters.initHour;
 		const final_value= reorderDate(selectedParameters.endDate) + ' '+selectedParameters.endHour;
 
@@ -146,24 +145,13 @@ const downloadView =() => {
 			if (Date.parse(initial_value) >= Date.parse(final_value)) {
 				openModalDateAlert();
 			} else {
-				const URL = switchData.checked
-					? `https://qairamapnapi-dev.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`
-					: `https://qairamapnapi-dev.qairadrones.com/api/average_valid_processed_period/?qhawax_id=${selectedParameters.id}&company_id=${selectedParameters.company}&initial_timestamp=${initial_timestamp}&final_timestamp=${final_timestamp}`;
-
-				requestData();
-				M.toast({
-					html: 'The download may take 5 minutes...',
-					displayLength: 10000,
-				});
-				M.toast({
-					html: '¡We are preparing the data!',
-					displayLength: 6000,
-				});
-
+			 	requestDownload(switchData,initial_timestamp, final_timestamp);
+				finalToast();
 				const pannel = document.querySelector('.card-pannel');
 				pannel.innerHTML = waitingLoader;
 			}
 		}
+		
 	});
 
 	return downloadElem;

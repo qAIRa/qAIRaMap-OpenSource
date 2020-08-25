@@ -1,8 +1,37 @@
 
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
-<div class="animated fadeInDown" id="map"></div>
+<div class="animate__animated animate__fadeInDown" id="map"></div>
+<div class="animate__animated animate__swing" id="over_map">
+<h6><strong>Índice de Calidad del Aire (INCA)</strong></h6>
+    <table class="centered">
+        <thead>
+          <tr>
+              <th>Buena</th>
+              <th>Moderada</th>
+			        <th>Mala</th>
+			        <th>Cuidado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td bgcolor="#009966" class="inca-color"></td>
+            <td bgcolor="#ffde33" class="inca-color"></td>
+	      		<td bgcolor="#ff9933" class="inca-color"></td>
+			      <td bgcolor="#cc0033" class="inca-color"></td>
+		      </tr>
+		      <tr>
+            <td><img class="inca-qairito" id="qairito-good" src="img/qairito/qairito_buena.gif" alt="qairito-good"></img></td>
+            <td><img class="inca-qairito" id="qairito-moderate" src="img/qairito/qairito_moderada.gif" alt="qairito-moderate" ></img></td>
+			      <td><img class="inca-qairito" id="qairito-bad" src="img/qairito/qairito_mala.gif" alt="qairito-bad" ></img></td>
+			      <td><img class="inca-qairito" id="qairito-hazardous" src="img/qairito/qairito_cuidado.gif" alt="qairito-hazardous"></img></td>
+          </tr>
+        </tbody>
+  </table>
 </div>
+</div>
+
+
 <!-- Modal Graphics -->
 <div id="modalGraphic" class="modal">
   <a id="close" class="modal-close right responsive-img modal-images-close">X</a>
@@ -11,7 +40,7 @@ const viewMap = `
 </div>
 `;
 
-const navbar =`
+const navbar =(structure) =>`
 <div class="navbar-fixed">
 
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
@@ -19,7 +48,18 @@ const navbar =`
 
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
     <li id="return-menu" type="button"><a >Home</a></li>
-    </ul> <a id="brand-logo-menu-bar" href="https://www.qairadrones.com" class="brand-logo center"><img id="logo-navbar" src="/img/logo-white.png" alt="logo qAIRa" class="responsive-img" /></a>
+    </ul> 
+
+    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+        <img
+        
+            src="/img/logo-white.png"
+            alt="logo qAIRa"
+            id="logo-menu-qAIRa"
+            style="max-width: 4.5em; max-height: 2em"
+
+        />
+    </a>
     <ul id="menu-list-bar" class="right hide-on-med-and-down">
 
     <li id="legend-menu"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
@@ -37,25 +77,15 @@ const navbar =`
 <!-- Mobile menu -->
 <ul id="mobile-nav" class="sidenav">
 <li id="return-menu-mobile" type="button"><a>Home</a></li>
-<li id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
+<li id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown2">Legend</a></li>
 <li id="download-mob-menu"><a>Download</a></li>
 <li id="dashboard-menu-mob"><a>Dashboard</a></li>
 <li id="graphics-menu-mob"><a>Graphics</a></li>
 </ul>
+${structure}
+`;
 
-
-
-<!-- Dropdown Structure 1-->
-<ul id="dropdown1" class="dropdown-content">
-    <li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
-    <li class="divider" tabindex="-1"></li>
-    <li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
-    <li class="divider" tabindex="-1"></li>
-    <li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
-    <li class="divider" tabindex="-1"></li>
-    <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
-</ul>
-
+const dropdown = `
 
 <!-- Modal Air INCA Structure -->
         <div id="modalAirInca" class="modal">
@@ -134,8 +164,27 @@ const navbar =`
             </div>
             <div class="modal-footer"></div>
         </div>
-`;
-
+        <!-- Dropdown Structure 1-->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
+        </ul>
+        <!-- Dropdown Structure 2-->
+        <ul id="dropdown2" class="dropdown-content">
+            <li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
+        </ul>
+        `
 
 const viewDownload = `
 <div class="row">
@@ -284,5 +333,6 @@ export { viewMap,
   navbar,
   viewDownload,
   viewBoard,
-  chartView
+  chartView,
+  dropdown
 }

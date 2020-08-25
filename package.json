@@ -19,8 +19,18 @@
 			"src"
 		],
 		"moduleFileExtensions": [
-			"js"
-		]
+			"js",
+			"json",
+			"css",
+			"scss"
+		],
+		"transform": {
+			"^.+\\.jsx?$": "babel-jest"
+		},
+		"moduleNameMapper": {
+			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
+		}
+		
 	},
 	"repository": {
 		"type": "git",
@@ -33,6 +43,7 @@
 	},
 	"homepage": "https://github.com/qAIRa/qAIRaMap-OpenSource#readme",
 	"dependencies": {
+		"@googlemaps/jest-mocks": "0.0.3",
 		"babel-jest": "^25.3.0",
 		"webpack": "^4.41.6",
 		"webpack-cli": "^3.3.11",
@@ -43,6 +54,7 @@
 		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
 		"babel-core": "^6.26.3",
 		"coveralls": "^3.1.0",
+		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.3.0",
 		"jsdoc": "^3.6.4"
 	}

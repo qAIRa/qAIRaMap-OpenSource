@@ -9,6 +9,8 @@ import { changeView } from './lib/viewController.js';
 /**
  * Service Worker Initialization
  */
+const APISource = 'https://qairamapnapi-dev-opensource.qairadrones.com/api/';
+const SocketSource ='https://qairamapnapi-dev-opensource.qairadrones.com/';
 
 if ('serviceWorker' in navigator) {
 	console.log('Service Worker: Supported');
@@ -25,4 +27,5 @@ if ('serviceWorker' in navigator) {
 
 		window.onhashchange = changeView(window.location.hash);
 	};
-}
+};
+export {APISource, SocketSource};

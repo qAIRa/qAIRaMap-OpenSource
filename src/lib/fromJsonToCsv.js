@@ -1,20 +1,19 @@
-const options = {
-	year: 'numeric',
-	month: 'numeric',
-	day: 'numeric',
-	hour: 'numeric',
-	minute: 'numeric',
-	second: 'numeric',
-};
+import { addZero} from '../lib/mapAssets.js';
+
+const index=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dic']
+
 
 const json2csv = (jsonData, jsonFields) => {
+	
 	let csvStr = jsonFields.join(',') + '\n';
 
 	for (let i = 0; i < jsonData.length; i++) {
-		jsonData[i].timestamp = new Intl.DateTimeFormat(
-			'es-PE',
-			options
-		).format(new Date(Date.parse(jsonData[i].timestamp) + 5 * 3600 * 1000));
+		const newFormat = new Date(jsonData[i].timestamp_zone)
+		const year = String(newFormat).slice(11,24);
+		const month = String(addZero(index.findIndex(m => m === String(newFormat).slice(4,7))+1));
+		const day = String(newFormat).slice(8,10);
+
+		jsonData[i].timestamp_zone = day+'/'+month+'/'+year;
 		csvStr +=
 			Object.getOwnPropertyNames(jsonData[i])
 				.map(e => jsonData[i][e])

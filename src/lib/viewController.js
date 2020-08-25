@@ -8,15 +8,6 @@ import { downloadView } from '../views/downloadView.js';
 import { viewDashboard } from '../views/dashboardView.js';
 import { viewGraphics } from '../views/graphicsView.js';
 
-
-
-/**
- * Container that alouds to insert changes in the index Html
- * @type {HTMLElement}
- */
-const container = document.getElementById('content-page');
-
-
 /**
  * View Controller alouds to change html on Hash Change
  * @param {string} router - Name of the View
@@ -24,6 +15,11 @@ const container = document.getElementById('content-page');
  */
 
 const changeView = router => {
+	/**
+ * Container that alouds to insert changes in the index Html
+ * @type {HTMLElement}
+ */
+	const container = document.getElementById('content-page');
 	container.innerHTML = '';
 	switch (router) {
 		case '':

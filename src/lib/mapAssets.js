@@ -455,7 +455,7 @@ const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 				const colorUV = uvColor(res.UV);
 
 				fetch(
-					'https://qairamapnapi-dev.qairadrones.com/api/last_gas_inca_data/'
+					'https://qairamapnapi-dev-opensource.qairadrones.com/api/last_gas_inca_data/'
 				)
 					.then(res => res.json())
 					.then(qhawax_inca_list => {
@@ -533,7 +533,64 @@ const drawQhawaxMap = (map, qhawax, company) => {
 	map.markers.push(qhawax_marker);
 };
 
+const optionsDatePicker = {
+    format: 'mm-dd-yyyy',
+	i18n: {
+		months: [
+			'Enero',
+			'Febrero',
+			'Marzo',
+			'Abril',
+			'Mayo',
+			'Junio',
+			'Julio',
+			'Agosto',
+			'Septiembre',
+			'Octubre',
+			'Noviembre',
+			'Diciembre',
+		],
+		monthsShort: [
+			'Ene',
+			'Feb',
+			'Mar',
+			'Abr',
+			'May',
+			'Jun',
+			'Jul',
+			'Ago',
+			'Set',
+			'Oct',
+			'Nov',
+			'Dic',
+		],
+		weekdays: [
+			'Domingo',
+			'Lunes',
+			'Martes',
+			'Miércoles',
+			'Jueves',
+			'Viernes',
+			'Sábado',
+		],
+		weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+		weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		selectMonths: true,
+		cancel: 'Cancelar',
+		clear: 'Limpiar',
+		today: 'hoy',
+		done: 'Ok',
+	},
+};
 
+const optionsTimePicker = {
+	i18n: {
+		cancel: 'Cancelar',
+		done: 'Ok',
+	},
+	twelveHour: false,
+	vibrate: false,
+};
 export {
 	drawQhawaxMap,
 	drawChart,
@@ -544,5 +601,7 @@ export {
 	setQhawaxInfowindow,
 	uvColor,
 	ECAlimits,
-	addZero
+	addZero,
+	optionsDatePicker,
+	optionsTimePicker
 };

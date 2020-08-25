@@ -1,7 +1,32 @@
-import { addZero, ppbToECAdash } from '../lib/navMenus.js';
 import {navBarClient} from '../lib/navBarClient.js';
 import {viewBoard } from '../lib/HtmlComponents.js'
-import { requestAllQhawaxByCompany} from '../requests/get.js';
+import { requestAllQhawax} from '../requests/get.js';
+const addZero = i => {
+	if (i < 10) {
+		i = '0' + i;
+	}
+	return i;
+};
+const ppbToECAdash = sensor => {
+	switch (sensor) {
+		case 'CO':
+			return { ECA: 10000 * 0.87, factor: 1.144919906 };
+		case 'NO2':
+			return { ECA: 100 * 0.532, factor: 1.880677075 };
+		case 'O3':
+			return { ECA: 100 * 0.51, factor: 1.962019118 };
+		case 'H2S':
+			return { ECA: 150 * 0.719, factor: 1.393033574 };
+		case 'SO2':
+			return { ECA: 250 * 0.382, factor: 2.618478014 };
+		case 'PM25':
+			return { ECA: 50, factor: 1 };
+		case 'PM10':
+			return { ECA: 100, factor: 1 };
+		default:
+			break;
+	}
+};
 
 const indexValue = data => {
 	const id = data.ID;
@@ -91,7 +116,7 @@ const viewDashboard =()  => {
 		let qhawax_asigned = [];
 		const request = async () => {
    //COMPANY
-			const qhawax_list = await requestAllQhawaxByCompany(1);
+			const qhawax_list = await requestAllQhawax();
 			
 			qhawax_list.forEach(q => qhawax_asigned.push(q));
 		
@@ -121,7 +146,7 @@ const viewDashboard =()  => {
           <td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>
           `;
 				row_table.innerHTML = row_data;
-				const socket = io.connect('https://qairamapnapi-dev.qairadrones.com/');
+				const socket = io.connect('https://qairamapnapi-dev-opensource.qairadrones.com/');
 				socket.on('new_data_summary_processed', data => {
 					if (q.name === data.ID) {
 						const value = indexValue(data);

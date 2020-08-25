@@ -1,11 +1,11 @@
-import { drawQhawaxMap, mapCenter } from '../lib/mapAssets.js';
+import { drawQhawaxMap} from '../lib/mapAssets.js';
 import {navBarClient} from '../lib/navBarClient.js';
 import {viewMap} from '../lib/HtmlComponents.js';
-import { requestAllQhawaxByCompany} from '../requests/get.js';
+import { requestAllQhawax} from '../requests/get.js';
 
 const request = async (map, company) => {
    
-	const qhawax_list = await requestAllQhawaxByCompany(company);
+	const qhawax_list = await requestAllQhawax();
 	qhawax_list.forEach(qhawax => {
 
 		drawQhawaxMap(map, qhawax, company);
@@ -25,13 +25,12 @@ const viewFreeMap = company => {
 		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 	});
-
 	map.markers = [];
 
 
 			
 			const socket = io.connect(
-				'https://qairamapnapi-dev.qairadrones.com/'
+				'https://qairamapnapi-dev-opensource.qairadrones.com/'
 			);
 			socket.on('update_inca', res => {
 				if (qhawax.name === res.name) {

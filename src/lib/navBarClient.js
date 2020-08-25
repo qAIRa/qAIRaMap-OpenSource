@@ -1,17 +1,17 @@
-import {navbar} from '../lib/HtmlComponents.js';
+import {navbar, dropdown} from '../lib/HtmlComponents.js';
 
 import {goTo } from '../lib/viewController.js';
 
 const navBarClient = (element, display) =>{
     const menuNavBar = document.querySelector('header');
 
-    menuNavBar.innerHTML = navbar;
+    menuNavBar.innerHTML = navbar(dropdown);
   
     element.innerHTML = display ;
 	
 	const dropMenu = document.querySelectorAll('.dropdown-trigger');
-	M.Dropdown.init(dropMenu,{coverTrigger:false});
-	
+    M.Dropdown.init(dropMenu,{coverTrigger:false});
+
 	const mobileMenu = document.getElementById('mobile-nav');
     M.Sidenav.init(mobileMenu);
    

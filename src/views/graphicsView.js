@@ -1,7 +1,15 @@
-import {addZero} from '../lib/navMenus.js';
+
 import {navBarClient} from '../lib/navBarClient.js';
 import { chartView} from '../lib/HtmlComponents.js';
-import { requestAllQhawaxByCompany, requestStatus} from '../requests/get.js';
+import { requestAllQhawax, requestStatus} from '../requests/get.js';
+import { APISource, SocketSource } from '../index.js';
+
+const addZero = i => {
+	if (i < 10) {
+		i = '0' + i;
+	}
+	return i;
+};
 
 const configuration = {
 	toImageButtonOptions: {
@@ -67,7 +75,7 @@ const dateFormat = (timestamp)=>{
 }
 
 const requestOptions = async (element, company) => {
-	const qhawax_list = await requestAllQhawaxByCompany(company);
+	const qhawax_list = await requestAllQhawax(company);
 	qhawax_list.forEach(async qhawax => {
 		const status = await requestStatus(qhawax.name);
 		const addOptions = element.querySelector('#selectQhawax');
@@ -80,11 +88,11 @@ const requestOptions = async (element, company) => {
  };
 
 
- const createTraces = async (time, qhawax) => {
+ const createTraces = async (time, qhawax, charts) => {
 	let traces = [];
 
 	const response = await fetch(
-		`https://qairamapnapi-dev.qairadrones.com/api/processed_measurements/?name=${qhawax}&interval_minutes=${time}&time_zone=${new Date(Date.now()).getTimezoneOffset()*-1/60}`
+		`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`
 	);
 	const json = await response.json();
 
@@ -287,10 +295,9 @@ const requestOptions = async (element, company) => {
 
 const viewGraphics = company => {
 
-	company=1
 	const graphElem = document.createElement('div');
 	graphElem.setAttribute('class', 'container');
-	navBarClient(graphElem, chartView)
+	navBarClient(graphElem, chartView, company)
 	
 
 	const graphBtn = graphElem.querySelector('#graphicBtn');
@@ -299,8 +306,7 @@ const viewGraphics = company => {
 	M.FormSelect.init(selection);
 
 	 requestOptions(graphElem, company);
-const charts = graphElem.querySelectorAll('.chart');
-
+	const charts = graphElem.querySelectorAll('.chart');
 
 	let selectedQhawax = '';
 	selection[0].onchange = () => {
@@ -313,9 +319,9 @@ const charts = graphElem.querySelectorAll('.chart');
 	
 
 	graphBtn.addEventListener('click', () => {
-		createTraces(selectedTime, selectedQhawax);
+		createTraces(selectedTime, selectedQhawax, charts);
 
-		const socket = io.connect('https://qairamapnapi-dev.qairadrones.com/');
+		const socket = io.connect(`${SocketSource}`);
 
 		socket.on('new_data_summary_processed', res => {
 			if (res.ID === selectedQhawax) {
