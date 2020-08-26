@@ -1,25 +1,13 @@
-const generateGif = (qhawax, company) => {
-	if (company === 3) {
-		if (qhawax.main_inca >= 0 && qhawax.main_inca <= 50) {
-			return '/img/gecko/gecko - buena.png';
-		} else if (qhawax.main_inca <= 100) {
-			return '/img/gecko/gecko - moderada.png';
-		} else if (qhawax.main_inca <= 500) {
-			return '/img/gecko/gecko - mala.png';
-		} else {
-			return '/img/gecko/gecko - cuidado.png';
-		}
-	} else {
-		if (qhawax.main_inca >= 0 && qhawax.main_inca <= 50) {
+const generateGif = (inca) => {
+		if (inca >= 0 && inca <= 50) {
 			return '/img/qairito/qairito_buena.gif';
-		} else if (qhawax.main_inca <= 100) {
+		} else if (inca <= 100) {
 			return '/img/qairito/qairito_moderada.gif';
-		} else if (qhawax.main_inca <= 500) {
+		} else if (inca <= 500) {
 			return '/img/qairito/qairito_mala.gif';
 		} else {
 			return '/img/qairito/qairito_cuidado.gif';
 		}
-	}
 };
 
 const infowindowComplete = (
@@ -38,7 +26,7 @@ const infowindowComplete = (
 		${qhawax.comercial_name}
 		<br />
 		<img
-			src="${generateGif(qhawax, company)}"
+			src="${generateGif(qhawax.main_inca)}"
 			alt="Hoja Calidad aire"
 			class="qairito-img"
 		/>
@@ -344,7 +332,7 @@ const infowindowPartial = (
 		${qhawax.comercial_name}
 		<br />
 		<img
-			src="${generateGif(qhawax, company)}"
+			src="${generateGif(qhawax.main_inca)}"
 			alt="Hoja Calidad aire"
 			class="qairito-img"
 		/>
@@ -586,4 +574,4 @@ const infowindowPartial = (
     `;
 };
 
-export { infowindowComplete, infowindowPartial };
+export { infowindowComplete, infowindowPartial, generateGif };

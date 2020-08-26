@@ -25,6 +25,7 @@ test('Add view', () => {
     M.Modal.init=jest.fn();
     M.FormSelect=jest.fn();
     M.FormSelect.init=jest.fn();
+    google.maps.Map=jest.fn();
     google.maps.MapTypeId=jest.fn();
     google.maps.MapTypeId.ROADMAP=jest.fn();
 
@@ -39,6 +40,7 @@ test('Add view', () => {
         M.Modal.init.mockReset(); 
         M.FormSelect.mockReset();
         M.FormSelect.init.mockReset();
+        google.maps.Map.mockReset();
         google.maps.MapTypeId.mockReset();
         google.maps.MapTypeId.ROADMAP.mockReset();
       });
