@@ -22,12 +22,6 @@ const changeView = router => {
 	const container = document.getElementById('content-page');
 	container.innerHTML = '';
 	switch (router) {
-		case '':
-			return container.appendChild(viewFreeMap());
-
-		case '#/':
-			return container.appendChild(viewFreeMap());
-
 		case '#/download':
 			return container.appendChild(downloadView());
 

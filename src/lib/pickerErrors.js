@@ -66,22 +66,5 @@ const openModalEmptyAlert = () => {
 	instance.open();
 };
 
-/**
- * Recive the Date and Hour selected from form picker and converts it to a timestamp format
- * @param {array} arrayDate
- * @param {array} arrayHour
- * @returns {DOMHighResTimeStamp}
- */
-const toTimestamp = (arrayDate, arrayHour) => {
-	const timestamp = new Date(
-		arrayDate[2],
-		arrayDate[1] - 1,
-		arrayDate[0],
-		arrayHour[0] - 5,
-		arrayHour[1]
-	);
 
-	return timestamp;
-};
-
-export { openModalDateAlert, openModalEmptyAlert, toTimestamp };
+export { openModalDateAlert, openModalEmptyAlert };
