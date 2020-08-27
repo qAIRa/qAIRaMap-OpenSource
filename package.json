@@ -30,7 +30,6 @@
 		"moduleNameMapper": {
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
 		}
-		
 	},
 	"repository": {
 		"type": "git",
@@ -43,6 +42,7 @@
 	},
 	"homepage": "https://github.com/qAIRa/qAIRaMap-OpenSource#readme",
 	"dependencies": {
+		"@babel/runtime": "^7.11.2",
 		"@googlemaps/jest-mocks": "0.0.3",
 		"babel-jest": "^25.3.0",
 		"webpack": "^4.41.6",
@@ -52,6 +52,8 @@
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
 		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
+		"@babel/plugin-transform-runtime": "^7.11.0",
+		"@babel/preset-env": "^7.11.0",
 		"babel-core": "^6.26.3",
 		"coveralls": "^3.1.0",
 		"identity-obj-proxy": "^3.0.0",
