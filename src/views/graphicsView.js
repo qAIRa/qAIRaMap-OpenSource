@@ -3,13 +3,7 @@ import {navBarClient} from '../lib/navBarClient.js';
 import { chartView} from '../lib/HtmlComponents.js';
 import { requestAllQhawax, requestStatus} from '../requests/get.js';
 import { APISource, SocketSource } from '../index.js';
-
-const addZero = i => {
-	if (i < 10) {
-		i = '0' + i;
-	}
-	return i;
-};
+import {addZero} from '../lib/mapAssets.js'
 
 const configuration = {
 	toImageButtonOptions: {
@@ -38,20 +32,8 @@ const configuration = {
 	responsive: true,
 };
 
-
 const formatDateDB = timestamp => {
 	const date = new Date(Date.parse(timestamp) + (new Date().getTimezoneOffset()/60)* 3600 * 1000);
-	return (
-		addZero(date.getHours()) +
-		':' +
-		addZero(date.getMinutes()) +
-		':' +
-		addZero(date.getSeconds())
-	);
-};
-
-const formatDateDBsocket = timestamp => {
-	const date = new Date(Date.parse(timestamp)- (new Date().getTimezoneOffset()/60)* 3600 * 1000);
 	return (
 		addZero(date.getHours()) +
 		':' +
@@ -87,8 +69,7 @@ const requestOptions = async (element, company) => {
 	});
  };
 
-
- const createTraces = async (time, qhawax, charts) => {
+const createTraces = async (time, qhawax, charts) => {
 	let traces = [];
 
 	const response = await fetch(
@@ -291,8 +272,6 @@ const requestOptions = async (element, company) => {
 	return traces;
 };
 
-
-
 const viewGraphics = company => {
 
 	const graphElem = document.createElement('div');
@@ -446,4 +425,4 @@ const viewGraphics = company => {
 	return graphElem;
 };
 
-export { viewGraphics, formatDateDB, configuration };
+export { viewGraphics, formatDateDB, configuration, dateFormat, requestOptions, createTraces };

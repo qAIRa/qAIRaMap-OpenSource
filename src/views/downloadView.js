@@ -57,7 +57,7 @@ const requestQhawaxs = async (element, company) => {
 
 const requestDownload = async (switchData,init, end) => {
 	let filename = '';
-	const json = await downloadData(switchData.checked,selectedParameters,init,end)
+	const json = await downloadData(switchData.checked,selectedParameters.id,init,end)
 	array_qhawax.forEach(qhawax => {
 		filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
 				? `${qhawax.name}` +
@@ -123,7 +123,6 @@ const downloadView = company => {
 	M.FormSelect.init(selection);
 
 	const switchData = downloadElem.querySelector('#select-data');
-	selectedParameters.company = company;
 	
 	selection[0].onchange = () => {
 		installationDateReq(selection, downloadElem)
@@ -138,7 +137,6 @@ const downloadView = company => {
 		const final_timestamp = withLocalTime(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
 		const initial_value = reorderDate(selectedParameters.initDate) + ' '+selectedParameters.initHour;
 		const final_value= reorderDate(selectedParameters.endDate) + ' '+selectedParameters.endHour;
-
 		if (Object.values(selectedParameters).includes("")||Object.values(selectedParameters).length<5) {
 			openModalEmptyAlert();
 		} else {

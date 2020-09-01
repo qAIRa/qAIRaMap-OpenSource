@@ -534,7 +534,7 @@ const drawQhawaxMap = (map, qhawax, company) => {
 };
 
 const optionsDatePicker = {
-    format: 'mm-dd-yyyy',
+    format: 'dd-mm-yyyy',
 	i18n: {
 		months: [
 			'Enero',

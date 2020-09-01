@@ -15,45 +15,28 @@ beforeEach(() => {
   });
 
 test('Add view', () => {
-    window.M = jest.fn();
-    M.toast = jest.fn();
-    M.Dropdown= jest.fn();
-    M.Dropdown.init= jest.fn();
-    M.Sidenav= jest.fn();
-    M.Sidenav.init= jest.fn();
-    M.Modal=jest.fn();
-    M.Modal.init=jest.fn();
-    M.FormSelect=jest.fn();
-    M.FormSelect.init=jest.fn();
+
     google.maps.Map=jest.fn();
     google.maps.MapTypeId=jest.fn();
     google.maps.MapTypeId.ROADMAP=jest.fn();
 
       afterEach(() => {
-        window.M.mockReset();
-        M.toast.mockReset();
-        M.Dropdown.mockReset();
-        M.Dropdown.init.mockReset();
-        M.Sidenav.mockReset();
-        M.Sidenav.init.mockReset();
-        M.Modal.mockReset();
-        M.Modal.init.mockReset(); 
-        M.FormSelect.mockReset();
-        M.FormSelect.init.mockReset();
+
         google.maps.Map.mockReset();
         google.maps.MapTypeId.mockReset();
         google.maps.MapTypeId.ROADMAP.mockReset();
       });
     document.body.innerHTML = `
     <header></header>
-      <div id="content-page">Add todo</div>
+      <div id="content-page"></div>
     `;
-    require('../src/lib/viewController.js');
+    require('../build/js/materialize.min.js');
+    require('../build/css/materialize.min.css');
     const container = document.getElementById('content-page')
-
-    // expect(changeView('')).toStrictEqual(container.appendChild(viewFreeMap()))
+    
     // expect(changeView('#/')).toStrictEqual(container.appendChild(viewFreeMap()))
     expect(changeView('#/download')).toStrictEqual(container.appendChild(downloadView()))
     expect(changeView('#/dashboard')).toStrictEqual(container.appendChild(viewDashboard()))
     expect(changeView('#/graphics')).toStrictEqual(container.appendChild(viewGraphics()))
+    // expect(changeView('')).toStrictEqual(container.appendChild(viewFreeMap()))
   });

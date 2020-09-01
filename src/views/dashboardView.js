@@ -1,12 +1,7 @@
 import {navBarClient} from '../lib/navBarClient.js';
 import {viewBoard } from '../lib/HtmlComponents.js'
 import { requestAllQhawax} from '../requests/get.js';
-const addZero = i => {
-	if (i < 10) {
-		i = '0' + i;
-	}
-	return i;
-};
+import { addZero} from '../lib/mapAssets.js';
 const ppbToECAdash = sensor => {
 	switch (sensor) {
 		case 'CO':
@@ -35,14 +30,7 @@ const indexValue = data => {
 	const lng = data.lon.toFixed(5);
 	const UV = Number(data.UV.toFixed(1));
 	const spl = Number(data.spl.toFixed(1));
-	// const newDate = new Date(data.timestamp);
 
-	// const time =
-	// 	addZero(newDate.getHours()) +
-	// 	':' +
-	// 	addZero(newDate.getMinutes()) +
-	// 	':' +
-	// 	addZero(newDate.getSeconds());
 	const newDate = new Date(Date.parse(data.timestamp))
 	const time =
 		addZero(newDate.getHours()) +
@@ -105,76 +93,75 @@ const indexValue = data => {
 		NO2color,
 	};
 };
-
+const request = async (element,qhawax_asigned) => {
+	//COMPANY
+	const table_body = element.querySelector('tbody');
+			 const qhawax_list = await requestAllQhawax();
+			 
+			 qhawax_list.forEach(q => qhawax_asigned.push(q));
+		 
+ 
+			 qhawax_asigned.forEach(q => {
+				 const row_table = document.createElement('tr');
+ 
+				 row_table.setAttribute('data-name', `${q.name}`);
+				 table_body.appendChild(row_table);
+ 
+				 let row_data = `
+		   <td><strong>${q.name}</strong></td> 
+		   <td>${q.comercial_name}</td> 
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td>-</td>
+		   <td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>
+		   `;
+				 row_table.innerHTML = row_data;
+				 const socket = io.connect('https://qairamapnapi-dev-opensource.qairadrones.com/');
+				 socket.on('new_data_summary_processed', data => {
+					 console.log(data);
+					 if (q.name === data.ID) {
+						 const value = indexValue(data);
+						 row_data = `
+			   <td><strong>${data.ID}</strong></td>
+			   <td>${q.comercial_name}</td>
+			   <td>${value.time}</td>
+			   <td style="color:${value.SO2color}">${value.SO2}</td> 
+			   <td style="color:${value.NO2color}">${value.NO2}</td> 
+			   <td style="color:${value.COcolor}">${value.CO}</td> 
+			   <td style="color:${value.H2Scolor}">${value.H2S}</td>
+			   <td style="color:${value.O3color}">${value.O3}</td>  
+			   <td style="color:${value.PM25color}">${value.PM25}</td> 
+			   <td style="color:${value.PM10color}">${value.PM10}</td> 
+			   <td style="color:${value.UVcolor}">${value.UV}</td> 
+			   <td>${value.spl}</td>
+			   <td>${value.temperature}</td>
+			   <td>${value.humidity}</td>
+			   <td>${value.pressure}</td>  
+			   <td><i class="material-icons" style="color:#32CD32">wifi</i></td>
+			   `;
+						 row_table.innerHTML = row_data;
+					 }
+				 });
+			 });
+	 }
 const viewDashboard =()  => {
 	const dashboardElem = document.createElement('div');
 	dashboardElem.classList.add('dashboard')
 	navBarClient(dashboardElem, viewBoard);
-
-	const table_body = dashboardElem.querySelector('tbody');
-
 		let qhawax_asigned = [];
-		const request = async () => {
-   //COMPANY
-			const qhawax_list = await requestAllQhawax();
-			
-			qhawax_list.forEach(q => qhawax_asigned.push(q));
 		
-
-			qhawax_asigned.forEach(q => {
-				const row_table = document.createElement('tr');
-
-				row_table.setAttribute('data-name', `${q.name}`);
-				table_body.appendChild(row_table);
-
-				let row_data = `
-          <td><strong>${q.name}</strong></td> 
-          <td>${q.comercial_name}</td> 
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>
-          `;
-				row_table.innerHTML = row_data;
-				const socket = io.connect('https://qairamapnapi-dev-opensource.qairadrones.com/');
-				socket.on('new_data_summary_processed', data => {
-					if (q.name === data.ID) {
-						const value = indexValue(data);
-						row_data = `
-              <td><strong>${data.ID}</strong></td>
-              <td>${q.comercial_name}</td>
-              <td>${value.time}</td>
-              <td style="color:${value.SO2color}">${value.SO2}</td> 
-              <td style="color:${value.NO2color}">${value.NO2}</td> 
-              <td style="color:${value.COcolor}">${value.CO}</td> 
-              <td style="color:${value.H2Scolor}">${value.H2S}</td>
-              <td style="color:${value.O3color}">${value.O3}</td>  
-              <td style="color:${value.PM25color}">${value.PM25}</td> 
-              <td style="color:${value.PM10color}">${value.PM10}</td> 
-              <td style="color:${value.UVcolor}">${value.UV}</td> 
-              <td>${value.spl}</td>
-              <td>${value.temperature}</td>
-              <td>${value.humidity}</td>
-              <td>${value.pressure}</td>  
-              <td><i class="material-icons" style="color:#32CD32">wifi</i></td>
-              `;
-						row_table.innerHTML = row_data;
-					}
-				});
-			});
-	}
-	request();	
+	request(dashboardElem,qhawax_asigned);	
 	return dashboardElem;
 };
 
-export { viewDashboard };
+export { viewDashboard, addZero, ppbToECAdash, indexValue, request };

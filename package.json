@@ -33,7 +33,8 @@
 		"automock": false,
 		"setupFiles": [
 			"./setupJest.js"
-		]
+		],
+		"coveragePathIgnorePatterns": [	"./build/"]
 	},
 	"repository": {
 		"type": "git",

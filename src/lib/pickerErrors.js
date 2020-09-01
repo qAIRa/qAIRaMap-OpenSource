@@ -50,8 +50,7 @@ const openModalDateAlert = () => {
 	const modalsMenu = modalElem.querySelectorAll('.data');
 	M.Modal.init(modalsMenu, optionsModal);
 	const myModal = modalElem.querySelector('#modalDate');
-	var instance = M.Modal.getInstance(myModal);
-	instance.open();
+	M.Modal.getInstance(myModal).open();
 };
 
 const openModalEmptyAlert = () => {
@@ -67,4 +66,4 @@ const openModalEmptyAlert = () => {
 };
 
 
-export { openModalDateAlert, openModalEmptyAlert };
+export { openModalDateAlert, openModalEmptyAlert};

@@ -1,12 +1,12 @@
 import {APISource} from '../index.js';
 
-const requestAllQhawax = async company => {
+const requestAllQhawax = async() => {
     const response = await fetch(`${APISource}AllQhawaxInMap/`);
     return  await response.json();
 }
 
 const requestAverageMeasurement = async (qhawax, sensor) => {
-    const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/gas_average_measurement/?qhawax=${qhawax_id}&gas=${sensor}`);
+    const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`);
     return  await response.json();
 }
 
@@ -20,10 +20,10 @@ const requestStatus = async (ID) =>{
     const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/qhawax_status/?name=${ID}`);
     return await response.text()
 };
-const downloadData = async(check, selectedParameters,init, end) =>{
+const downloadData = async(check, id,init, end) =>{
 	const URL = check
-				? `${APISource}valid_processed_measurements_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${init}&final_timestamp=${end}`
-				: `${APISource}average_valid_processed_period/?qhawax_id=${selectedParameters.id}&initial_timestamp=${init}&final_timestamp=${end}`;
+				? `${APISource}valid_processed_measurements_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`
+				: `${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`;
 
     const response = await fetch(URL);
     return await response.json();
