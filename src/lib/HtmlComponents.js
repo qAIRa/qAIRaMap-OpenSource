@@ -3,14 +3,14 @@ const viewMap = `
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__swing" id="over_map">
-<h6><strong>Índice de Calidad del Aire (INCA)</strong></h6>
+<h6><strong>Air Quality Index (INCA)</strong></h6>
     <table class="centered">
         <thead>
           <tr>
-              <th>Buena</th>
-              <th>Moderada</th>
-			        <th>Mala</th>
-			        <th>Cuidado</th>
+              <th>Good</th>
+              <th>Moderate</th>
+			        <th>Bad</th>
+			        <th>Hazardous</th>
           </tr>
         </thead>
         <tbody>

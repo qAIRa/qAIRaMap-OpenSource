@@ -29,7 +29,11 @@
 		},
 		"moduleNameMapper": {
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
-		}
+		},
+		"automock": false,
+		"setupFiles": [
+			"./setupJest.js"
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -58,6 +62,7 @@
 		"coveralls": "^3.1.0",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.3.0",
+		"jest-fetch-mock": "^3.0.3",
 		"jsdoc": "^3.6.4"
 	}
 }
