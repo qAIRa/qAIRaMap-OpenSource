@@ -1,0 +1,4 @@
+exclude_patterns:
+- "test/"
+- "build/"
+- "custom-template/"
