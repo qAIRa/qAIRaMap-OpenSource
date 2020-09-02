@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "jest --coverage ",
 		"test:watch": "jest --watch",
-		"test:coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
+		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
@@ -37,10 +37,7 @@
 		],
 		"coveragePathIgnorePatterns": [
 			"./build/"
-		],
-		"coverageDirectory": "./tests/coverage",
-		"collectCoverage": true,
-		"coverageReporters": ["html", "text-summary", "lcov"]
+		]
 	},
 	"repository": {
 		"type": "git",
