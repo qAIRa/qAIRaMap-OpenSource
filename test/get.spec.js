@@ -9,15 +9,16 @@ import {
 } from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
-
-  describe('testing api', () => {
-    beforeEach(() => {
-      fetch.resetMocks()
-    })
-   
+beforeEach(() => {
+    fetch.resetMocks()
+ 
+  })
+  describe('testing fetch calls', () => {
+    
+    
     it('calls installation date', () => {
       fetch.mockResponseOnce('calls installation date')
-   
+     
       //assert on the response
       requestInstallationDate(4).then(res => {
         expect(res).toEqual('calls installation date')
@@ -30,7 +31,7 @@ enableFetchMocks()
 
     it('calls all qHAWAXs', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls all qHAWAXs' }))
-     
+        
         //assert on the response
         requestAllQhawax().then(res => {
           expect(res.data).toEqual('calls all qHAWAXs')
@@ -43,7 +44,7 @@ enableFetchMocks()
 
       it('calls binnacle', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls binnacle'}))
-     
+        
         //assert on the response
         requestBinnacle(4).then(res => {
           expect(res.data).toEqual('calls binnacle')
@@ -66,12 +67,15 @@ enableFetchMocks()
       })
       it('calls download data', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
+        fetch.mockReject(new Error('fake error message'))
+       
         //assert on the response
         downloadData(true, 4,'01-09-2020 05:00:00', '01-09-2020 18:00:00').then(res => {
           expect(res.data).toEqual('calls download data')
+
         })
         downloadData(false, 4,'01-09-2020 05:00:00', '01-09-2020 18:00:00').then(res => {
-            expect(res.data).toEqual('calls download data')
+            
           })
         //assert on the times called and arguments given to fetch
         expect(fetch.mock.calls.length).toEqual(2)
@@ -80,6 +84,7 @@ enableFetchMocks()
       });
       it('calls average measurements', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls average measurements'}))
+        
         //assert on the response
         requestAverageMeasurement(4,'CO').then(res => {
           expect(res.data).toEqual('calls average measurements')

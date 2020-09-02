@@ -20,12 +20,6 @@ test('Add view', () => {
     google.maps.MapTypeId=jest.fn();
     google.maps.MapTypeId.ROADMAP=jest.fn();
 
-      afterEach(() => {
-
-        google.maps.Map.mockReset();
-        google.maps.MapTypeId.mockReset();
-        google.maps.MapTypeId.ROADMAP.mockReset();
-      });
     document.body.innerHTML = `
     <header></header>
       <div id="content-page"></div>
@@ -40,3 +34,11 @@ test('Add view', () => {
     expect(changeView('#/graphics')).toStrictEqual(container.appendChild(viewGraphics()))
     // expect(changeView('')).toStrictEqual(container.appendChild(viewFreeMap()))
   });
+
+  test('directioner', () =>{
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: { assign: jest.fn(),reload: jest.fn() }
+    });
+    expect(goTo('/')).toBe();
+});

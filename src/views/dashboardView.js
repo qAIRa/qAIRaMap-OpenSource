@@ -24,6 +24,7 @@ const ppbToECAdash = sensor => {
 };
 
 const indexValue = data => {
+	console.log(data);
 	const id = data.ID;
 
 	const lat = data.lat.toFixed(5);

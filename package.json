@@ -4,7 +4,7 @@
 	"description": "Real-time website for monitoring air quality",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --coverage --runInBand",
+		"test": "jest --coverage",
 		"test:watch": "jest --watch",
 		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
