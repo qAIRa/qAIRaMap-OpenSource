@@ -10,8 +10,7 @@
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
-		"doc": "jsdoc -c jsdoc.json",
-		"cover": "jest --coverage --coverageReporters=text-lcov | coveralls"
+		"doc": "jsdoc -c jsdoc.json"
 	},
 	"jest": {
 		"verbose": true,
@@ -40,7 +39,8 @@
 			"./build/"
 		],
 		"coverageDirectory": "./tests/coverage",
-		"collectCoverage": true
+		"collectCoverage": true,
+		"coverageReporters": ["html", "text-summary", "lcov"]
 	},
 	"repository": {
 		"type": "git",
