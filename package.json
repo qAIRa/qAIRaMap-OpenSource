@@ -32,9 +32,6 @@
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
 		},
 		"automock": false,
-		"setupFiles": [
-			"./setupJest.js"
-		],
 		"coveragePathIgnorePatterns": [
 			"./build/"
 		]
