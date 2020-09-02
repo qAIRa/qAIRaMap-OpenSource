@@ -33,7 +33,7 @@ beforeEach(() => {
   ]
 
 test('format for date', () => {
-	expect(dateFormat('Wed, 02 Sep 2020 21:02:16 GMT')).toStrictEqual('16:02:16');
+	expect(dateFormat('2020-07-29 23:00:00')).toStrictEqual('23:00:00');
 })
 
 // test('create traces for chart',async () => {
