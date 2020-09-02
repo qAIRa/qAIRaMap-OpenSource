@@ -38,6 +38,11 @@ const requestInstallationDate = async (ID)=>{
     const response = await fetch(`${APISource}GetInstallationDate/?qhawax_id=${ID}`).catch(err => console.log(err));
     return await response.text()
 };
+
+const requestGraphicsData = async (qhawax, time)=>{
+    const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`).catch(err => console.log(err));;
+	return await response.json();
+}
 export { 
     requestAverageMeasurement,
     requestAllQhawax,
@@ -45,5 +50,6 @@ export {
     requestStatus,
     downloadData,
     requestInstallationDate,
-    handleError
+    handleError,
+    requestGraphicsData
 }

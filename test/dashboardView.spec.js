@@ -94,21 +94,21 @@ test('from ppb to ECA standards', () => {
 //     expect(indexValue(data)).toEqual({"CO": 1.1, "COcolor": "black", "H2S": 4.2, "H2Scolor": "black", "NO2": 451.4, "NO2color": "red", "O3": 9.8, "O3color": "black", "PM1": 1.9, "PM10": 2.4, "PM10color": "black", "PM1color": "black", "PM25": 1.7, "PM25color": "black", "SO2": 5.2, "SO2color": "black", "UV": 0, "UVcolor": "red", "humidity": "71.6", "id": "qH004", "lat": "-12.07274", "lng": "-77.08269", "pressure": "100.7", "spl": 84.3, "temperature": "19.1", "time": "14:27:42"});
 //     });
 
-test('dashboard view', () => {
-    window.M = jest.fn();
-    M.Dropdown= jest.fn();
-    M.Dropdown.init= jest.fn();
-    M.Sidenav= jest.fn();
-    M.Sidenav.init= jest.fn();
-    M.Modal=jest.fn();
-    M.Modal.init=jest.fn();
-    document.body.innerHTML = `
-    <header></header>
-      <div id="content-page">
-      </div>
-    `;
-    expect(String(viewDashboard())).toMatch('[object HTMLDivElement]');
-    });
+// test('dashboard view', () => {
+//     window.M = jest.fn();
+//     M.Dropdown= jest.fn();
+//     M.Dropdown.init= jest.fn();
+//     M.Sidenav= jest.fn();
+//     M.Sidenav.init= jest.fn();
+//     M.Modal=jest.fn();
+//     M.Modal.init=jest.fn();
+//     document.body.innerHTML = `
+//     <header></header>
+//       <div id="content-page">
+//       </div>
+//     `;
+//     expect(String(viewDashboard())).toMatch('[object HTMLDivElement]');
+//     });
 
 // test('request for dashboard', () => {
 //     document.body.innerHTML = `

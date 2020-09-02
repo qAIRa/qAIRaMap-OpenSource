@@ -159,7 +159,7 @@ const viewDashboard =()  => {
 	const dashboardElem = document.createElement('div');
 	dashboardElem.classList.add('dashboard')
 	navBarClient(dashboardElem, viewBoard);
-		let qhawax_asigned = [];
+	let qhawax_asigned = [];
 		
 	request(dashboardElem,qhawax_asigned);	
 	return dashboardElem;

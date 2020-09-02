@@ -1,7 +1,7 @@
 
 import {navBarClient} from '../lib/navBarClient.js';
 import { chartView} from '../lib/HtmlComponents.js';
-import { requestAllQhawax, requestStatus} from '../requests/get.js';
+import { requestAllQhawax, requestStatus, requestGraphicsData} from '../requests/get.js';
 import { APISource, SocketSource } from '../index.js';
 import {addZero} from '../lib/mapAssets.js'
 
@@ -31,20 +31,8 @@ const configuration = {
 	displaylogo: false,
 	responsive: true,
 };
-
-const formatDateDB = timestamp => {
-	const date = new Date(Date.parse(timestamp) + (new Date().getTimezoneOffset()/60)* 3600 * 1000);
-	return (
-		addZero(date.getHours()) +
-		':' +
-		addZero(date.getMinutes()) +
-		':' +
-		addZero(date.getSeconds())
-	);
-};
-
 const dateFormat = (timestamp)=>{
-
+	
 	const date = new Date(Date.parse(timestamp));
 	return (
 		addZero(date.getHours()) +
@@ -56,8 +44,8 @@ const dateFormat = (timestamp)=>{
 
 }
 
-const requestOptions = async (element, company) => {
-	const qhawax_list = await requestAllQhawax(company);
+const requestOptions = async (element) => {
+	const qhawax_list = await requestAllQhawax();
 	qhawax_list.forEach(async qhawax => {
 		const status = await requestStatus(qhawax.name);
 		const addOptions = element.querySelector('#selectQhawax');
@@ -72,11 +60,8 @@ const requestOptions = async (element, company) => {
 const createTraces = async (time, qhawax, charts) => {
 	let traces = [];
 
-	const response = await fetch(
-		`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`
-	);
-	const json = await response.json();
-
+	const json = await requestGraphicsData(qhawax, time)
+console.log(json);
 	let y = [];
 	let yCO = [];
 	let yH2S = [];
@@ -272,11 +257,11 @@ const createTraces = async (time, qhawax, charts) => {
 	return traces;
 };
 
-const viewGraphics = company => {
+const viewGraphics = () => {
 
 	const graphElem = document.createElement('div');
 	graphElem.setAttribute('class', 'container');
-	navBarClient(graphElem, chartView, company)
+	navBarClient(graphElem, chartView, )
 	
 
 	const graphBtn = graphElem.querySelector('#graphicBtn');
@@ -284,7 +269,7 @@ const viewGraphics = company => {
 	const selection = graphElem.querySelectorAll('select');
 	M.FormSelect.init(selection);
 
-	 requestOptions(graphElem, company);
+	 requestOptions(graphElem );
 	const charts = graphElem.querySelectorAll('.chart');
 
 	let selectedQhawax = '';
@@ -421,8 +406,7 @@ const viewGraphics = company => {
 			}
 		});
 	});
-
 	return graphElem;
 };
 
-export { viewGraphics, formatDateDB, configuration, dateFormat, requestOptions, createTraces };
+export { viewGraphics, configuration, dateFormat, requestOptions, createTraces };

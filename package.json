@@ -20,6 +20,7 @@
 		],
 		"moduleFileExtensions": [
 			"js",
+			"jsx",
 			"json",
 			"css",
 			"scss"
@@ -34,8 +35,10 @@
 		"setupFiles": [
 			"./setupJest.js"
 		],
-		"coveragePathIgnorePatterns": [	"./build/"],
-		"collectCoverage": true 
+		"coveragePathIgnorePatterns": [
+			"./build/"
+		],
+		"collectCoverage": true
 	},
 	"repository": {
 		"type": "git",
@@ -63,7 +66,8 @@
 		"babel-core": "^6.26.3",
 		"coveralls": "^3.1.0",
 		"identity-obj-proxy": "^3.0.0",
-		"jest": "^25.3.0",
+		"jest": "^25.5.4",
+		"jest-cli": "^26.4.2",
 		"jest-fetch-mock": "^3.0.3",
 		"jsdoc": "^3.6.4"
 	}
