@@ -10,6 +10,7 @@ install:
   - npm install
 script: npm test
 script: npm run test:coveralls
+after_script: npm run cover
 
 after_success: "sbt coveralls"
 

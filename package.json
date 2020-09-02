@@ -10,7 +10,8 @@
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
-		"doc": "jsdoc -c jsdoc.json"
+		"doc": "jsdoc -c jsdoc.json",
+		"cover": "jest --coverage --coverageReporters=text-lcov | coveralls"
 	},
 	"jest": {
 		"verbose": true,
