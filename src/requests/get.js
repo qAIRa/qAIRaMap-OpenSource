@@ -1,6 +1,6 @@
 import {APISource} from '../index.js';
 const handleError =  (err)=> {
-    console.throw(err);
+    console.error(err);
     return new Response(JSON.stringify({
         code: 400,
         message: 'Stupid network Error xD'
@@ -45,5 +45,6 @@ export {
     requestBinnacle,
     requestStatus,
     downloadData,
-    requestInstallationDate
+    requestInstallationDate,
+    handleError
 }

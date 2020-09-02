@@ -4,11 +4,11 @@ import {
     requestBinnacle,
     requestStatus,
     downloadData,
-    requestInstallationDate
+    requestInstallationDate,
+    handleError
 } from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
-
 
   describe('testing api', () => {
     beforeEach(() => {
