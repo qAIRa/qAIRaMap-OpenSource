@@ -32,203 +32,54 @@ const requestOptions = async (element) => {
 	});
  };
 
-const createTraces = async (time, qhawax, charts) => {
+ const createTraces = async (time, qhawax, charts) => {
 	let traces = [];
 
 	const json = await requestGraphicsData(qhawax, time)
-console.log(json);
-	let y = [];
-	let yCO = [];
-	let yH2S = [];
-	let yNO2 = [];
-	let yO3 = [];
-	let ySO2 = [];
-	let yPM1 = [];
-	let yPM10 = [];
-	let yPM25 = [];
-	let yUV = [];
-	let yUVA = [];
-	let yUVB = [];
-	let yhumidity = [];
-	let ypressure = [];
-	let yspl = [];
-	let ytemperature = [];
-	let x = [];
+	let yAxis = {
+		temperature : {value:[],name: 'Temperatura (C)'},
+		pressure : {value:[],name: 'Presión (Pa)'},
+		humidity : {value:[],name: 'Humedad (%)'},
+		 CO : {value:[],name: 'CO (ppb)'},
+		 H2S : {value:[],name: 'H2S (ppb)'},
+		 NO2 : {value:[],name: 'NO2 (ppb)'},
+		 O3 : {value:[],name: 'O3 (ppb)'},
+		 SO2 : {value:[],name: 'SO2 (ppb)'},
+		 PM1 : {value:[],name: 'PM1 (ug/m3)'},
+		 PM10 : {value:[],name: 'PM10 (ug/m3)'},
+		 PM25 : {value:[],name: 'PM2,5 (ug/m3)'},
+		 spl : {value:[],name: 'Ruido (dB)'},
+		 UV : {value:[],name: 'UV'},
+		 UVA : {value:[],name: 'UVA (mW/m2)'},
+		 UVB : {value:[],name: 'UVA (mW/m2)'},	 
+		 
+	}
+	 let y = [];
+	 let x = [];
 	json.forEach(d => {
-		yCO.push(d.CO);
-		yH2S.push(d.H2S);
-		yNO2.push(d.NO2);
-		yO3.push(d.O3);
-		ySO2.push(d.SO2);
-		yPM1.push(d.PM1);
-		yPM10.push(d.PM10);
-		yPM25.push(d.PM25);
-		yUV.push(d.UV);
-		yUVA.push(d.UVA);
-		yUVB.push(d.UVB);
-		yhumidity.push(d.humidity);
-		ypressure.push(d.pressure);
-		yspl.push(d.spl);
-		ytemperature.push(d.temperature);
+		let index = 0;
+		Object.entries(yAxis).forEach(([key, value]) => {
+			yAxis[key].value.push(d[key])
+
+			traces.push({
+				trace: {
+					y:yAxis[key].value,
+					x: x,
+					name: yAxis[key].name,
+					type: 'scatter',
+				},
+				chart: charts[index],
+				layout: { title: yAxis[key].name, showlegend: false },
+			},)
+			index++;
+		});
 		x.push(dateFormat(d.timestamp_zone));
 
-		traces = [
-			{
-				trace: {
-					y: yCO,
-					x: x,
-					name: 'CO (ppb)',
-					type: 'scatter',
-				},
-				chart: charts[3],
-				layout: { title: 'CO (ppb)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yH2S,
-					x: x,
-					name: 'H2S (ppb)',
-					type: 'scatter',
-				},
-				chart: charts[4],
-				layout: { title: 'H2S (ppb)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yNO2,
-					x: x,
-					name: 'NO2 (ppb)',
-					type: 'scatter',
-				},
-				chart: charts[5],
-				layout: { title: 'NO2 (ppb)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yO3,
-					x: x,
-					name: 'O3 (ppb)',
-					type: 'scatter',
-				},
-				chart: charts[6],
-				layout: { title: 'O3 (ppb)', showlegend: false },
-			},
-			{
-				trace: {
-					y: ySO2,
-					x: x,
-					name: 'SO2 (ppb)',
-					type: 'scatter',
-				},
-				chart: charts[7],
-				layout: { title: 'SO2 (ppb)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yPM1,
-					x: x,
-					name: 'PM1 (ug/m3)',
-					type: 'scatter',
-				},
-				chart: charts[8],
-				layout: { title: 'PM1 (ug/m3)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yPM10,
-					x: x,
-					name: 'PM10 (ug/m3)',
-					type: 'scatter',
-				},
-				chart: charts[9],
-				layout: { title: 'PM10 (ug/m3)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yPM25,
-					x: x,
-					name: 'PM2,5 (ug/m3)',
-					type: 'scatter',
-				},
-				chart: charts[10],
-				layout: { title: 'PM25 (ug/m3)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yUV,
-					x: x,
-					name: 'UV ',
-					type: 'scatter',
-				},
-				chart: charts[12],
-				layout: { title: 'UV ', showlegend: false },
-			},
-			{
-				trace: {
-					y: yUVA,
-					x: x,
-					name: 'UVA (mW/m2)',
-					type: 'scatter',
-				},
-				chart: charts[13],
-				layout: { title: 'UVA (mW/m2)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yUVB,
-					x: x,
-					name: 'UVB (mW/m2)',
-					type: 'scatter',
-				},
-				chart: charts[14],
-				layout: { title: 'UVB (mW/m2)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yhumidity,
-					x: x,
-					name: 'Humedad (%)',
-					type: 'scatter',
-				},
-				chart: charts[2],
-				layout: { title: 'Humedad (%)', showlegend: false },
-			},
-			{
-				trace: {
-					y: ypressure,
-					x: x,
-					name: 'Presión (Pa)',
-					type: 'scatter',
-				},
-				chart: charts[1],
-				layout: { title: 'Presión (Pa)', showlegend: false },
-			},
-			{
-				trace: {
-					y: yspl,
-					x: x,
-					name: 'Ruido (dB)',
-					type: 'scatter',
-				},
-				chart: charts[11],
-				layout: { title: 'Ruido (dB)', showlegend: false },
-			},
-			{
-				trace: {
-					y: ytemperature,
-					x: x,
-					name: 'Temperatura (C)',
-					type: 'scatter',
-				},
-				chart: charts[0],
-				layout: { title: 'Temperatura (C)', showlegend: false },
-			},
-		];
 	});
 	traces.forEach(trace => {
 		Plotly.newPlot(trace.chart, [trace.trace], trace.layout, configuration);
 	});
-
+	
 	return traces;
 };
 
