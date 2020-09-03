@@ -4,9 +4,9 @@
 	"description": "Real-time website for monitoring air quality",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --coverage --coverage-reporters=json,lcov,text ",
-		"test:watch": "jest --watch --coverage --coverage-reporters=lcov",
-		"test:coveralls": "jest --coverage --coverage-reporters=json,lcov,text && coveralls < coverage/lcov.info",
+		"test": "jest --coverage",
+		"test:watch": "jest --watch",
+		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
@@ -34,7 +34,14 @@
 		"automock": false,
 		"coveragePathIgnorePatterns": [
 			"./build/"
-		]
+		],
+		"collectCoverage": true,
+  		"coverageReporters":[
+			"json",
+			"text",
+			"lcov",
+			"clover"
+		  ]
 	},
 	"repository": {
 		"type": "git",
