@@ -138,4 +138,4 @@ const viewGraphics = () => {
 	return graphElem;
 };
 
-export { viewGraphics, configuration, dateFormat, requestOptions, createTraces };
+export { viewGraphics, dateFormat, requestOptions, createTraces };
