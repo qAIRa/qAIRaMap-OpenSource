@@ -221,32 +221,24 @@ const zoneColorNoise = data =>{
 	return colorData;
 };
 
+let uvColors = {
+	Minimum:{color: '#009966',label: 'Minimum' },
+	Low:{color: '#ffde33',label: 'Low' },
+	Moderate:{color: '#ff9933',	label: 'Moderate' },
+	High:{color: '#cc0033',	label: 'High' },
+	Extreme:{color: 'darkmagenta',label: 'Extreme' },
 
+}
 const uvColor = uvValue => {
 	return uvValue >= 0 && uvValue < 3
-		? {
-				color: '#009966',
-				label: 'Minimum',
-		  }
+		? uvColors.Minimum
 		: uvValue >= 3 && uvValue < 6
-		? {
-				color: '#ffde33',
-				label: 'Low',
-		  }
+		? uvColors.Low
 		: uvValue >= 6 && uvValue < 8
-		? {
-				color: '#ff9933',
-				label: 'Moderate',
-		  }
+		? uvColors.Moderate
 		: uvValue >= 8 && uvValue < 11
-		? {
-				color: '#cc0033',
-				label: 'High',
-		  }
-		: {
-				color: 'darkmagenta',
-				label: 'Extreme',
-		  };
+		? uvColors.High
+		: uvColors.Extreme;
 };
 
 
@@ -276,16 +268,7 @@ const indexValue = data => {
 	indexResult.lng=data.lon.toFixed(5);
 	indexResult.UV = Number(data.UV.toFixed(1));
 	indexResult.spl = Number(data.spl.toFixed(1));
-	indexResult.time = newDate.getDate() +
-	' de ' +
-	months[newDate.getMonth()] +
-	' de ' +
-	newDate.getFullYear() +
-	', ' +
-	newDate.getHours() +
-	':' +
-	newDate.getMinutes();
-
+	indexResult.time = newDate.getDate() +' de ' +months[newDate.getMonth()] +' de ' +newDate.getFullYear() +', ' +	newDate.getHours() +':' +newDate.getMinutes();
 	indexResult.PM1 = Number(data.PM1);
 	indexResult.humidity = Number(data.humidity.toFixed(1));
 	indexResult.pressure = Number((data.pressure / 1000).toFixed(1));
@@ -298,7 +281,6 @@ const indexValue = data => {
 	indexResult.O3 = Number(data.O3.toFixed(1));
 	indexResult.NO2 = Number(data.NO2.toFixed(1));
 return indexResult;
-	
 };
 const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 	const socket = io.connect('https://qairamapnapi.qairadrones.com/');
