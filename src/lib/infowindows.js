@@ -78,84 +78,84 @@ const infowindowComplete = (
 					</td>
 					<td bgcolor="${
 						qhawax_inca.CO === 0 || qhawax_inca.CO
-							? qhawax_sensor_color.qCO.color
+							? qhawax_sensor_color.result.CO.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.CO === 0 || qhawax_inca.CO
-								? qhawax_sensor_color.qCO.label
+								? qhawax_sensor_color.result.CO.label
 								: ''
 						}<br />
 						(${qhawax_inca.CO === 0 || qhawax_inca.CO ? qhawax_inca.CO : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.NO2 === 0 || qhawax_inca.NO2
-							? qhawax_sensor_color.qNO2.color
+							? qhawax_sensor_color.result.NO2.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.NO2 === 0 || qhawax_inca.NO2
-								? qhawax_sensor_color.qNO2.label
+								? qhawax_sensor_color.result.NO2.label
 								: ''
 						} <br />
 						(${qhawax_inca.NO2 === 0 || qhawax_inca.NO2 ? qhawax_inca.NO2 : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.O3 === 0 || qhawax_inca.O3
-							? qhawax_sensor_color.qO3.color
+							? qhawax_sensor_color.result.O3.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.O3 === 0 || qhawax_inca.O3
-								? qhawax_sensor_color.qO3.label
+								? qhawax_sensor_color.result.O3.label
 								: ''
 						}	<br />
 						(${qhawax_inca.O3 === 0 || qhawax_inca.O3 ? qhawax_inca.O3 : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.H2S === 0 || qhawax_inca.H2S
-							? qhawax_sensor_color.qH2S.color
+							? qhawax_sensor_color.result.H2S.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.H2S === 0 || qhawax_inca.H2S
-								? qhawax_sensor_color.qH2S.label
+								? qhawax_sensor_color.result.H2S.label
 								: ''
 						} <br />
 						(${qhawax_inca.H2S === 0 || qhawax_inca.H2S ? qhawax_inca.H2S : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.SO2 === 0 || qhawax_inca.SO2
-							? qhawax_sensor_color.qSO2.color
+							? qhawax_sensor_color.result.SO2.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.SO2 === 0 || qhawax_inca.SO2
-								? qhawax_sensor_color.qSO2.label
+								? qhawax_sensor_color.result.SO2.label
 								: ''
 						} <br />
 						(${qhawax_inca.SO2 === 0 || qhawax_inca.SO2 ? qhawax_inca.SO2 : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.PM25 === 0 || qhawax_inca.PM25
-							? qhawax_sensor_color.qPM25.color
+							? qhawax_sensor_color.result.PM25.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.PM25 === 0 || qhawax_inca.PM25
-								? qhawax_sensor_color.qPM25.label
+								? qhawax_sensor_color.result.PM25.label
 								: ''
 						} <br />
 						(${qhawax_inca.PM25 === 0 || qhawax_inca.PM25 ? qhawax_inca.PM25 : '-'})
 					</td>
 					<td bgcolor="${
 						qhawax_inca.PM10 === 0 || qhawax_inca.PM10
-							? qhawax_sensor_color.qPM10.color
+							? qhawax_sensor_color.result.PM10.color
 							: 'transparent'
 					}">
 						${
 							qhawax_inca.PM10 === 0 || qhawax_inca.PM10
-								? qhawax_sensor_color.qPM10.label
+								? qhawax_sensor_color.result.PM10.label
 								: ''
 						} <br />
 						(${qhawax_inca.PM10 === 0 || qhawax_inca.PM10 ? qhawax_inca.PM10 : '-'})

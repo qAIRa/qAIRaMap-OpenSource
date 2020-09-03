@@ -56,7 +56,6 @@ const formatDateDB = timestamp => {
 	);
 };
 
-
 const ECAlimits = sensor => {
 	switch (sensor) {
 		case 'CO':
@@ -147,129 +146,46 @@ const addZero = i => {
 	}
 	return i;
 };
+
+const qualityColor ={
+	good:{color: '#009966',label: 'Good' },
+	moderate:{color: '#ffde33',label: 'Moderate'},
+	bad:{color: '#ff9933',label: 'Bad'},
+	hazardous:{color: '#cc0033',label: 'Danger' },
+	noinfo:{	color: 'transparent',label: '' }
+}
 const airQuality = data => {
-	const PM10 = data.PM10;
-	const SO2 = data.SO2;
-	const CO = data.CO;
-	const H2S = data.H2S;
-	const PM25 = data.PM25;
-	const O3 = data.O3;
-	const NO2 = data.NO2;
-	const UV = data.UV;
+	let sensors = {
+		PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null
+	}
+	Object.entries(sensors).forEach(([key, value]) => sensors[key]=data[key]);
 
-	const newDate = new Date(data.timestamp);
-
-	const good = {color: 'green',label: 'Good' };
-	const moderate ={color: 'yellow',label: 'Moderate'};
-	const bad= {color: 'orange',label: 'Bad'};
-	const hazardous={color: 'red',label: 'Danger' };
-	const noinfo ={	color: 'transparent',label: '' };
-
-	const time =
-		addZero(newDate.getHours()) + ':' + addZero(newDate.getMinutes());
-
-	const qPM10 =
-		PM10 >= 0 && PM10 <= 50
-			? good
-			: PM10 > 50 && PM10 <= 100
-			? moderate
-			: PM10 > 100 && PM10 <= 167
-			? bad
-			: PM10 > 167
-			? hazardous
-			: noinfo
-
-	const qSO2 =
-		SO2 >= 0 && SO2 <= 50
-			? good
-			: SO2 > 50 && SO2 <= 100
-			? moderate
-			: SO2 > 100 && SO2 <= 625
-			? bad
-			: SO2 > 625
-			? hazardous
-			: noinfo
-
-	const qCO =
-		CO >= 0 && CO <= 50
-			? good
-			: CO > 50 && CO <= 100
-			? moderate
-			: CO > 100 && CO <= 150
-			? bad
-			: CO > 150
-			? hazardous
-			: noinfo
-
-	const qH2S =
-		H2S >= 0 && H2S <= 50
-			? good
-			: H2S > 50 && H2S <= 100
-			? moderate
-			: H2S > 100 && H2S <= 1000
-			? bad
-			: H2S > 1000
-			? hazardous
-			: noinfo
-
-	const qPM25 =
-		PM25 >= 0 && PM25 <= 50
-			? good
-			: PM25 > 50 && PM25 <= 100
-			? moderate
-			: PM25 > 100 && PM25 <= 500
-			? bad
-			: PM25 > 500
-			? hazardous
-			: noinfo
-
-	const qO3 =
-		O3 >= 0 && O3 <= 50
-			? good
-			: O3 > 50 && O3 <= 100
-			? moderate
-			: O3 > 100 && O3 <= 175
-			? bad
-			: O3 > 175
-			? hazardous
-			: noinfo
-
-	const qNO2 =
-		NO2 >= 0 && NO2 <= 50
-			? good
-			: NO2 > 50 && NO2 <= 100
-			? moderate
-			: NO2 > 100 && NO2 <= 150
-			? bad
-			: NO2 > 150
-			? hazardous
-			: noinfo
-
-	const qUV =
-		0 <= UV && UV < 3
-			? 'green'
-			: 3 <= UV && UV < 6
-			? 'yellow'
-			: 6 <= UV && UV < 9
-			? 'orange'
-			: 9 <= UV && UV < 12
-			? 'red'
-			: 12 <= UV && UV <= 14
-			? 'orchid'
-			: UV > 14
-			? 'blueviolet'
-			: 'transparent';
-
+	const time =addZero(new Date(data.timestamp).getHours()) + ':' + addZero(new Date(data.timestamp).getMinutes());
+	const limits = {
+		PM10:[0,50,100,167],
+		SO2:[0,50,100,625],
+		CO:[0,50,100,150],
+		H2S:[0,50,100,1000],
+		PM25:[0,50,100,500],
+		O3:[0,50,100,175],
+		NO2:[0,50,100,150]
+	}
+	let result={PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null}
+Object.entries(sensors).forEach(([keyS, valueS]) => {
+	result[keyS] = valueS >= limits[keyS][0] && valueS <= limits[keyS][1]
+	? qualityColor.good
+	: valueS > limits[keyS][1] && valueS <= limits[keyS][2]
+	? qualityColor.moderate
+	: valueS > limits[keyS][2] && valueS <= limits[keyS][3]
+	? qualityColor.bad
+	: valueS > limits[keyS][3]
+	? qualityColor.hazardous
+	: qualityColor.noinfo
+	
+});
 	return {
 		time,
-		qPM10,
-		qSO2,
-		qCO,
-		qH2S,
-		qPM25,
-		qO3,
-		qNO2,
-		qUV
+		result,
 	};
 };
 
@@ -302,15 +218,15 @@ const zoneColorNoise = data =>{
 	let colorData = {color:null, zone:data.zone}
 
 	if (newDate.getHours() <= 22 &&  newDate.getHours() >= 7) {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 50? colorData.color='green':
-		data.zone==='Zona Residencial'&&data.spl <= 60? colorData.color='green':
-		data.zone==='Zona Comercial'&&data.spl <= 70? colorData.color='green':
-		data.zone==='Zona Industrial'&&data.spl <= 80? colorData.color='green':colorData.color='red';
+		data.zone==='Zona de Protección Especial'&&data.spl <= 50? colorData.color='#009966':
+		data.zone==='Zona Residencial'&&data.spl <= 60? colorData.color='#009966':
+		data.zone==='Zona Comercial'&&data.spl <= 70? colorData.color='#009966':
+		data.zone==='Zona Industrial'&&data.spl <= 80? colorData.color='#009966':colorData.color='#cc0033';
 	} else {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 40? colorData.color='green':
-		data.zone==='Zona Residencial'&&data.spl <= 50? colorData.color='green':
-		data.zone==='Zona Comercial'&&data.spl <= 60? colorData.color='green':
-		data.zone==='Zona Industrial'&&data.spl <= 70? colorData.color='green':colorData.color='red';
+		data.zone==='Zona de Protección Especial'&&data.spl <= 40? colorData.color='#009966':
+		data.zone==='Zona Residencial'&&data.spl <= 50? colorData.color='#009966':
+		data.zone==='Zona Comercial'&&data.spl <= 60? colorData.color='#009966':
+		data.zone==='Zona Industrial'&&data.spl <= 70? colorData.color='#009966':colorData.color='#cc0033';
 		
 	}
 	return colorData;
@@ -320,27 +236,27 @@ const zoneColorNoise = data =>{
 const uvColor = uvValue => {
 	return uvValue >= 0 && uvValue < 3
 		? {
-				color: 'green',
-				label: 'Mínimo',
+				color: '#009966',
+				label: 'Minimum',
 		  }
 		: uvValue >= 3 && uvValue < 6
 		? {
-				color: 'yellow',
-				label: 'Bajo',
+				color: '#ffde33',
+				label: 'Low',
 		  }
 		: uvValue >= 6 && uvValue < 8
 		? {
-				color: 'orange',
-				label: 'Moderado',
+				color: '#ff9933',
+				label: 'Moderate',
 		  }
 		: uvValue >= 8 && uvValue < 11
 		? {
-				color: 'red',
-				label: 'Alto',
+				color: '#cc0033',
+				label: 'High',
 		  }
 		: {
 				color: 'darkmagenta',
-				label: 'Extremo',
+				label: 'Extreme',
 		  };
 };
 

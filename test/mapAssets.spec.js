@@ -27,15 +27,16 @@ const dataAirQuality = {
 };
 
 const resultAirQuality = {
-	qCO: {color: "green", label: "Good"},
-	qH2S: {color: "green", label: "Good"},
-	qNO2: {color: "red", label: "Danger"},
-	qO3: {color: "yellow", label: "Moderate"},
-	qPM10: {color: "green", label: "Good"},
-	qPM25: {color: "yellow", label: "Moderate"},
-	qSO2: {color: "green", label: "Good"},
-	qUV: "transparent",
-	time: "23:00"
+	time: "23:00",
+	result:{
+		CO: {color: "#009966", label: "Good"},
+		H2S: {color: "#009966", label: "Good"},
+		NO2: {color: "#cc0033", label: "Danger"},
+		O3: {color: "#ffde33", label: "Moderate"},
+		PM10: {color: "#009966", label: "Good"},
+		PM25: {color: "#ffde33", label: "Moderate"},
+		SO2: {color: "#009966", label: "Good"},
+	}
 };
 
 const dataIndexValue = {
@@ -94,7 +95,7 @@ const resultIndexValue = {
 };
 
 const resultZoneColorNoise = {
-	color: "red",
+	color: "#cc0033",
 	zone: "Zona Residencial"
 };
 
@@ -125,24 +126,24 @@ test('qhawaxLeaf for each state of the qhawax', () => {
 
 test('uvColor', () => {
 	expect(uvColor(0)).toStrictEqual({
-		color: 'green',
-		label: 'Mínimo',
+		color: '#009966',
+		label: 'Minimum',
 	});
 	expect(uvColor(3)).toStrictEqual({
-		color: 'yellow',
-		label: 'Bajo',
+		color: '#ffde33',
+		label: 'Low',
 	});
 	expect(uvColor(6)).toStrictEqual({
-		color: 'orange',
-		label: 'Moderado',
+		color: '#ff9933',
+		label: 'Moderate',
 	});
 	expect(uvColor(9)).toStrictEqual({
-		color: 'red',
-		label: 'Alto',
+		color: '#cc0033',
+		label: 'High',
 	});
 	expect(uvColor(14)).toStrictEqual({
 		color: 'darkmagenta',
-		label: 'Extremo',
+		label: 'Extreme',
 	});
 });
 
@@ -160,6 +161,12 @@ test('zoneColorNoise', () =>{
 
 test('ECAlimits', () =>{
 	expect(ECAlimits('CO')).toStrictEqual(10000);
+	expect(ECAlimits('NO2')).toStrictEqual(100);
+	expect(ECAlimits('O3')).toStrictEqual(100);
+	expect(ECAlimits('H2S')).toStrictEqual(150);
+	expect(ECAlimits('SO2')).toStrictEqual(250);
+	expect(ECAlimits('PM25')).toStrictEqual(50);
+	expect(ECAlimits('PM10')).toStrictEqual(100);
 });
 
 test('addZero', () =>{
