@@ -112,123 +112,31 @@ const viewGraphics = () => {
 		createTraces(selectedTime, selectedQhawax, charts);
 
 		const socket = io.connect(`${SocketSource}`);
+		let sensors=['temperature',
+			'pressure',
+			'humidity',
+			'CO',
+			'H2S',
+			'NO2',
+			'O3',
+			'SO2',
+			'PM1',
+			'PM10',
+			'PM25',
+			'spl',
+			'UV',
+			'UVA',
+			'UVB']
 
 		socket.on('new_data_summary_processed', res => {
 			if (res.ID === selectedQhawax) {
-				Plotly.extendTraces(
-					charts[3],
-					{ y: [[res.CO]], x: [[dateFormat(res.timestamp_zone)]] },
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[4],
-					{
-						y: [[res.H2S]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[5],
-					{
-						y: [[res.NO2]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[6],
-					{ y: [[res.O3]], x: [[dateFormat(res.timestamp_zone)]] },
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[7],
-					{
-						y: [[res.SO2]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[8],
-					{
-						y: [[res.PM1]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[9],
-					{
-						y: [[res.PM10]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[10],
-					{
-						y: [[res.PM25]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[12],
-					{
-						y: [[res.UV]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[13],
-					{
-						y: [[res.UVA]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[14],
-					{
-						y: [[res.UVB]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[2],
-					{
-						y: [[res.humidity]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[1],
-					{
-						y: [[res.pressure]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[11],
-					{
-						y: [[res.spl]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
-				Plotly.extendTraces(
-					charts[0],
-					{
-						y: [[res.temperature]],
-						x: [[dateFormat(res.timestamp_zone)]],
-					},
-					[0]
-				);
+				let index=0;
+				sensors.forEach(s=>{
+					Plotly.extendTraces(
+						charts[index],
+						{ y: [[res[s]]], x: [[dateFormat(res.timestamp_zone)]] },[0]);
+					index++;
+				});
 			}
 		});
 	});
