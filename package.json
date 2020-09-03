@@ -10,7 +10,8 @@
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
-		"doc": "jsdoc -c jsdoc.json"
+		"doc": "jsdoc -c jsdoc.json",
+		"test:debug": "npm run test --coverage --coverageReporters=coverage/text-lcov | ./node_modules/coveralls/bin/coveralls.js"
 	},
 	"jest": {
 		"verbose": true,
@@ -35,13 +36,7 @@
 		"coveragePathIgnorePatterns": [
 			"./build/"
 		],
-		"collectCoverage": true,
-  		"coverageReporters":[
-			"json",
-			"text",
-			"lcov",
-			"clover"
-		  ]
+		"collectCoverage": true
 	},
 	"repository": {
 		"type": "git",
@@ -56,16 +51,19 @@
 	"dependencies": {
 		"@babel/runtime": "^7.11.2",
 		"@googlemaps/jest-mocks": "0.0.3",
-		"babel-jest": "^25.3.0",
+		"babel-jest": "^26.0.1",
+		"core-util-is": "^1.0.2",
 		"webpack": "^4.41.6",
 		"webpack-cli": "^3.3.11",
 		"webpack-dev-server": "^3.11.0"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.11.5",
 		"@babel/core": "^7.9.0",
 		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
 		"@babel/plugin-transform-runtime": "^7.11.0",
-		"@babel/preset-env": "^7.11.0",
+		"@babel/preset-env": "^7.11.5",
+		"@babel/register": "^7.11.5",
 		"babel-core": "^6.26.3",
 		"coveralls": "^3.1.0",
 		"identity-obj-proxy": "^3.0.0",
