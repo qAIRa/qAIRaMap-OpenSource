@@ -60,9 +60,7 @@ const ECAlimits = sensor => {
 	switch (sensor) {
 		case 'CO':
 			return 10000;
-		case 'NO2':
-			return 100;
-		case 'O3':
+		case 'NO2':case 'O3':case 'PM10':
 			return 100;
 		case 'H2S':
 			return 150;
@@ -70,8 +68,6 @@ const ECAlimits = sensor => {
 			return 250;
 		case 'PM25':
 			return 50;
-		case 'PM10':
-			return 100;
 		default:
 			break;
 	}
@@ -253,66 +249,57 @@ const uvColor = uvValue => {
 		  };
 };
 
+
+
+let indexResult = {
+	lat:null,
+	lng:null,
+	UV:null,
+	spl:null,
+	time:null,
+	PM1:null,
+	humidity:null,
+	pressure:null,
+	temperature:null,
+	PM10:null,
+	SO2:null,
+	CO:null,
+	H2S:null,
+	PM25:null,
+	O3:null,
+	NO2:null
+}
+
 const indexValue = data => {
-	const lat = data.lat.toFixed(5);
-	const lng = data.lon.toFixed(5);
-	const UV = Number(data.UV.toFixed(1));
-	const spl = Number(data.spl.toFixed(1));
-
 	const newDate = new Date(data.timestamp);
+	indexResult.lat=data.lat.toFixed(5);
+	indexResult.lng=data.lon.toFixed(5);
+	indexResult.UV = Number(data.UV.toFixed(1));
+	indexResult.spl = Number(data.spl.toFixed(1));
+	indexResult.time = newDate.getDate() +
+	' de ' +
+	months[newDate.getMonth()] +
+	' de ' +
+	newDate.getFullYear() +
+	', ' +
+	newDate.getHours() +
+	':' +
+	newDate.getMinutes();
 
-	const time =
-		newDate.getDate() +
-		' de ' +
-		months[newDate.getMonth()] +
-		' de ' +
-		newDate.getFullYear() +
-		', ' +
-		newDate.getHours() +
-		':' +
-		newDate.getMinutes();
-
-	const PM1 = Number(data.PM1);
-	const humidity = Number(data.humidity.toFixed(1));
-	const pressure = Number((data.pressure / 1000).toFixed(1));
-	const temperature = Number(data.temperature.toFixed(1));
-
-	const PM10 = Number(data.PM10.toFixed(1));
-	const SO2 = Number(data.SO2.toFixed(1));
-	const CO = Number(data.CO.toFixed(1));
-	const H2S = Number(data.H2S.toFixed(1));
-	const PM25 = Number(data.PM25.toFixed(1));
-	const O3 = Number(data.O3.toFixed(1));
-	const NO2 = Number(data.NO2.toFixed(1));
-
-	return {
-		lat,
-		lng,
-		UV,
-		spl,
-		time,
-		PM1,
-		PM1label: 'PM1',
-		humidity,
-		pressure,
-		temperature,
-		PM10,
-		PM10label: 'PM10',
-		SO2,
-		SO2label: 'SO2',
-		CO,
-		COlabel: 'CO',
-		H2S,
-		H2Slabel: 'H2S',
-		PM25,
-		PM25label: 'PM25',
-		O3,
-		O3label: 'O3',
-		NO2,
-		NO2label: 'NO2',
-	};
+	indexResult.PM1 = Number(data.PM1);
+	indexResult.humidity = Number(data.humidity.toFixed(1));
+	indexResult.pressure = Number((data.pressure / 1000).toFixed(1));
+	indexResult.temperature = Number(data.temperature.toFixed(1));
+	indexResult.PM10 = Number(data.PM10.toFixed(1));
+	indexResult.SO2 = Number(data.SO2.toFixed(1));
+	indexResult.CO = Number(data.CO.toFixed(1));
+	indexResult.H2S = Number(data.H2S.toFixed(1));
+	indexResult.PM25 = Number(data.PM25.toFixed(1));
+	indexResult.O3 = Number(data.O3.toFixed(1));
+	indexResult.NO2 = Number(data.NO2.toFixed(1));
+return indexResult;
+	
 };
-
 const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 	const socket = io.connect('https://qairamapnapi.qairadrones.com/');
 

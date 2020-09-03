@@ -172,7 +172,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.COlabel}"
+							data-label="CO"
 						>
 							${values.CO}
 							<br />
@@ -186,7 +186,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.NO2label}"
+							data-label="NO2"
 						>
 							${values.NO2}
 							<br />
@@ -200,7 +200,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.O3label}"
+							data-label="O3"
 						>
 							${values.O3}
 							<br />
@@ -214,7 +214,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.H2Slabel}"
+							data-label="H2S"
 						>
 							${values.H2S}
 							<br />
@@ -228,7 +228,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.SO2label}"
+							data-label="SO2"
 						>
 							${values.SO2}
 							<br />
@@ -242,7 +242,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.PM25label}"
+							data-label="PM25"
 						>
 							${values.PM25}
 							<br />
@@ -256,7 +256,7 @@ const infowindowComplete = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.PM10label}"
+							data-label="PM10"
 						>
 							${values.PM10}
 							<br />
@@ -427,7 +427,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.COlabel}"
+							data-label="CO"
 						>
 							${values.CO}
 							<br />
@@ -441,7 +441,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.NO2label}"
+							data-label="NO2"
 						>
 							${values.NO2}
 							<br />
@@ -455,7 +455,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.O3label}"
+							data-label="O3"
 						>
 							${values.O3}
 							<br />
@@ -469,7 +469,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.H2Slabel}"
+							data-label="H2S"
 						>
 							${values.H2S}
 							<br />
@@ -483,7 +483,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.SO2label}"
+							data-label="SO2"
 						>
 							${values.SO2}
 							<br />
@@ -497,7 +497,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.PM25label}"
+							data-label="PM25"
 						>
 							${values.PM25}
 							<br />
@@ -511,7 +511,7 @@ const infowindowPartial = (
 							class="modal-trigger"
 							href="#modalGraphic"
 							data-infograph="${marker.id}"
-							data-label="${values.PM10label}"
+							data-label="PM10"
 						>
 							${values.PM10}
 							<br />
