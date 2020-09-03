@@ -203,25 +203,6 @@ const qhawaxLeaf = inca => {
 		default: leaf = '/img/leafs/leaf_out_of_service.png';
 			break;
 	}
-	// inca === -1 || inca===null
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_out_of_service.png')
-	// 	: inca === 0 || inca === 1 || inca === -2 ||inca === -3
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_helmet.png')
-	// 	: inca === 50
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_inca_good.png')
-	// 	: inca === 100
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_inca_moderate.png')
-	// 	: inca === 500
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_inca_bad.png')
-	// 	: inca === 600
-	// 	? (leaf =
-	// 			'/img/leafs/leaf_inca_hazardous.png')
-	// 	: (leaf = false);
 	return leaf;
 };
 
