@@ -201,23 +201,26 @@ const qhawaxLeaf = inca => {
 	}
 	return leaf;
 };
-
+const noiseLimits = {
+	'Zona de Protección Especial':{day:50, night:40},
+	'Zona Residencial':{day:60, night:50},
+	'Zona Comercial':{day:70, night:60},
+	'Zona Industrial':{day:80, night:70},
+}
 const zoneColorNoise = data =>{
 	const newDate = new Date(data.timestamp);
 	let colorData = {color:null, zone:data.zone}
-
-	if (newDate.getHours() <= 22 &&  newDate.getHours() >= 7) {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 50? colorData.color='#009966':
-		data.zone==='Zona Residencial'&&data.spl <= 60? colorData.color='#009966':
-		data.zone==='Zona Comercial'&&data.spl <= 70? colorData.color='#009966':
-		data.zone==='Zona Industrial'&&data.spl <= 80? colorData.color='#009966':colorData.color='#cc0033';
-	} else {
-		data.zone==='Zona de Protección Especial'&&data.spl <= 40? colorData.color='#009966':
-		data.zone==='Zona Residencial'&&data.spl <= 50? colorData.color='#009966':
-		data.zone==='Zona Comercial'&&data.spl <= 60? colorData.color='#009966':
-		data.zone==='Zona Industrial'&&data.spl <= 70? colorData.color='#009966':colorData.color='#cc0033';
-		
-	}
+	const day = newDate.getHours() <= 22 &&  newDate.getHours() >= 7;
+	const good = '#009966';
+	const bad = '#cc0033';
+	
+	Object.entries(noiseLimits).forEach(([key, value]) => {
+		if (key===data.zone&&day) {
+			data.spl<=value.day?colorData.color=good:colorData.color=bad;
+		}else if(key===data.zone&&!day) {
+			data.spl<=value.night?colorData.color=good:colorData.color=bad;
+		}
+	});
 	return colorData;
 };
 
