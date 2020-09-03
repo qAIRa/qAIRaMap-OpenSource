@@ -154,24 +154,21 @@ const qualityColor ={
 	hazardous:{color: '#cc0033',label: 'Danger' },
 	noinfo:{	color: 'transparent',label: '' }
 }
+const limits = {
+	PM10:[0,50,100,167],
+	SO2:[0,50,100,625],
+	CO:[0,50,100,150],
+	H2S:[0,50,100,1000],
+	PM25:[0,50,100,500],
+	O3:[0,50,100,175],
+	NO2:[0,50,100,150]
+}
 const airQuality = data => {
-	let sensors = {
-		PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null
-	}
+	let sensors = {	PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null}
 	Object.entries(sensors).forEach(([key, value]) => sensors[key]=data[key]);
-
 	const time =addZero(new Date(data.timestamp).getHours()) + ':' + addZero(new Date(data.timestamp).getMinutes());
-	const limits = {
-		PM10:[0,50,100,167],
-		SO2:[0,50,100,625],
-		CO:[0,50,100,150],
-		H2S:[0,50,100,1000],
-		PM25:[0,50,100,500],
-		O3:[0,50,100,175],
-		NO2:[0,50,100,150]
-	}
 	let result={PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null}
-Object.entries(sensors).forEach(([keyS, valueS]) => {
+	Object.entries(sensors).forEach(([keyS, valueS]) => {
 	result[keyS] = valueS >= limits[keyS][0] && valueS <= limits[keyS][1]
 	? qualityColor.good
 	: valueS > limits[keyS][1] && valueS <= limits[keyS][2]
@@ -181,7 +178,6 @@ Object.entries(sensors).forEach(([keyS, valueS]) => {
 	: valueS > limits[keyS][3]
 	? qualityColor.hazardous
 	: qualityColor.noinfo
-	
 });
 	return {
 		time,
@@ -191,25 +187,41 @@ Object.entries(sensors).forEach(([keyS, valueS]) => {
 
 const qhawaxLeaf = inca => {
 	let leaf = '';
-	inca === -1 || inca===null
-		? (leaf =
-				'/img/leafs/leaf_out_of_service.png')
-		: inca === 0 || inca === 1 || inca === -2 ||inca === -3
-		? (leaf =
-				'/img/leafs/leaf_helmet.png')
-		: inca === 50
-		? (leaf =
-				'/img/leafs/leaf_inca_good.png')
-		: inca === 100
-		? (leaf =
-				'/img/leafs/leaf_inca_moderate.png')
-		: inca === 500
-		? (leaf =
-				'/img/leafs/leaf_inca_bad.png')
-		: inca === 600
-		? (leaf =
-				'/img/leafs/leaf_inca_hazardous.png')
-		: (leaf = false);
+	switch (inca) {
+		case -1: case null: leaf = '/img/leafs/leaf_out_of_service.png';
+			break;
+		case -3: case -2: case 1: case 0: leaf = '/img/leafs/leaf_helmet.png';
+			break;
+		case 50: leaf = '/img/leafs/leaf_inca_good.png';
+			break;
+		case 100: leaf = '/img/leafs/leaf_inca_moderate.png';
+			break;
+		case 500: leaf = '/img/leafs/leaf_inca_bad.png';
+			break;
+		case 600: leaf = '/img/leafs/leaf_inca_hazardous.png';
+			break;
+		default: leaf = '/img/leafs/leaf_out_of_service.png';
+			break;
+	}
+	// inca === -1 || inca===null
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_out_of_service.png')
+	// 	: inca === 0 || inca === 1 || inca === -2 ||inca === -3
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_helmet.png')
+	// 	: inca === 50
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_inca_good.png')
+	// 	: inca === 100
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_inca_moderate.png')
+	// 	: inca === 500
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_inca_bad.png')
+	// 	: inca === 600
+	// 	? (leaf =
+	// 			'/img/leafs/leaf_inca_hazardous.png')
+	// 	: (leaf = false);
 	return leaf;
 };
 

@@ -121,7 +121,9 @@ test('qhawaxLeaf for each state of the qhawax', () => {
 	expect(qhawaxLeaf(600)).toStrictEqual(
 		'/img/leafs/leaf_inca_hazardous.png'
 	);
-	expect(qhawaxLeaf()).toStrictEqual(false);
+	expect(qhawaxLeaf()).toStrictEqual(
+		'/img/leafs/leaf_out_of_service.png'
+	);
 });
 
 test('uvColor', () => {
