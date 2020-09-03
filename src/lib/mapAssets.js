@@ -258,6 +258,14 @@ const indexValue = data => {
 	indexResult.NO2 = Number(data.NO2.toFixed(1));
 return indexResult;
 };
+
+const valuesInfo = (res) =>{
+	return{
+		values:indexValue(res),
+		zoneColor:zoneColorNoise(res),
+		colorUV:uvColor(res.UV)
+	}
+}
 const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 	const socket = io.connect('https://qairamapnapi.qairadrones.com/');
 
@@ -321,13 +329,11 @@ const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
 
 								content = infowindowComplete(
 									qhawax,
-									zoneColor,
-									values,
 									qhawax_sensor_color,
 									qhawax_inca,
 									company,
 									marker,
-									colorUV
+									valuesInfo(res)
 								);
 								infoWindow.setContent(content);
 								const infograph = document.querySelectorAll(

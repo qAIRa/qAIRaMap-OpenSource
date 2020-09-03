@@ -12,13 +12,11 @@ const generateGif = (inca) => {
 
 const infowindowComplete = (
 	qhawax,
-	zoneColor,
-	values,
 	qhawax_sensor_color,
 	qhawax_inca,
 	company,
 	marker,
-	colorUV
+	data
 ) => {
 	return `
 <div class="infoWindow">
@@ -26,14 +24,14 @@ const infowindowComplete = (
 		${qhawax.comercial_name}
 		<br />
 		<img
-			src="${generateGif(qhawax.main_inca)}"
+			src="${generateGif(qhawax, company)}"
 			alt="Hoja Calidad aire"
 			class="qairito-img"
 		/>
 	</h6>
-	<h7 class="header"><strong>${zoneColor.zone}</strong></h7>
+	<h7 class="header"><strong>${data.zoneColor.zone}</strong></h7>
 	<br />
-	<h7 class="header">${values.time}</h7>
+	<h7 class="header">${data.values.time}</h7>
 	<div class="gas-table">
 		<table class="responsive-table centered">
 			<thead>
@@ -174,7 +172,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="CO"
 						>
-							${values.CO}
+							${data.values.CO}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -188,7 +186,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="NO2"
 						>
-							${values.NO2}
+							${data.values.NO2}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -202,7 +200,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="O3"
 						>
-							${values.O3}
+							${data.values.O3}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -216,7 +214,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="H2S"
 						>
-							${values.H2S}
+							${data.values.H2S}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -230,7 +228,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="SO2"
 						>
-							${values.SO2}
+							${data.values.SO2}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -244,7 +242,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="PM25"
 						>
-							${values.PM25}
+							${data.values.PM25}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -258,7 +256,7 @@ const infowindowComplete = (
 							data-infograph="${marker.id}"
 							data-label="PM10"
 						>
-							${values.PM10}
+							${data.values.PM10}
 							<br />
 							(&micro;g/m
 							<sup>3</sup>
@@ -300,15 +298,15 @@ const infowindowComplete = (
 							Real
 						</strong>
 					</td>
-					<td bgcolor="${zoneColor.color}">${values.spl}</td>
-					<td>${values.temperature}</td>
-					<td bgcolor="${colorUV.color}">
-						${colorUV.label}
+					<td bgcolor="${data.zoneColor.color}">${data.values.spl}</td>
+					<td>${data.values.temperature}</td>
+					<td bgcolor="${data.colorUV.color}">
+						${data.colorUV.label}
 						<br />
-						${values.UV}
+						${data.values.UV}
 					</td>
-					<td>${values.pressure}</td>
-					<td>${values.humidity}</td>
+					<td>${data.values.pressure}</td>
+					<td>${data.values.humidity}</td>
 				</tr>
 			</tbody>
 		</table>

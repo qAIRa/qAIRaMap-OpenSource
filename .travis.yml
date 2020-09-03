@@ -16,10 +16,10 @@ env:
   global:
     - COVERALLS_PARALLEL=true
 
-notifications:
-  email:
-    recipients:
-      - s.campos@qairadrones.com
+# notifications:
+#   email:
+#     recipients:
+#       - s.campos@qairadrones.com
 
 
 jobs:
