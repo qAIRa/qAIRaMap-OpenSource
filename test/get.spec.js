@@ -5,7 +5,8 @@ import {
     requestStatus,
     downloadData,
     requestInstallationDate,
-    handleError
+    handleError,
+    requestGraphicsData
 } from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
@@ -93,6 +94,18 @@ beforeEach(() => {
         
         expect(fetch.mock.calls.length).toEqual(1)
         expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/gas_average_measurement/?qhawax=4&gas=CO')
+      })
+      it('calls graphics Data', () => {
+        fetch.mockResponseOnce(JSON.stringify({ data: 'calls graphics Data'}))
+        
+        //assert on the response
+        requestGraphicsData('qH004',5).then(res => {
+          expect(res.data).toEqual('calls graphics Data')
+        })
+        //assert on the times called and arguments given to fetch
+        
+        expect(fetch.mock.calls.length).toEqual(1)
+        expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/processed_measurements/?name=qH004&interval_minutes=5')
       })
 
   })
