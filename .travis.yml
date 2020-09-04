@@ -8,7 +8,7 @@ node_js:
 install:
   - npm install
 
-script: npm run cover
+script: npm run test:coveralls
 
 after_success: "sbt coveralls"
 
