@@ -68,7 +68,6 @@ const createTraces = async(time, qhawax, charts) => {
   const traces = [];
 
   const json = await requestGraphicsData(qhawax, time);
-console.log(json);
 	 const y = [];
 	 const x = [];
   json.forEach((d) => {

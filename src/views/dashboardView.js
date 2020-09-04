@@ -2,27 +2,11 @@ import { navBarClient } from '../lib/navBarClient.js';
 import { viewBoard } from '../lib/HtmlComponents.js';
 import { requestAllQhawax } from '../requests/get.js';
 import { addZero } from '../lib/mapAssets.js';
+import { openModalDateAlert } from '../lib/pickerErrors.js';
 
-const ppbToECAdash = (sensor) => {
-  switch (sensor) {
-  case 'CO':
-    return { ECA: 10000 * 0.87, factor: 1.144919906 };
-  case 'NO2':
-    return { ECA: 100 * 0.532, factor: 1.880677075 };
-  case 'O3':
-    return { ECA: 100 * 0.51, factor: 1.962019118 };
-  case 'H2S':
-    return { ECA: 150 * 0.719, factor: 1.393033574 };
-  case 'SO2':
-    return { ECA: 250 * 0.382, factor: 2.618478014 };
-  case 'PM25':
-    return { ECA: 50, factor: 1 };
-  case 'PM10':
-    return { ECA: 100, factor: 1 };
-  default:
-    return { ECA: 100000000, factor: 1 };
-  }
-};
+const ECAlimits = {
+  CO:10000 * 0.87,NO2:100 * 0.532,O3:100 * 0.51,H2S:150 * 0.719,SO2:250 * 0.382,PM25:50,PM10:100,ID:0,lat:0,lon:0,UV:0,spl:0,timestamp:0,humidity:0,pressure:0,termperature:0,PM1:0
+}
 
 let valuesForDashboard = {
   ID:{value:null,color:''},
@@ -48,7 +32,7 @@ let valuesForDashboard = {
 const indexValue = (data) => {
   Object.entries(valuesForDashboard).forEach(([key]) => { 
     valuesForDashboard[key].value=data[key]
-    valuesForDashboard[key].value >= ppbToECAdash(key).ECA ? valuesForDashboard[key].color= 'red' : valuesForDashboard[key].color= 'black';
+    valuesForDashboard[key].value >= ECAlimits[key] ? valuesForDashboard[key].color= 'red' : valuesForDashboard[key].color= 'black';
    });
 return valuesForDashboard;
   
@@ -109,5 +93,5 @@ const viewDashboard = () => {
 };
 
 export {
-  viewDashboard, addZero, ppbToECAdash, indexValue, request,
+  viewDashboard, addZero, indexValue, request,
 };
