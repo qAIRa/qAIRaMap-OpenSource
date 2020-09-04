@@ -15,7 +15,7 @@ module.exports = {
     google: 'readonly',
   },
   parserOptions: {
-    ecmaVersion: 2015,
+    ecmaVersion: 7,
     sourceType: 'module',
   },
   rules: {
