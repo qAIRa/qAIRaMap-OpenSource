@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
-		"test:coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+		"test:coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
@@ -33,10 +33,9 @@
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
 		},
 		"automock": false,
-		"coveragePathIgnorePatterns": [
-			"./build/"
-		],
-		"collectCoverage": true
+		"coveragePathIgnorePatterns": ["./build/","/node_modules/", "/coverage/"],
+		"collectCoverage": true,
+		"coverageReporters": ["html", "text-summary", "lcov"]
 	},
 	"repository": {
 		"type": "git",
