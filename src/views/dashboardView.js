@@ -39,29 +39,27 @@ return valuesForDashboard;
 };
 
 const dashboardRow = (q) =>`
-<td><strong>${q.name}</strong></td> 
-<td>${q.comercial_name}</td> 
+<td><strong>${q.name}</strong></td>
+<td>${q.comercial_name}</td>
 <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
-<td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>
-`;
+<td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>`;
 const dashboardRowActive =(data,q,value)=>`
 <td><strong>${data.ID}</strong></td>
 <td>${q.comercial_name}</td>
 <td>${new Date(Date.parse(value.timestamp.value)).toLocaleString('en-EN')}</td>
-<td style="color:${value.SO2.color}">${value.SO2.value.toFixed(1)}</td> 
-<td style="color:${value.NO2.color}">${value.NO2.value.toFixed(1)}</td> 
-<td style="color:${value.CO.color}">${value.CO.value.toFixed(1)}</td> 
+<td style="color:${value.SO2.color}">${value.SO2.value.toFixed(1)}</td>
+<td style="color:${value.NO2.color}">${value.NO2.value.toFixed(1)}</td>
+<td style="color:${value.CO.color}">${value.CO.value.toFixed(1)}</td>
 <td style="color:${value.H2S.color}">${value.H2S.value.toFixed(1)}</td>
-<td style="color:${value.O3.color}">${value.O3.value.toFixed(1)}</td>  
-<td style="color:${value.PM25.color}">${value.PM25.value.toFixed(1)}</td> 
-<td style="color:${value.PM10.color}">${value.PM10.value.toFixed(1)}</td> 
-<td style="color:${value.UV.color}">${value.UV.value.toFixed(0)}</td> 
+<td style="color:${value.O3.color}">${value.O3.value.toFixed(1)}</td>
+<td style="color:${value.PM25.color}">${value.PM25.value.toFixed(1)}</td>
+<td style="color:${value.PM10.color}">${value.PM10.value.toFixed(1)}</td>
+<td style="color:${value.UV.color}">${value.UV.value.toFixed(0)}</td>
 <td>${value.spl.value.toFixed(1)}</td>
 <td>${value.temperature.value.toFixed(1)}</td>
 <td>${value.humidity.value.toFixed(1)}</td>
-<td>${(value.pressure.value/1000).toFixed(1)}</td>  
-<td><i class="material-icons" style="color:#32CD32">wifi</i></td>
-`;
+<td>${(value.pressure.value/1000).toFixed(1)}</td>
+<td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
 const request = async(element, qhawax_asigned) => {
   const table_body = element.querySelector('tbody');
 	const qhawax_list = await requestAllQhawax();
@@ -93,5 +91,5 @@ const viewDashboard = () => {
 };
 
 export {
-  viewDashboard, addZero, indexValue, request,
+  viewDashboard, addZero, indexValue, request, dashboardRow, dashboardRowActive
 };

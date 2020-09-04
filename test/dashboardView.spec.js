@@ -1,4 +1,4 @@
-import {viewDashboard, indexValue, request } from '../src/views/dashboardView.js';
+import {viewDashboard, indexValue, request, dashboardRow, dashboardRowActive } from '../src/views/dashboardView.js';
 
 const data = {
     CO: 1,
@@ -28,10 +28,40 @@ const data = {
     timestamp_zone: "2020-09-01 15:27:42.0-04:00",
     zone: "Zona de Protección Especial"
 }
-
+const q = {name:'qH004', comercial_name:'The Boss'}
+const rowOutput = `
+<td><strong>qH004</strong></td>
+<td>The Boss</td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+<td><i class=\"material-icons\" style=\"color:gray\">signal_wifi_off</i></td>`;
+const activeRowOutput = `
+<td><strong>qH004</strong></td>
+<td>The Boss</td>
+<td>9/1/2020, 2:27:42 PM</td>
+<td style="color:black">2.0</td>
+<td style="color:red">240.0</td>
+<td style="color:black">1.0</td>
+<td style="color:black">3.0</td>
+<td style="color:black">5.0</td>
+<td style="color:black">1.7</td>
+<td style="color:black">2.4</td>
+<td style="color:red">0</td>
+<td>84.3</td>
+<td>19.1</td>
+<td>71.6</td>
+<td>100.7</td>
+<td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
 const indexResult = {"CO": {"color": "black", "value": 1}, "H2S": {"color": "black", "value": 3}, "ID": {"color": "black", "value": "qH004"}, "NO2": {"color": "red", "value": 240}, "O3": {"color": "black", "value": 5}, "PM1": {"color": "red", "value": 1.9}, "PM10": {"color": "black", "value": 2.398}, "PM25": {"color": "black", "value": 1.652}, "SO2": {"color": "black", "value": 2}, "UV": {"color": "red", "value": 0}, "humidity": {"color": "red", "value": 71.6}, "lat": {"color": "black", "value": -12.072736}, "lon": {"color": "black", "value": -77.082687}, "pressure": {"color": "red", "value": 100680.49}, "spl": {"color": "red", "value": 84.3}, "temperature": {"color": "black", "value": 19.1}, "timestamp": {"color": "black", "value": "2020-09-01 15:27:42.0-04:00"}}
-test('format for date', () => {
+
+test('values for dashboard display', () => {
 	expect(indexValue(data)).toStrictEqual(indexResult);
 })
 
+test('dashboard empty row', () => {
+	expect(dashboardRow(q)).toStrictEqual(rowOutput);
+})
+
+test('dashboard active row', () => {
+	expect(dashboardRowActive(data,q,indexResult)).toStrictEqual(activeRowOutput);
+})
 
