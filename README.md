@@ -16,7 +16,9 @@ Download of historic data.
 Visualization of results in Google Maps.
 
 Data available: modules and drone in Madre de Dios (UNICEF project) and any other data from people using qairamap open source that have either a qHAWAX or Andean Drone
-
+<p align="center">
+<img src="./build/img/qAIRaMap.jpeg" alt="web view" width="400">
+</p>
 ## Getting Started
 
 Clone or download the project to the device where it will be used.
