@@ -32,10 +32,7 @@
 		"moduleNameMapper": {
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
 		},
-		"automock": false,
-		"coveragePathIgnorePatterns": ["./build/","/node_modules/", "/coverage/"],
-		"collectCoverage": true,
-		"coverageReporters": ["html", "text-summary", "lcov"]
+		"coveragePathIgnorePatterns": ["./build/","/node_modules/", "/coverage/"]
 	},
 	"repository": {
 		"type": "git",
