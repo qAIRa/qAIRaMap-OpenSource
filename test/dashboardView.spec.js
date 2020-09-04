@@ -37,7 +37,7 @@ const rowOutput = `
 const activeRowOutput = `
 <td><strong>qH004</strong></td>
 <td>The Boss</td>
-<td>9/1/2020, 2:27:42 PM</td>
+<td>9/1/2020, 3:27:42 PM</td>
 <td style="color:black">2.0</td>
 <td style="color:red">240.0</td>
 <td style="color:black">1.0</td>
