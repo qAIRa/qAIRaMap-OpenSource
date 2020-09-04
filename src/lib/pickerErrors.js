@@ -37,10 +37,7 @@ const modalEmptyAlert = `
   </div>
 </div>
 `;
-const optionsModal = {
-  onCloseEnd: () => window.location.reload(),
-  outDuration: 800,
-};
+const optionsModal = { onCloseEnd: () => window.location.reload(), outDuration: 800 };
 
 const openModalDateAlert = () => {
   const container = document.getElementById('content-page');

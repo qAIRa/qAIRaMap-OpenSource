@@ -60,6 +60,7 @@ const dashboardRowActive =(data,q,value)=>`
 <td>${value.humidity.value.toFixed(1)}</td>
 <td>${(value.pressure.value/1000).toFixed(1)}</td>
 <td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
+
 const request = async(element, qhawax_asigned) => {
   const table_body = element.querySelector('tbody');
 	const qhawax_list = await requestAllQhawax();
