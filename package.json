@@ -11,7 +11,8 @@
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
 		"doc": "jsdoc -c jsdoc.json",
-		"test:debug": "npm run test --coverage --coverageReporters=coverage/lcov | ./node_modules/coveralls/bin/coveralls.js"
+		"test:debug": "npm run test --coverage --coverageReporters=coverage/text-lcov | ./node_modules/coveralls/bin/coveralls.js",
+		"cover": "jest --coverage --coverageReporters=text-lcov | coveralls"
 	},
 	"jest": {
 		"verbose": true,
@@ -21,7 +22,6 @@
 		],
 		"moduleFileExtensions": [
 			"js",
-			"jsx",
 			"json",
 			"css",
 			"scss"
