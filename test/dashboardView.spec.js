@@ -24,8 +24,8 @@ const data = {
     pressure: 100680.49,
     spl: 84.3,
     temperature: 19.1,
-    timestamp: "2020-09-01 15:27:42.0-04:00",
-    timestamp_zone: "2020-09-01 15:27:42.0-04:00",
+    timestamp: "2020-09-01 15:27:42",
+    timestamp_zone: "2020-09-01 15:27:42",
     zone: "Zona de Protección Especial"
 }
 const q = {name:'qH004', comercial_name:'The Boss'}
@@ -51,7 +51,7 @@ const activeRowOutput = `
 <td>71.6</td>
 <td>100.7</td>
 <td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
-const indexResult = {"CO": {"color": "black", "value": 1}, "H2S": {"color": "black", "value": 3}, "ID": {"color": "black", "value": "qH004"}, "NO2": {"color": "red", "value": 240}, "O3": {"color": "black", "value": 5}, "PM1": {"color": "red", "value": 1.9}, "PM10": {"color": "black", "value": 2.398}, "PM25": {"color": "black", "value": 1.652}, "SO2": {"color": "black", "value": 2}, "UV": {"color": "red", "value": 0}, "humidity": {"color": "red", "value": 71.6}, "lat": {"color": "black", "value": -12.072736}, "lon": {"color": "black", "value": -77.082687}, "pressure": {"color": "red", "value": 100680.49}, "spl": {"color": "red", "value": 84.3}, "temperature": {"color": "black", "value": 19.1}, "timestamp": {"color": "black", "value": "2020-09-01 15:27:42.0-04:00"}}
+const indexResult = {"CO": {"color": "black", "value": 1}, "H2S": {"color": "black", "value": 3}, "ID": {"color": "black", "value": "qH004"}, "NO2": {"color": "red", "value": 240}, "O3": {"color": "black", "value": 5}, "PM1": {"color": "red", "value": 1.9}, "PM10": {"color": "black", "value": 2.398}, "PM25": {"color": "black", "value": 1.652}, "SO2": {"color": "black", "value": 2}, "UV": {"color": "red", "value": 0}, "humidity": {"color": "red", "value": 71.6}, "lat": {"color": "black", "value": -12.072736}, "lon": {"color": "black", "value": -77.082687}, "pressure": {"color": "red", "value": 100680.49}, "spl": {"color": "red", "value": 84.3}, "temperature": {"color": "black", "value": 19.1}, "timestamp": {"color": "black", "value": "2020-09-01 15:27:42"}}
 
 test('values for dashboard display', () => {
 	expect(indexValue(data)).toStrictEqual(indexResult);
