@@ -13,5 +13,4 @@ module.exports = {
   devServer: {
     contentBase: '/home/sabrina/qaira dev/qAIRaMap-OpenSource/build',
   },
-  resolve: {extensions: ['.js','.jsx']}
 };

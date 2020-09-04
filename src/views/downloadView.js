@@ -12,7 +12,7 @@ const reorderDate = (str) => str.split('-').reverse().join('-');
 
 const withLocalTime = (date) => {
   const local_time = new Date(date).toJSON();
-  return local_time ? `${reorderDate(local_time.slice(0, 10))} ${local_time.slice(11, 19)}` : '';
+  return local_time?reorderDate(local_time.slice(0,10)) + ' '+ local_time.slice(11,19):'';
 };
 
 const csvFields = [
@@ -47,7 +47,7 @@ const requestQhawaxs = async(element, company) => {
   qhawax_list.forEach((qhawax) => {
     const option = document.createElement('option');
     option.setAttribute('value', qhawax.qhawaxId);
-    option.innerText =	`${qhawax.name}: ${qhawax.comercial_name}`;
+    option.innerText =	qhawax.name + ': ' + qhawax.comercial_name;;
     array_qhawax.push(qhawax);
     addOptions.appendChild(option);
   });
@@ -130,10 +130,10 @@ const downloadView = (company) => {
   downloadBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const initial_timestamp = withLocalTime(`${selectedParameters.initDate} ${selectedParameters.initHour}:00`);
-    const final_timestamp = withLocalTime(`${selectedParameters.endDate} ${selectedParameters.endHour}:00`);
-    const initial_value = `${reorderDate(selectedParameters.initDate)} ${selectedParameters.initHour}`;
-    const final_value = `${reorderDate(selectedParameters.endDate)} ${selectedParameters.endHour}`;
+    const initial_timestamp = withLocalTime(selectedParameters.initDate+' '+selectedParameters.initHour+':00');
+		const final_timestamp = withLocalTime(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
+    const initial_value = reorderDate(selectedParameters.initDate) + ' '+selectedParameters.initHour;
+		const final_value= reorderDate(selectedParameters.endDate) + ' '+selectedParameters.endHour;
     if (Object.values(selectedParameters).includes('') || Object.values(selectedParameters).length < 5) {
       openModalEmptyAlert();
     } else if (Date.parse(initial_value) >= Date.parse(final_value)) {

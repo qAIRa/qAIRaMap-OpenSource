@@ -16,14 +16,17 @@ const months = [
   'Noviembre',
   'Diciembre',
 ];
-const addZero = (i) => {
-  if (i < 10) return `0${i}`;
+
+const addZero = i => {
+	if (i < 10) {
+		i = '0' + i;
+	}
+	return i;
 };
 
 const formatDateDB = (timestamp) => {
   const date = new Date(Date.parse(timestamp) + 5 * 3600 * 1000);
-  return (
-    `${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`
+  return (addZero(date.getHours()) + addZero(date.getMinutes()) + addZero(date.getSeconds())
   );
 };
 
@@ -127,7 +130,7 @@ const airQuality = (data) => {
     PM10: null, SO2: null, CO: null, H2S: null, PM25: null, O3: null, NO2: null,
   };
   Object.entries(sensors).forEach(([key]) => { sensors[key] = data[key]; });
-  const time = `${addZero(new Date(data.timestamp).getHours())}:${addZero(new Date(data.timestamp).getMinutes())}`;
+  const time = addZero(new Date(data.timestamp).getHours())+':' + addZero(new Date(data.timestamp).getMinutes());
   const result = {
     PM10: null, SO2: null, CO: null, H2S: null, PM25: null, O3: null, NO2: null,
   };
@@ -234,7 +237,7 @@ const indexValue = (data) => {
   indexResult.lng = data.lon.toFixed(5);
   indexResult.UV = Number(data.UV.toFixed(1));
   indexResult.spl = Number(data.spl.toFixed(1));
-  indexResult.time = `${newDate.getDate()} de ${months[newDate.getMonth()]} de ${newDate.getFullYear()}, ${newDate.getHours()}:${newDate.getMinutes()}`;
+  indexResult.time = newDate.getDate() +' de ' +months[newDate.getMonth()] +' de ' +newDate.getFullYear() +', ' +	newDate.getHours() +':' +newDate.getMinutes();
   indexResult.PM1 = Number(data.PM1);
   indexResult.humidity = Number(data.humidity.toFixed(1));
   indexResult.pressure = Number((data.pressure / 1000).toFixed(1));

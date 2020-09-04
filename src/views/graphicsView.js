@@ -5,16 +5,18 @@ import { SocketSource } from '../index.js';
 import { addZero } from '../lib/mapAssets.js';
 import { configuration } from '../lib/graphAssets.js';
 
-const dateFormat = (timestamp) => {
-  const date = new Date(Date.parse(timestamp));
-  return (
-    `${addZero(date.getHours())
-		 }:${
-		 addZero(date.getMinutes())
-		 }:${
-		 addZero(date.getSeconds())}`
-  );
-};
+const dateFormat = (timestamp)=>{
+	
+	const date = new Date(Date.parse(timestamp));
+	return (
+		addZero(date.getHours()) +
+		':' +
+		addZero(date.getMinutes()) +
+		':' +
+		addZero(date.getSeconds())
+	);
+
+}
 
 const requestOptions = async(element) => {
   const qhawax_list = await requestAllQhawax();
@@ -23,7 +25,7 @@ const requestOptions = async(element) => {
     const addOptions = element.querySelector('#selectQhawax');
     const option = document.createElement('option');
     option.setAttribute('value', qhawax.name);
-    option.innerText =			`${qhawax.name}: ${qhawax.comercial_name}`;
+    option.innerText =qhawax.name + ': ' + qhawax.comercial_name;;
     status === 'ON' ? addOptions.appendChild(option) : false;
   });
 };

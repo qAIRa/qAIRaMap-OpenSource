@@ -25,7 +25,6 @@ const ppbToECAdash = (sensor) => {
 };
 
 const indexValue = (data) => {
-  console.log(data);
   const id = data.ID;
 
   const lat = data.lat.toFixed(5);
@@ -33,12 +32,8 @@ const indexValue = (data) => {
   const UV = Number(data.UV.toFixed(1));
   const spl = Number(data.spl.toFixed(1));
 
-  const newDate = new Date(Date.parse(data.timestamp));
-  const time =		`${addZero(newDate.getHours())
-		 }:${
-		 addZero(newDate.getMinutes())
-		 }:${
-		 addZero(newDate.getSeconds())}`;
+  const date = new Date(Date.parse(data.timestamp));
+  const time = addZero(date.getHours()) + addZero(date.getMinutes()) + addZero(date.getSeconds());
 
   const PM1 = Number(data.PM1.toFixed(1));
   const humidity = Number(data.humidity).toFixed(1);
