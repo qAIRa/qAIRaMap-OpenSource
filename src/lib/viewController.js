@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 /**
  * Picker Materialize Error Handler
  * @module ViewController
@@ -14,30 +14,30 @@ import { viewGraphics } from '../views/graphicsView.js';
  * @returns {HTMLDivElement} - Append an HTML Div to the index Html
  */
 
-const changeView = router => {
-	/**
+const changeView = (router) => {
+  /**
  * Container that alouds to insert changes in the index Html
  * @type {HTMLElement}
  */
-	const container = document.getElementById('content-page');
-	container.innerHTML = '';
-	switch (router) {
-		case '#/download':
-			return container.appendChild(downloadView());
+  const container = document.getElementById('content-page');
+  container.innerHTML = '';
+  switch (router) {
+  case '#/download':
+    return container.appendChild(downloadView());
 
-		case '#/dashboard':
-			return  container.appendChild(viewDashboard());
-		
-		case '#/graphics':
-			return  container.appendChild(viewGraphics());
-		default:
-			return container.appendChild(viewFreeMap());
-	}
+  case '#/dashboard':
+    return container.appendChild(viewDashboard());
+
+  case '#/graphics':
+    return container.appendChild(viewGraphics());
+  default:
+    return container.appendChild(viewFreeMap());
+  }
 };
 
-const goTo = (location)=>{
-    window.location.assign(`..#/${location}`);
-    window.location.reload();
-}
+const goTo = (location) => {
+  window.location.assign(`..#/${location}`);
+  window.location.reload();
+};
 
-export { changeView , goTo};
+export { changeView, goTo };

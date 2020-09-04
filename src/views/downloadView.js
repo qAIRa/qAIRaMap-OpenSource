@@ -1,36 +1,36 @@
-
 import {
-	openModalDateAlert,
-	openModalEmptyAlert
+  openModalDateAlert,
+  openModalEmptyAlert,
 } from '../lib/pickerErrors.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
-import { navBarClient} from '../lib/navBarClient.js';
-import { viewDownload} from '../lib/HtmlComponents.js';
-import { requestAllQhawax, downloadData, requestInstallationDate} from '../requests/get.js';
-import { optionsDatePicker, optionsTimePicker} from '../lib/mapAssets.js';
-const reorderDate = (str) =>str.split("-").reverse().join("-");
+import { navBarClient } from '../lib/navBarClient.js';
+import { viewDownload } from '../lib/HtmlComponents.js';
+import { requestAllQhawax, downloadData, requestInstallationDate } from '../requests/get.js';
+import { optionsDatePicker, optionsTimePicker } from '../lib/mapAssets.js';
 
-const withLocalTime = (date) =>{
-	const local_time = new Date(date).toJSON();
-	return local_time?reorderDate(local_time.slice(0,10)) + ' '+ local_time.slice(11,19):'';
-}
+const reorderDate = (str) => str.split('-').reverse().join('-');
+
+const withLocalTime = (date) => {
+  const local_time = new Date(date).toJSON();
+  return local_time ? `${reorderDate(local_time.slice(0, 10))} ${local_time.slice(11, 19)}` : '';
+};
 
 const csvFields = [
-	'CO (ug/m3)',
-	'H2S (ug/m3)',
-	'NO2 (ug/m3)',
-	'O3 (ug/m3)',
-	'PM10 (ug/m3)',
-	'PM2.5 (ug/m3)',
-	'SO2 (ug/m3)',
-	'Noise (dB)',
-	'UV',
-	'Humidity (%)',
-	'Latitude',
-	'Longitude',
-	'Pressure (Pa)',
-	'Temperature (C)',
-	'Date',
+  'CO (ug/m3)',
+  'H2S (ug/m3)',
+  'NO2 (ug/m3)',
+  'O3 (ug/m3)',
+  'PM10 (ug/m3)',
+  'PM2.5 (ug/m3)',
+  'SO2 (ug/m3)',
+  'Noise (dB)',
+  'UV',
+  'Humidity (%)',
+  'Latitude',
+  'Longitude',
+  'Pressure (Pa)',
+  'Temperature (C)',
+  'Date',
 ];
 
 const waitingLoader = `
@@ -38,121 +38,115 @@ const waitingLoader = `
       <div class="indeterminate"></div>
   </div>
 `;
-let array_qhawax = [];
-let selectedParameters = {};
+const array_qhawax = [];
+const selectedParameters = {};
 
-
-
-const requestQhawaxs = async (element, company) => {
-	const qhawax_list = await requestAllQhawax();
-	const addOptions = element.querySelector('#selectQhawax');
-	qhawax_list.forEach(qhawax => {
-		const option = document.createElement('option');
-		option.setAttribute('value', qhawax.qhawax_id);
-		option.innerText =	qhawax.name + ': ' + qhawax.comercial_name;
-		array_qhawax.push(qhawax);
-		addOptions.appendChild(option);
-	});
+const requestQhawaxs = async(element, company) => {
+  const qhawax_list = await requestAllQhawax();
+  const addOptions = element.querySelector('#selectQhawax');
+  qhawax_list.forEach((qhawax) => {
+    const option = document.createElement('option');
+    option.setAttribute('value', qhawax.qhawaxId);
+    option.innerText =	`${qhawax.name}: ${qhawax.comercial_name}`;
+    array_qhawax.push(qhawax);
+    addOptions.appendChild(option);
+  });
 };
 
-const requestDownload = async (switchData,init, end) => {
-	let filename = '';
-	const json = await downloadData(switchData.checked,selectedParameters.id,init,end)
-	array_qhawax.forEach(qhawax => {
-		filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
-				? `${qhawax.name}` +
-				  '-' +
-				  `${qhawax.comercial_name}`
-				: '';});
+const requestDownload = async(switchData, init, end) => {
+  let filename = '';
+  const json = await downloadData(switchData.checked, selectedParameters.id, init, end);
+  array_qhawax.forEach((qhawax) => {
+    filename +=	Number(selectedParameters.id) === Number(qhawax.qhawaxId)
+      ? `${qhawax.name}`
+				  + '-'
+				  + `${qhawax.comercial_name}`
+      : '';
+  });
 
-	const csvContent = json2csv(json, csvFields);
-	download(csvContent,`${filename}.csv`,'text/csv;encoding:utf-8');
-	window.location.reload();
+  const csvContent = json2csv(json, csvFields);
+  download(csvContent, `${filename}.csv`, 'text/csv;encoding:utf-8');
+  window.location.reload();
 };
 
+const installationDateReq = async(selection, element) => {
+  const installationDate = await requestInstallationDate(selection[0].value);
 
-const installationDateReq = async (selection, element)=>{
-	const installationDate = await requestInstallationDate(selection[0].value)
-	
-			selectedParameters.id = selection[0].value;
-			optionsDatePicker.minDate = new Date(installationDate);
-			optionsDatePicker.maxDate = new Date(Date.now());
-			optionsDatePicker.onClose = () => {
-				selectedParameters.initDate = datePicker[0].value;
-				selectedParameters.endDate = datePicker[1].value;
-			};
-			optionsTimePicker.onCloseEnd = () => {
-				selectedParameters.initHour = timePicker[0].value;
-				selectedParameters.endHour = timePicker[1].value;
-			};
+  selectedParameters.id = selection[0].value;
+  optionsDatePicker.minDate = new Date(installationDate);
+  optionsDatePicker.maxDate = new Date(Date.now());
+  optionsDatePicker.onClose = () => {
+    selectedParameters.initDate = datePicker[0].value;
+    selectedParameters.endDate = datePicker[1].value;
+  };
+  optionsTimePicker.onCloseEnd = () => {
+    selectedParameters.initHour = timePicker[0].value;
+    selectedParameters.endHour = timePicker[1].value;
+  };
 
-			const datePicker = element.querySelectorAll('.datepicker');
-			M.Datepicker.init(datePicker, optionsDatePicker);
+  const datePicker = element.querySelectorAll('.datepicker');
+  M.Datepicker.init(datePicker, optionsDatePicker);
 
-			const timePicker = element.querySelectorAll('.timepicker');
-			M.Timepicker.init(timePicker, optionsTimePicker);
+  const timePicker = element.querySelectorAll('.timepicker');
+  M.Timepicker.init(timePicker, optionsTimePicker);
 };
 
-const initialToast = ()=>{
-	M.toast({ html: 'First select a module!' });
-	M.toast({ html: 'Please complete all fields.' });
-}
+const initialToast = () => {
+  M.toast({ html: 'First select a module!' });
+  M.toast({ html: 'Please complete all fields.' });
+};
 
-const finalToast=()=>{
-	M.toast({
-		html: 'The date may take 5 minutes...',
-		displayLength: 10000,
-	});
-	M.toast({
-		html: 'We are preparing your data!',
-		displayLength: 6000,
-	});
-}
+const finalToast = () => {
+  M.toast({
+    html: 'The date may take 5 minutes...',
+    displayLength: 10000,
+  });
+  M.toast({
+    html: 'We are preparing your data!',
+    displayLength: 6000,
+  });
+};
 
-const downloadView = company => {
-	initialToast()
+const downloadView = (company) => {
+  initialToast();
 
-	const downloadElem = document.createElement('div');
+  const downloadElem = document.createElement('div');
 
-	navBarClient(downloadElem, viewDownload, company);
+  navBarClient(downloadElem, viewDownload, company);
 
+  requestQhawaxs(downloadElem, company);
 
-	requestQhawaxs(downloadElem, company);
+  const selection = downloadElem.querySelectorAll('select');
+  M.FormSelect.init(selection);
 
-	const selection = downloadElem.querySelectorAll('select');
-	M.FormSelect.init(selection);
+  const switchData = downloadElem.querySelector('#select-data');
 
-	const switchData = downloadElem.querySelector('#select-data');
-	
-	selection[0].onchange = () => {
-		installationDateReq(selection, downloadElem)
-	};
+  selection[0].onchange = () => {
+    installationDateReq(selection, downloadElem);
+  };
 
-	const downloadBtn = downloadElem.querySelector('#submit-btn');
-	
-	downloadBtn.addEventListener('click', (e) => {
-		e.preventDefault()
+  const downloadBtn = downloadElem.querySelector('#submit-btn');
 
-		const initial_timestamp = withLocalTime(selectedParameters.initDate+' '+selectedParameters.initHour+':00');
-		const final_timestamp = withLocalTime(selectedParameters.endDate+' '+selectedParameters.endHour+':00');
-		const initial_value = reorderDate(selectedParameters.initDate) + ' '+selectedParameters.initHour;
-		const final_value= reorderDate(selectedParameters.endDate) + ' '+selectedParameters.endHour;
-		if (Object.values(selectedParameters).includes("")||Object.values(selectedParameters).length<5) {
-			openModalEmptyAlert();
-		} else {
-			if (Date.parse(initial_value) >= Date.parse(final_value)) {
-				openModalDateAlert();
-			} else {
-			 	requestDownload(switchData,initial_timestamp, final_timestamp);
-				finalToast();
-				const pannel = document.querySelector('.card-pannel');
-				pannel.innerHTML = waitingLoader;
-			}
-		}
-		
-	});
+  downloadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
-	return downloadElem;
+    const initial_timestamp = withLocalTime(`${selectedParameters.initDate} ${selectedParameters.initHour}:00`);
+    const final_timestamp = withLocalTime(`${selectedParameters.endDate} ${selectedParameters.endHour}:00`);
+    const initial_value = `${reorderDate(selectedParameters.initDate)} ${selectedParameters.initHour}`;
+    const final_value = `${reorderDate(selectedParameters.endDate)} ${selectedParameters.endHour}`;
+    if (Object.values(selectedParameters).includes('') || Object.values(selectedParameters).length < 5) {
+      openModalEmptyAlert();
+    } else if (Date.parse(initial_value) >= Date.parse(final_value)) {
+      openModalDateAlert();
+    } else {
+			 	requestDownload(switchData, initial_timestamp, final_timestamp);
+      finalToast();
+      const pannel = document.querySelector('.card-pannel');
+      pannel.innerHTML = waitingLoader;
+    }
+  });
+
+  return downloadElem;
 };
 
 export { downloadView };

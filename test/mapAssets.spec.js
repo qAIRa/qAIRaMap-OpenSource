@@ -21,7 +21,7 @@ const dataAirQuality = {
 	PM25: 62,
 	SO2: 0,
 	main_inca: 600,
-	qhawax_id: 8,
+	qhawaxId: 8,
 	qhawax_name: "qH008",
 	timestamp: "2020-07-29 23:00:00"
 };

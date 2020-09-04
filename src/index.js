@@ -1,5 +1,5 @@
 import { changeView } from './lib/viewController.js';
-//@ts-check
+// @ts-check
 /**
  * @file index.js is the root file for this web page
  * @author Grupo Qaira S.A.C.
@@ -10,22 +10,22 @@ import { changeView } from './lib/viewController.js';
  * Service Worker Initialization
  */
 const APISource = 'https://qairamapnapi-dev-opensource.qairadrones.com/api/';
-const SocketSource ='https://qairamapnapi-dev-opensource.qairadrones.com/';
+const SocketSource = 'https://qairamapnapi-dev-opensource.qairadrones.com/';
 
 if ('serviceWorker' in navigator) {
-	console.log('Service Worker: Supported');
-	window.onload = () => {
-		navigator.serviceWorker
-			.register('service_worker.bundle.js')
-			.then(() => console.log('Service Worker: Registered'))
-			.catch(err => console.log(`Service Worker: Error: ${err}`));
+  console.log('Service Worker: Supported');
+  window.onload = () => {
+    navigator.serviceWorker
+      .register('service_worker.bundle.js')
+      .then(() => console.log('Service Worker: Registered'))
+      .catch((err) => console.log(`Service Worker: Error: ${err}`));
 
-		document.getElementById('loader').classList.add('hide');
-		
-		const chipAlert = document.querySelectorAll('.chip');
-		M.Chips.getInstance(chipAlert);
+    document.getElementById('loader').classList.add('hide');
 
-		window.onhashchange = changeView(window.location.hash);
-	};
-};
-export {APISource, SocketSource};
+    const chipAlert = document.querySelectorAll('.chip');
+    M.Chips.getInstance(chipAlert);
+
+    window.onhashchange = changeView(window.location.hash);
+  };
+}
+export { APISource, SocketSource };

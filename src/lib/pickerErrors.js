@@ -11,7 +11,7 @@ const modalDateAlert = `
 <div id="modalDate" class="modal data">
   <div class="modal-content center-align">
     <h5>Error de Fecha</h5>
-    <p>	The initial date must be smaller than the final date</p>
+    <p>The initial date must be smaller than the final date</p>
     <i class="large material-icons">block</i>
   </div>
   <div class="modal-footer">
@@ -38,32 +38,31 @@ const modalEmptyAlert = `
 </div>
 `;
 const optionsModal = {
-	onCloseEnd: () => window.location.reload(),
-	outDuration: 800,
+  onCloseEnd: () => window.location.reload(),
+  outDuration: 800,
 };
 
 const openModalDateAlert = () => {
-	const container = document.getElementById('content-page');
-	const modalElem = document.createElement('div');
-	modalElem.innerHTML = modalDateAlert;
-	container.appendChild(modalElem);
-	const modalsMenu = modalElem.querySelectorAll('.data');
-	M.Modal.init(modalsMenu, optionsModal);
-	const myModal = modalElem.querySelector('#modalDate');
-	M.Modal.getInstance(myModal).open();
+  const container = document.getElementById('content-page');
+  const modalElem = document.createElement('div');
+  modalElem.innerHTML = modalDateAlert;
+  container.appendChild(modalElem);
+  const modalsMenu = modalElem.querySelectorAll('.data');
+  M.Modal.init(modalsMenu, optionsModal);
+  const myModal = modalElem.querySelector('#modalDate');
+  M.Modal.getInstance(myModal).open();
 };
 
 const openModalEmptyAlert = () => {
-	const container = document.getElementById('content-page');
-	const modalElem = document.createElement('div');
-	modalElem.innerHTML = modalEmptyAlert;
-	container.appendChild(modalElem);
-	const modalsMenu = modalElem.querySelectorAll('.empty');
-	M.Modal.init(modalsMenu, optionsModal);
-	const myModal = modalElem.querySelector('#modalEmpty');
-	var instance = M.Modal.getInstance(myModal);
-	instance.open();
+  const container = document.getElementById('content-page');
+  const modalElem = document.createElement('div');
+  modalElem.innerHTML = modalEmptyAlert;
+  container.appendChild(modalElem);
+  const modalsMenu = modalElem.querySelectorAll('.empty');
+  M.Modal.init(modalsMenu, optionsModal);
+  const myModal = modalElem.querySelector('#modalEmpty');
+  const instance = M.Modal.getInstance(myModal);
+  instance.open();
 };
 
-
-export { openModalDateAlert, openModalEmptyAlert};
+export { openModalDateAlert, openModalEmptyAlert };

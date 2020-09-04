@@ -1,22 +1,21 @@
-
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__swing" id="over_map">
 <h6><strong>Air Quality Index (INCA)</strong></h6>
-    <table class="centered">
-        <thead><tr><th>Good</th><th>Moderate</th><th>Bad</th><th>Hazardous</th></tr></thead>
-        <tbody><tr><td bgcolor="#009966" class="inca-color"></td>
-                <td bgcolor="#ffde33" class="inca-color"></td>
-	      		<td bgcolor="#ff9933" class="inca-color"></td>
-			    <td bgcolor="#cc0033" class="inca-color"></td></tr>
-		  <tr><td><img class="inca-qairito" id="qairito-good" src="img/qairito/qairito_buena.gif" alt="qairito-good"></img></td>
-            <td><img class="inca-qairito" id="qairito-moderate" src="img/qairito/qairito_moderada.gif" alt="qairito-moderate" ></img></td>
-			<td><img class="inca-qairito" id="qairito-bad" src="img/qairito/qairito_mala.gif" alt="qairito-bad" ></img></td>
-			<td><img class="inca-qairito" id="qairito-hazardous" src="img/qairito/qairito_cuidado.gif" alt="qairito-hazardous"></img></td>
-          </tr>
-        </tbody>
-  </table>
+<table class="centered">
+<thead><tr><th>Good</th><th>Moderate</th><th>Bad</th><th>Hazardous</th></tr></thead>
+<tbody><tr><td bgcolor="#009966" class="inca-color"></td>
+<td bgcolor="#ffde33" class="inca-color"></td>
+<td bgcolor="#ff9933" class="inca-color"></td>
+<td bgcolor="#cc0033" class="inca-color"></td></tr>
+<tr><td><img class="inca-qairito" id="qairito-good" src="img/qairito/qairito_buena.gif" alt="qairito-good"></img></td>
+<td><img class="inca-qairito" id="qairito-moderate" src="img/qairito/qairito_moderada.gif" alt="qairito-moderate" ></img></td>
+<td><img class="inca-qairito" id="qairito-bad" src="img/qairito/qairito_mala.gif" alt="qairito-bad" ></img></td>
+<td><img class="inca-qairito" id="qairito-hazardous" src="img/qairito/qairito_cuidado.gif" alt="qairito-hazardous"></img></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <!-- Modal Graphics -->
@@ -27,7 +26,7 @@ const viewMap = `
 </div>
 `;
 
-const navbar =(structure) =>`
+const navbar = (structure) => `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
@@ -119,7 +118,7 @@ const dropdown = `
             <li class="divider" tabindex="-1"></li>
             <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
         </ul>
-        `
+        `;
 
 const viewDownload = `
 <div class="row">
@@ -169,15 +168,14 @@ const viewDownload = `
                   </button>
                 </div>
                 </div>
-			</form>
-			<p class="center"><strong><sub>
-      The data has not passed a quality control.</sub></strong></p>
-        </div>
-    </div>
-	</div>	
-`;
+</form>
+<p class="center"><strong><sub>
+The data has not passed a quality control.</sub></strong></p>
+</div>
+</div>
+</div>`;
 
-    const viewBoard = `   
+const viewBoard = `   
 <table class="responsive-table highlight centered table-calibration">
             <thead>
               <tr>
@@ -211,33 +209,32 @@ const viewDownload = `
 `;
 
 const chartView = `
-  <div class="row edition-element">
-  <h4 class="center">Real Time Graphics</h4>
-	<div class="col s4  ">
-    <select class="browser-default" name="" id="selectQhawax">
-    <option value="" disabled selected> Select a qHAWAX</option>
-	</select>
-	</div>
-	<div class="col s4  ">
-    <select class="browser-default" name="" id="selectTime">
-	<option value="" disabled selected> Select time in minutes</option>
-	<option value="5"> 5 </option>
-	<option value="10"> 10 </option>
-	<option value="15"> 15 </option>
-	<option value="20"> 20 </option>
-	<option value="25"> 25 </option>
-	<option value="30"> 30 </option>
-	<option value="60"> 60 </option>
-	<option value="120"> 120 </option>
-	</select>
-	</div>
-	<br>
-	<div class="col s2">
-	<a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
-	</div>
-	</div>
-        <div class="row">
-        <div id="chart1" class="chart"></div><br>
+<div class="row edition-element">
+<h4 class="center">Real Time Graphics</h4>
+<select class="browser-default" name="" id="selectQhawax">
+<option value="" disabled selected> Select a qHAWAX</option>
+</select>
+</div>
+<div class="col s4  ">
+<select class="browser-default" name="" id="selectTime">
+<option value="" disabled selected> Select time in minutes</option>
+<option value="5"> 5 </option>
+<option value="10"> 10 </option>
+<option value="15"> 15 </option>
+<option value="20"> 20 </option>
+<option value="25"> 25 </option>
+<option value="30"> 30 </option>
+<option value="60"> 60 </option>
+<option value="120"> 120 </option>
+</select>
+</div>
+<br>
+<div class="col s2">
+<a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
+</div>
+</div>
+<div class="row">
+<div id="chart1" class="chart"></div><br>
         <div id="chart2" class="chart"></div><br>
         <div id="chart3" class="chart"></div><br>
         <div id="chart4" class="chart"></div><br>
@@ -257,10 +254,11 @@ const chartView = `
         
 `;
 
-export { viewMap,
+export {
+  viewMap,
   navbar,
   viewDownload,
   viewBoard,
   chartView,
-  dropdown
-}
+  dropdown,
+};

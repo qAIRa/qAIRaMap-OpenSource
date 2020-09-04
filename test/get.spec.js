@@ -27,7 +27,7 @@ beforeEach(() => {
    
       //assert on the times called and arguments given to fetch
       expect(fetch.mock.calls.length).toEqual(1)
-      expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/GetInstallationDate/?qhawax_id=4')
+      expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/GetInstallationDate/?qhawaxId=4')
     })
 
     it('calls all qHAWAXs', () => {
@@ -53,7 +53,7 @@ beforeEach(() => {
      
         //assert on the times called and arguments given to fetch
         expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/get_all_observations_by_qhawax/?qhawax_id=4')
+        expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/get_all_observations_by_qhawax/?qhawaxId=4')
       });
       it('calls status', () => {
         fetch.mockResponseOnce('calls status');
@@ -80,8 +80,8 @@ beforeEach(() => {
           })
         //assert on the times called and arguments given to fetch
         expect(fetch.mock.calls.length).toEqual(2)
-        expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
-        expect(fetch.mock.calls[1][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/average_valid_processed_period/?qhawax_id=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
+        expect(fetch.mock.calls[0][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/valid_processed_measurements_period/?qhawaxId=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
+        expect(fetch.mock.calls[1][0]).toEqual('https://qairamapnapi-dev-opensource.qairadrones.com/api/average_valid_processed_period/?qhawaxId=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
       });
       it('calls average measurements', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls average measurements'}))
