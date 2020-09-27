@@ -12,20 +12,13 @@ import { changeView } from './lib/viewController.js';
 const APISource = 'https://qairamapnapi-dev-opensource.qairadrones.com/api/';
 const SocketSource = 'https://qairamapnapi-dev-opensource.qairadrones.com/';
 
-if ('serviceWorker' in navigator) {
-  console.log('Service Worker: Supported');
-  window.onload = () => {
-    navigator.serviceWorker
-      .register('service_worker.bundle.js')
-      .then(() => console.log('Service Worker: Registered'))
-      .catch((err) => console.log(`Service Worker: Error: ${err}`));
+window.onload = () => {
+  document.getElementById('loader').classList.add('hide');
 
-    document.getElementById('loader').classList.add('hide');
+  const chipAlert = document.querySelectorAll('.chip');
+  M.Chips.getInstance(chipAlert);
 
-    const chipAlert = document.querySelectorAll('.chip');
-    M.Chips.getInstance(chipAlert);
+  window.onhashchange = changeView(window.location.hash);
+};
 
-    window.onhashchange = changeView(window.location.hash);
-  };
-}
 export { APISource, SocketSource };

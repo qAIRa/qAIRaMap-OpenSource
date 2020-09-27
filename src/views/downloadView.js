@@ -149,4 +149,4 @@ const downloadView = () => {
   return downloadElem;
 };
 
-export { downloadView, reorderDate, withLocalTime };
+export { downloadView, reorderDate, withLocalTime, requestQhawaxs };

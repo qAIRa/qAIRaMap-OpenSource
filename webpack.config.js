@@ -2,7 +2,6 @@ module.exports = {
   mode: 'production',
   entry: {
     index: './src/index.js',
-    service_worker: './src/service_worker.js',
   },
   output: {
     path: __dirname + '/build',

@@ -10,9 +10,8 @@
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",
-		"doc": "jsdoc -c jsdoc.json",
 		"test:debug": "npm run test --coverage --coverageReporters=coverage/text-lcov | ./node_modules/coveralls/bin/coveralls.js",
-		"test:test":"jest --coverage --passWithNoTests --runInBand && cat ./coverage/lcov.info",
+		"test:test": "jest --coverage --passWithNoTests --runInBand && cat ./coverage/lcov.info",
 		"cover": "jest --coverage --coverageReporters=text-lcov | coveralls"
 	},
 	"jest": {
@@ -33,7 +32,11 @@
 		"moduleNameMapper": {
 			"\\.(css|less|sass|scss)$": "identity-obj-proxy"
 		},
-		"coveragePathIgnorePatterns": ["./build/","/node_modules/", "/coverage/"]
+		"coveragePathIgnorePatterns": [
+			"./build/",
+			"/node_modules/",
+			"/coverage/"
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -69,7 +72,6 @@
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.5.4",
 		"jest-cli": "^26.4.2",
-		"jest-fetch-mock": "^3.0.3",
-		"jsdoc": "^3.6.4"
+		"jest-fetch-mock": "^3.0.3"
 	}
 }

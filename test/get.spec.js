@@ -109,3 +109,7 @@ beforeEach(() => {
       })
 
   })
+
+  test('handle error', () =>{
+    expect(handleError('error').statusText).toStrictEqual('OK');
+  });
