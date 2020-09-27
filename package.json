@@ -12,6 +12,7 @@
 		"start": "npm run webpack",
 		"doc": "jsdoc -c jsdoc.json",
 		"test:debug": "npm run test --coverage --coverageReporters=coverage/text-lcov | ./node_modules/coveralls/bin/coveralls.js",
+		"test:test":"jest --coverage --passWithNoTests --runInBand && cat ./coverage/lcov.info",
 		"cover": "jest --coverage --coverageReporters=text-lcov | coveralls"
 	},
 	"jest": {
