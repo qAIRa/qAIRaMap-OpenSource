@@ -10,7 +10,7 @@ const request = async (map) => {
   });
 };
 
-const viewFreeMap = () => {
+const viewFreeDrone = () => {
   const mapElem = document.createElement('div');
   navBarClient(mapElem, viewMap);
 
@@ -40,4 +40,4 @@ const viewFreeMap = () => {
   return mapElem;
 };
 
-export { viewFreeMap };
+export { viewFreeDrone };

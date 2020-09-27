@@ -41,7 +41,7 @@ const waitingLoader = `
 const array_qhawax = [];
 const selectedParameters = {};
 
-const requestQhawaxs = async(element, company) => {
+const requestQhawaxs = async(element) => {
   const qhawax_list = await requestAllQhawax();
   const addOptions = element.querySelector('#selectQhawax');
   qhawax_list.forEach((qhawax) => {
@@ -107,14 +107,14 @@ const finalToast = () => {
   });
 };
 
-const downloadView = (company) => {
+const downloadView = () => {
   initialToast();
 
   const downloadElem = document.createElement('div');
 
-  navBarClient(downloadElem, viewDownload, company);
+  navBarClient(downloadElem, viewDownload);
 
-  requestQhawaxs(downloadElem, company);
+  requestQhawaxs(downloadElem);
 
   const selection = downloadElem.querySelectorAll('select');
   M.FormSelect.init(selection);
@@ -149,4 +149,4 @@ const downloadView = (company) => {
   return downloadElem;
 };
 
-export { downloadView };
+export { downloadView, reorderDate, withLocalTime };

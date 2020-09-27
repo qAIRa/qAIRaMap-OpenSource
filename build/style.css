@@ -476,6 +476,23 @@ textarea.materialize-textarea {
 	font-weight: bold;
 }
 
+#background {
+	-webkit-animation: filter-animation 5s infinite;
+  }
+  
+  @-webkit-keyframes filter-animation {
+	0% {
+	  -webkit-filter: sepia(0) saturate(1);
+	}
+	
+	50% {
+	  -webkit-filter: sepia(1) saturate(1);
+	}
+	
+	100% {
+	  -webkit-filter: sepia(0) saturate(1);
+	}
+  }
 @media only screen and (max-width: 767px)  {
 	#over_map{
 		height: 14em;

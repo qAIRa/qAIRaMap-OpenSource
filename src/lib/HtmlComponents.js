@@ -31,7 +31,8 @@ const navbar = (structure) => `
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li id="return-menu" type="button"><a >Home</a></li>
+    <li id="home-menu" type="button"><a >Home</a></li>
+    <li id="return-menu" type="button"><a >Map</a></li>
     </ul> 
     <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
         <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
@@ -49,7 +50,8 @@ const navbar = (structure) => `
 
 <!-- Mobile menu -->
 <ul id="mobile-nav" class="sidenav">
-<li id="return-menu-mobile" type="button"><a>Home</a></li>
+<li id="home-menu-mobile" type="button"><a>Home</a></li>
+<li id="return-menu-mobile" type="button"><a>Map</a></li>
 <li id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown2">Legend</a></li>
 <li id="download-mob-menu"><a>Download</a></li>
 <li id="dashboard-menu-mob"><a>Dashboard</a></li>
@@ -254,6 +256,48 @@ const chartView = `
         
 `;
 
+const landbar = `
+<div class="navbar-fixed">
+<nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
+<div id="nav-wrapper-menu-bar" class="nav-wrapper">
+    <ul id="menu-left-bar" class="left hide-on-med-and-down">
+    </ul> 
+    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+    </a>
+    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+</div>
+</nav>
+</div>
+`;
+
+const landpage = `
+<div id="background"></div>
+<div class="row valign-wrapper" style="position: absolute; top:16em" id="foreground">
+    <div class="col s3  animate__animated animate__zoomIn" id="qhawax_map">
+      <div class="card hoverable" style="border-radius: 25px">
+        <div class="card-image valign-wrapper" style="height: 14em">
+          <img src="img/qHAWAX_v3.png" style="width: 14em; margin:auto">
+        </div>
+        <div class="card-content">
+          <p class="blue-grey-text text-darken-3">Map with qHAWAX modules for monitoring air quality.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col s3 animate__animated animate__zoomIn" id="andean_map">
+      <div class="card hoverable" style="border-radius: 25px">
+        <div class="card-image valign-wrapper" style="height: 14em">
+          <img src="img/andeanDrone.png" style="width: 14em; margin:auto">
+        </div>
+        <div class="card-content">
+        <p class="blue-grey-text text-darken-3">Map with Andean Drones for monitoring air quality.</p>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+`;
+
 export {
   viewMap,
   navbar,
@@ -261,4 +305,6 @@ export {
   viewBoard,
   chartView,
   dropdown,
+  landpage,
+  landbar,
 };

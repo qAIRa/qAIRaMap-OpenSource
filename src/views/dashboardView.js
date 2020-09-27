@@ -5,8 +5,8 @@ import { addZero } from '../lib/mapAssets.js';
 import { openModalDateAlert } from '../lib/pickerErrors.js';
 
 const ECAlimits = {
-  CO:10000 * 0.87,NO2:100 * 0.532,O3:100 * 0.51,H2S:150 * 0.719,SO2:250 * 0.382,PM25:50,PM10:100,ID:0,lat:0,lon:0,UV:0,spl:0,timestamp:0,humidity:0,pressure:0,termperature:0,PM1:0
-}
+	CO_ug_m3:30000,NO2_ug_m3:200,O3_ug_m3:100,H2S_ug_m3:150,SO2_ug_m3:250,PM25:50,PM10:100,ID:0,lat:0,lon:0,UV:20,spl:0,timestamp:0,humidity:0,pressure:0,termperature:0,PM1:0
+  }
 
 let valuesForDashboard = {
   ID:{value:null,color:''},
@@ -20,12 +20,12 @@ let valuesForDashboard = {
   pressure:{value:null,color:''},
   temperature:{value:null,color:''},
   PM10:{value:null,color:''},
-  SO2:{value:null,color:''},
-  CO:{value:null,color:''},
-  H2S:{value:null,color:''},
+  SO2_ug_m3:{value:null,color:''},
+  CO_ug_m3:{value:null,color:''},
+  H2S_ug_m3:{value:null,color:''},
   PM25:{value:null,color:''},
-  O3:{value:null,color:''},
-  NO2:{value:null,color:''},
+  O3_ug_m3:{value:null,color:''},
+  NO2_ug_m3:{value:null,color:''},
 }
 
 
@@ -47,11 +47,11 @@ const dashboardRowActive =(data,q,value)=>`
 <td><strong>${data.ID}</strong></td>
 <td>${q.comercial_name}</td>
 <td>${new Date(Date.parse(value.timestamp.value)).toLocaleString('en-EN')}</td>
-<td style="color:${value.SO2.color}">${value.SO2.value.toFixed(1)}</td>
-<td style="color:${value.NO2.color}">${value.NO2.value.toFixed(1)}</td>
-<td style="color:${value.CO.color}">${value.CO.value.toFixed(1)}</td>
-<td style="color:${value.H2S.color}">${value.H2S.value.toFixed(1)}</td>
-<td style="color:${value.O3.color}">${value.O3.value.toFixed(1)}</td>
+<td style="color:${value.SO2_ug_m3.color}">${value.SO2_ug_m3.value.toFixed(1)}</td>
+<td style="color:${value.NO2_ug_m3.color}">${value.NO2_ug_m3.value.toFixed(1)}</td>
+<td style="color:${value.CO_ug_m3.color}">${value.CO_ug_m3.value.toFixed(1)}</td>
+<td style="color:${value.H2S_ug_m3.color}">${value.H2S_ug_m3.value.toFixed(1)}</td>
+<td style="color:${value.O3_ug_m3.color}">${value.O3_ug_m3.value.toFixed(1)}</td>
 <td style="color:${value.PM25.color}">${value.PM25.value.toFixed(1)}</td>
 <td style="color:${value.PM10.color}">${value.PM10.value.toFixed(1)}</td>
 <td style="color:${value.UV.color}">${value.UV.value.toFixed(0)}</td>

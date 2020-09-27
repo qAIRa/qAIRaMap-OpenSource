@@ -257,7 +257,7 @@ const valuesInfo = (res) => ({
   zoneColor: zoneColorNoise(res),
   colorUV: uvColor(res.UV),
 });
-const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
+const setQhawaxInfowindow = (map, marker, infoWindow, qhawax) => {
   const socket = io.connect('https://qairamapnapi.qairadrones.com/');
 
   let content = 'Loading...';
@@ -282,7 +282,6 @@ const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
           qhawax,
           zoneColor,
           values,
-          company,
           marker,
           colorUV,
         );
@@ -316,7 +315,6 @@ const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
                   qhawax,
                   qhawaxSensorColor,
                   qhawaxInca,
-                  company,
                   marker,
                   valuesInfo(res),
                 );
@@ -344,7 +342,7 @@ const setQhawaxInfowindow = (map, marker, infoWindow, qhawax, company) => {
   });
 };
 
-const drawQhawaxMap = (map, qhawax, company) => {
+const drawQhawaxMap = (map, qhawax) => {
   const previousMarkerIndex = map.markers.findIndex(
     (marker) => marker.id === qhawax.name,
   );
@@ -368,7 +366,7 @@ const drawQhawaxMap = (map, qhawax, company) => {
   });
   const infoWindow = new google.maps.InfoWindow();
   qhawaxMarker.addListener('click', () => {
-    setQhawaxInfowindow(map, qhawaxMarker, infoWindow, qhawax, company);
+    setQhawaxInfowindow(map, qhawaxMarker, infoWindow, qhawax);
   });
 
   map.markers.push(qhawaxMarker);

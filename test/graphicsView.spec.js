@@ -54,3 +54,14 @@ Plotly.newPlot = jest.fn()
     expect.not.arrayContaining(result)),
   );
 });
+
+const html = '[object HTMLDivElement]';
+
+test('graphics page', () => {
+    document.body.innerHTML = `
+    <header></header>
+      <div id="content-page"></div>
+    `;
+    require('../build/js/materialize.min.js')
+	expect(viewGraphics().toString()).toMatch(html);
+})

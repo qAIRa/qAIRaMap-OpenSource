@@ -13,7 +13,6 @@ const infowindowComplete = (
   qhawax,
   qhawaxSensorColor,
   qhawaxInca,
-  company,
   marker,
   data,
 ) => `
@@ -21,7 +20,7 @@ const infowindowComplete = (
 <h6 class="header">
 ${qhawax.comercial_name}
 <br/>
-<img src="${generateGif(qhawax, company)}"alt="Hoja Calidad aire"class="qairito-img"/>
+<img src="${generateGif(qhawax)}"alt="Hoja Calidad aire"class="qairito-img"/>
 </h6>
 <h7 class="header"><strong>${data.zoneColor.zone}</strong></h7><br />
 <h7 class="header">${data.values.time}</h7>
@@ -93,7 +92,6 @@ const infowindowPartial = (
   qhawax,
   zoneColor,
   values,
-  company,
   marker,
   colorUV,
 ) => `

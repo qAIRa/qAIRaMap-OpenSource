@@ -18,8 +18,10 @@ const navBarClient = (element, display) => {
   const modal = document.querySelectorAll('.modal');
   M.Modal.init(modal);
 
-  document.querySelector('#return-menu').addEventListener('click', () => goTo(''));
-  document.querySelector('#return-menu-mobile').addEventListener('click', () => goTo(''));
+  document.querySelector('#return-menu').addEventListener('click', () => goTo('mapQhawax'));
+  document.querySelector('#return-menu-mobile').addEventListener('click', () => goTo('mapQhawax'));
+  document.querySelector('#home-menu').addEventListener('click', () => goTo(''));
+  document.querySelector('#home-menu-mobile').addEventListener('click', () => goTo(''));
   document.querySelector('#download-menu').addEventListener('click', () => goTo('download'));
   document.querySelector('#download-mob-menu').addEventListener('click', () => goTo('download'));
   document.querySelector('#dashboard-menu').addEventListener('click', () => goTo('dashboard'));

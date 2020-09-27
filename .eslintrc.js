@@ -45,5 +45,7 @@ module.exports = {
     'no-array-constructor': 1,
     'no-nested-ternary': 0,
     allowTernary: 0,
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['element'] }],
+    'no-restricted-imports': ['error', { patterns: ['build/*'] }],
   },
 };
