@@ -1,11 +1,3 @@
-/**
- * Picker Materialize Error Handler
- * @module PickerErrors
- */
-/**
- * Modal structure for Materialize that indicates the initial date must be lower than the final
- * @type {string}
- */
 const modalDateAlert = `
 <!-- Modal Structure -->
 <div id="modalDate" class="modal data">
@@ -19,10 +11,6 @@ const modalDateAlert = `
   </div>
 </div>
 `;
-/**
- * Modal structure for Materialize that indicates every option must be selected
- * @type {string}
- */
 
 const modalEmptyAlert = `
 <!-- Modal Structure -->

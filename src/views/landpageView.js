@@ -19,12 +19,8 @@ const landPage = () => {
   foreground.style.width = '100%';
   landElem.querySelector('#qhawax_map').style.marginLeft = '25%';
   landElem.querySelector('#andean_map').style.marginRight = '25%';
-  landElem.querySelector('#qhawax_map').addEventListener('click', () => {
-    goTo('mapQhawax');
-  });
-  landElem.querySelector('#andean_map').addEventListener('click', () => {
-    goTo('mapDrone');
-  });
+  landElem.querySelector('#qhawax_map').addEventListener('click', () => goTo('mapQhawax'));
+  landElem.querySelector('#andean_map').addEventListener('click', () => goTo('mapDrone'));
 
   return landElem;
 };
