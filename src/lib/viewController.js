@@ -3,7 +3,7 @@ import { downloadView } from '../views/downloadView.js';
 import { viewDashboard } from '../views/dashboardView.js';
 import { viewGraphics } from '../views/graphicsView.js';
 import { landPage } from '../views/landpageView.js';
-import { viewFreeDrone} from '../views/freeMapDroneView.js';
+import { viewFreeDrone } from '../views/freeMapDroneView.js';
 
 const changeView = (router) => {
   const container = document.getElementById('content-page');
@@ -14,6 +14,8 @@ const changeView = (router) => {
   case '#/mapDrone':
     return container.appendChild(viewFreeDrone());
   case '#/download':
+    return container.appendChild(downloadView());
+  case '#/downloadDrone':
     return container.appendChild(downloadView());
   case '#/dashboard':
     return container.appendChild(viewDashboard());

@@ -12,4 +12,5 @@ module.exports = {
   devServer: {
     contentBase: '/home/sabrina/qaira dev/qAIRaMap-OpenSource/build',
   },
+  
 };
