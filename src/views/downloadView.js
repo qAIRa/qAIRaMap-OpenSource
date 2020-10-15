@@ -112,7 +112,7 @@ const downloadView = () => {
 
   const downloadElem = document.createElement('div');
 
-  navBarClient(downloadElem, viewDownload);
+ navBarClient(downloadElem, viewDownload)
 
   requestQhawaxs(downloadElem);
 
