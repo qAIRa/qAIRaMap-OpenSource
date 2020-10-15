@@ -123,13 +123,13 @@ const dropdown = `
         `;
 
 const viewDownload = `
-<div class="row">
-    <div class="col s6 offset-s3">
+<div class="row background-download">
+    <div class="col s12 m6 offset-s0.5 offset-m3">
         <div class="card-pannel z-depth-5">
-            <form action="">
+            <form action=""class="form-download">
                 <h5 class="center-align">Download the air quality data</h5>
                 <div class="row">
-                    <div class="input-field col s6 offset-s3">
+                    <div class="col s10 m6 offset-s1 offset-m3">
                               <div class="switch center-align">
                               <label> Hourly average <input type="checkbox" checked="checked" id="select-data"> <span class="lever">
                               </span> Raw Data

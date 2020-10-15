@@ -493,11 +493,13 @@ textarea.materialize-textarea {
 	  -webkit-filter: sepia(0) saturate(1);
 	}
   }
-@media only screen and (max-width: 767px)  {
-	#over_map{
+@media only screen and (max-width: 767p	x) {
+	#over_map {
 		height: 14em;
 		width: 20em;
 		position: relative;
 		bottom: 15.7em;
 		left: 0.5em;
-	}}
+	}
+	
+}
