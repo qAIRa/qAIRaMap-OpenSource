@@ -10,6 +10,9 @@ module.exports = {
 
   target: 'node',
   devServer: {
-    contentBase: './build',
+
+    contentBase: './build'
+
   },
+
 };

@@ -1,4 +1,4 @@
-const viewMap = `   
+const viewMap = `
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__swing" id="over_map">
@@ -31,17 +31,17 @@ const navbar = (structure) => `
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li id="home-menu" type="button"><a >Home</a></li>
-    <li id="return-menu" type="button"><a >Map</a></li>
-    </ul> 
+    <li class="menu-btn" id="home-menu" type="button"><a >Home</a></li>
+    <li class="menu-btn" id="return-menu" type="button"><a >Map</a></li>
+    </ul>
     <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
         <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
     </a>
     <ul id="menu-list-bar" class="right hide-on-med-and-down">
-    <li id="legend-menu"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
-    <li id="download-menu"><a>Download</a></li>
-    <li id="dashboard-menu"><a>Dashboard</a></li>
-    <li id="graphics-menu"><a>Graphics</a></li>
+    <li class="menu-btn" id="legend-menu"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
+    <li class="menu-btn" id="download-menu"><a>Download</a></li>
+    <li class="menu-btn" id="dashboard-menu"><a>Dashboard</a></li>
+    <li class="menu-btn" id="graphics-menu"><a>Graphics</a></li>
     </ul>
     <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
 </div>
@@ -50,14 +50,45 @@ const navbar = (structure) => `
 
 <!-- Mobile menu -->
 <ul id="mobile-nav" class="sidenav">
-<li id="home-menu-mobile" type="button"><a>Home</a></li>
-<li id="return-menu-mobile" type="button"><a>Map</a></li>
-<li id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown2">Legend</a></li>
-<li id="download-mob-menu"><a>Download</a></li>
-<li id="dashboard-menu-mob"><a>Dashboard</a></li>
-<li id="graphics-menu-mob"><a>Graphics</a></li>
+<li class="menu-btn" id="home-menu-mobile" type="button"><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mobile" type="button"><a>Map</a></li>
+<li class="menu-btn" id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown2">Legend</a></li>
+<li class="menu-btn" id="download-mob-menu"><a>Download</a></li>
+<li class="menu-btn" id="dashboard-menu-mob"><a>Dashboard</a></li>
+<li class="menu-btn" id="graphics-menu-mob"><a>Graphics</a></li>
 </ul>
 ${structure}
+`;
+
+const navbarDrone = `
+<div class="navbar-fixed">
+<nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
+<div id="nav-wrapper-menu-bar" class="nav-wrapper">
+    <ul id="menu-left-bar" class="left hide-on-med-and-down">
+    <li class="menu-btn" id="home-menu" type="button"><a >Home</a></li>
+    <li class="menu-btn" id="return-menu-drone" type="button"><a >Map</a></li>
+    </ul>
+    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+    </a>
+    <ul id="menu-list-bar" class="right hide-on-med-and-down">
+    <li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
+    <li class="menu-btn" id="flight-menu"><a>Flights</a></li>
+    <li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
+    </ul>
+    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+</div>
+</nav>
+</div>
+
+<!-- Mobile menu -->
+<ul id="mobile-nav" class="sidenav">
+<li class="menu-btn" id="home-menu-mobile" type="button"><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mobile-drone" type="button"><a>Map</a></li>
+<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>
+<li class="menu-btn" id="flight-menu-mob"><a>Flights</a></li>
+<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>
+</ul>
 `;
 
 const dropdown = `
@@ -123,13 +154,13 @@ const dropdown = `
         `;
 
 const viewDownload = `
-<div class="row">
-    <div class="col s6 offset-s3">
+<div class="row background-download">
+    <div class="col s12 m6 offset-s0.5 offset-m3">
         <div class="card-pannel z-depth-5">
-            <form action="">
+            <form action=""class="form-download">
                 <h5 class="center-align">Download the air quality data</h5>
                 <div class="row">
-                    <div class="input-field col s6 offset-s3">
+                    <div class="col s10 m6 offset-s1 offset-m3">
                               <div class="switch center-align">
                               <label> Hourly average <input type="checkbox" checked="checked" id="select-data"> <span class="lever">
                               </span> Raw Data
@@ -177,12 +208,12 @@ The data has not passed a quality control.</sub></strong></p>
 </div>
 </div>`;
 
-const viewBoard = `   
+const viewBoard = `
 <table class="responsive-table highlight centered table-calibration">
             <thead>
               <tr>
-                <th align="justify">Qhawax</th> 
-                <th align="justify">Name</th>  
+                <th align="justify">Qhawax</th>
+                <th align="justify">Name</th>
                 <th align="justify">Time</th>
                 <th align="justify">SO<sub>2</sub><br>(&micro;g/m<sup>3</sup>)</th>
                 <th align="justify">NO<sub>2</sub><br>(&micro;g/m<sup>3</sup>)</th>
@@ -191,7 +222,7 @@ const viewBoard = `
                 <th align="justify">O<sub>3</sub><br>(&micro;g/m<sup>3</sup>)</th>
                 <th align="justify">PM<sub>2,5</sub><br>(&micro;g/m<sup>3</sup>)</th>
                 <th align="justify">PM<sub>10</sub><br>(&micro;g/m<sup>3</sup>)</th>
-                <th align="justify">UV</th>    
+                <th align="justify">UV</th>
                 <th align="justify">dB</th>
                 <th align="justify">°C</th>
                 <th align="justify">H (%)</th>
@@ -213,7 +244,8 @@ const viewBoard = `
 const chartView = `
 <div class="row edition-element">
 <h4 class="center">Real Time Graphics</h4>
-<select class="browser-default" name="" id="selectQhawax">
+<label for="selectQhawax">qHAWAX name</label>
+<select class="browser-default width-sel-qhawax" name="" id="selectQhawax">
 <option value="" disabled selected> Select a qHAWAX</option>
 </select>
 </div>
@@ -253,7 +285,7 @@ const chartView = `
         <div id="chart15" class="chart"></div><br>
         </div>
     </div>
-        
+
 `;
 
 const landbar = `
@@ -261,7 +293,7 @@ const landbar = `
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    </ul> 
+    </ul>
     <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
         <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
     </a>
@@ -295,12 +327,13 @@ const landpage = `
       </div>
     </div>
   </div>
-  
+
 `;
 
 export {
   viewMap,
   navbar,
+  navbarDrone,
   viewDownload,
   viewBoard,
   chartView,

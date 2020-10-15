@@ -12,7 +12,7 @@
 html {
     font-family: 'NEXT-ART_Regular',Fallback, sans-serif;
   }
-     
+
 
 body {
 	background-image: var(--blue-background);
@@ -54,11 +54,11 @@ main {
 	right: 1em;
 	bottom: 2em;
   }
-  
+
   .cont-access.click .icon-key {
 	opacity: 0.8;
   }
-  
+
   .icon-key.show {
 	background-image: url(img/icon-show.png);
   }
@@ -138,7 +138,7 @@ main {
 #wrapper-pagination{
 	display: flex;
 	flex-wrap: wrap;
-	
+
 }
 
 #wrapper-pagination button{
@@ -226,18 +226,18 @@ main {
 .timeline {
 	position: relative;
   }
-  
+
   .timeline .timeline-event {
 	position: relative;
 	padding-top: 5px;
 	padding-bottom: 5px;
   }
-  
+
   .timeline .timeline-event .timeline-content {
 	position: relative;
 	width: calc(50% - 50px);
   }
-  
+
   .timeline .timeline-event::before {
 	display: block;
 	content: "";
@@ -248,7 +248,7 @@ main {
 	left: calc(50% - 1px);
 	top: 0;
   }
-  
+
   .timeline .timeline-event::after {
 	display: block;
 	content: "";
@@ -259,23 +259,23 @@ main {
 	left: calc(50% - 1px);
 	top: calc(50% + 30px);
   }
-  
+
   .timeline .timeline-event:first-child::before {
 	display: none;
   }
-  
+
   .timeline .timeline-event:last-child::after {
 	display: none;
   }
-  
+
   .timeline .timeline-event:nth-child(even) .timeline-content {
 	margin-left: calc(50% + 50px);
   }
-  
+
   .timeline .timeline-event:nth-child(odd) .timeline-content {
 	margin-left: 0;
   }
-  
+
   .timeline .timeline-badge {
 	display: block;
 	position: absolute;
@@ -288,7 +288,7 @@ main {
 	text-align: center;
 	cursor: default;
   }
-  
+
   .timeline .timeline-badge i {
 	font-size: 25px;
 	line-height: 40px;
@@ -353,10 +353,10 @@ main {
 		font-size: 2.3em;
         margin-top: 2.5em;
 	}
-	
-  
 
-  
+
+
+
 .form-actual-value{
 	display: inline-block;
 	overflow: hidden;
@@ -476,28 +476,33 @@ textarea.materialize-textarea {
 	font-weight: bold;
 }
 
+.width-sel-qhawax{
+	width: 15em;
+}
 #background {
 	-webkit-animation: filter-animation 5s infinite;
   }
-  
+
   @-webkit-keyframes filter-animation {
 	0% {
 	  -webkit-filter: sepia(0) saturate(1);
 	}
-	
+
 	50% {
 	  -webkit-filter: sepia(1) saturate(1);
 	}
-	
+
 	100% {
 	  -webkit-filter: sepia(0) saturate(1);
 	}
   }
-@media only screen and (max-width: 767px)  {
-	#over_map{
+@media only screen and (max-width: 767px) {
+	#over_map {
 		height: 14em;
 		width: 20em;
 		position: relative;
 		bottom: 15.7em;
 		left: 0.5em;
-	}}
+	}
+
+}
