@@ -10,6 +10,6 @@ module.exports = {
 
   target: 'node',
   devServer: {
-    contentBase: '/home/sabrina/qaira dev/qAIRaMap-OpenSource/build',
+    contentBase: './build',
   },
 };
