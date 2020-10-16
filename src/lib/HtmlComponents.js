@@ -243,29 +243,32 @@ const viewBoard = `
 
 const chartView = `
 <div class="row edition-element">
-<h4 class="center">Real Time Graphics</h4>
-<label for="selectQhawax">qHAWAX name</label>
-<select class="browser-default width-sel-qhawax" name="" id="selectQhawax">
-<option value="" disabled selected> Select a qHAWAX</option>
-</select>
+  <h4 class="center">Real Time Graphics</h4>
 </div>
-<div class="col s4  ">
-<select class="browser-default" name="" id="selectTime">
-<option value="" disabled selected> Select time in minutes</option>
-<option value="5"> 5 </option>
-<option value="10"> 10 </option>
-<option value="15"> 15 </option>
-<option value="20"> 20 </option>
-<option value="25"> 25 </option>
-<option value="30"> 30 </option>
-<option value="60"> 60 </option>
-<option value="120"> 120 </option>
-</select>
+<div class="test-row grid-rows">
+  <div class="test-col grid-chart">
+      <select class="browser-default" name="" id="selectQhawax">
+        <option value="" disabled selected> Select a qHAWAX</option>
+      </select>
+      <select class="browser-default" name="" id="selectTime">
+        <option value="" disabled selected> Select sampling in minutes</option>
+        <option value="5"> 5 </option>
+        <option value="10"> 10 </option>
+        <option value="15"> 15 </option>
+        <option value="20"> 20 </option>
+        <option value="25"> 25 </option>
+        <option value="30"> 30 </option>
+        <option value="60"> 60 </option>
+        <option value="120"> 120 </option>
+      </select>
+  </div>
 </div>
 <br>
-<div class="col s2">
-<a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
-</div>
+<div class="test-row grid-rows">
+  <div class="test-col s2 center-align">
+    <a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
+  </div>
+  </div>
 </div>
 <div class="row">
 <div id="chart1" class="chart"></div><br>
