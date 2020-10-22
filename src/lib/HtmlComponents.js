@@ -28,7 +28,7 @@ const viewMap = `
 
 const navbar = (structure) => `
 <div class="navbar-fixed">
-<nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
+<nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
     <li class="menu-btn" id="home-menu" type="button"><a >Home</a></li>

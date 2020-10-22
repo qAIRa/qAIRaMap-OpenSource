@@ -475,6 +475,9 @@ textarea.materialize-textarea {
 .bold {
 	font-weight: bold;
 }
+#nav-menu-bar{
+	background-color: var(--blue);
+}
 
 #background {
 	-webkit-animation: filter-animation 5s infinite;
