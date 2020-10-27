@@ -1,7 +1,7 @@
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
-<div class="animate__animated animate__swing" id="over_map">
+<div class="animate__animated animate__swing" id="over_map" style="width:20.65em; height: 15em; margin: 0px">
 <h6><strong>Air Quality Index (INCA)</strong></h6>
 <table class="centered">
 <thead><tr><th>Good</th><th>Moderate</th><th>Bad</th><th>Hazardous</th></tr></thead>
