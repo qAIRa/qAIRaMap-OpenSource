@@ -304,6 +304,8 @@ main {
 	border: 1px solid #999;
 	text-align: center;
 	border-radius: 20px;
+	height:120px;
+	width:200px;
 }
 .over_map_infowindow {
 	position: absolute;
@@ -319,7 +321,7 @@ main {
 	border-radius: 20px;
 }
 .inca-color {
-	width: 6em;
+	width: 1em;
 }
 .inca-qairito {
 	position: relative;
@@ -496,7 +498,7 @@ textarea.materialize-textarea {
 	  -webkit-filter: sepia(0) saturate(1);
 	}
   }
-@media only screen and (max-width: 767p	x) {
+@media only screen and (max-width: 767px) {
 	#over_map {
 		height: 14em;
 		width: 20em;
@@ -505,4 +507,18 @@ textarea.materialize-textarea {
 		left: 0.5em;
 	}
 	
+	
 }
+@media only screen and (max-width: 350px) {
+	#over_map {
+		height: 14em;
+		width: 20em;
+		position: relative;
+		bottom: 15.7em;
+		left: 0.5em;
+	}
+}
+
+
+
+
