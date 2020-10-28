@@ -1,18 +1,19 @@
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
-<div class="animate__animated animate__swing" id="over_map" style="width:20.65em; height: 15em; margin: 0px">
-<h6><strong>Air Quality Index (INCA)</strong></h6>
+<div class="animate__animated animate__swing" id="over_map">
 <table class="centered">
-<thead><tr><th>Good</th><th>Moderate</th><th>Bad</th><th>Hazardous</th></tr></thead>
+<h6><strong>Air Quality Index (INCA)</strong></h6>
+<thead><tr><th class="inca-color1">Good</th><th class="inca-color1">Moderate</th><th class="inca-color1">Bad</th><th class="inca-color1">Hazardous</th></tr></thead>
 <tbody><tr><td bgcolor="#009966" class="inca-color"></td>
 <td bgcolor="#ffde33" class="inca-color"></td>
 <td bgcolor="#ff9933" class="inca-color"></td>
 <td bgcolor="#cc0033" class="inca-color"></td></tr>
-<tr><td><img class="inca-qairito" id="qairito-good" src="img/qairito/qairito_buena.gif" alt="qairito-good"></img></td>
-<td><img class="inca-qairito" id="qairito-moderate" src="img/qairito/qairito_moderada.gif" alt="qairito-moderate" ></img></td>
-<td><img class="inca-qairito" id="qairito-bad" src="img/qairito/qairito_mala.gif" alt="qairito-bad" ></img></td>
-<td><img class="inca-qairito" id="qairito-hazardous" src="img/qairito/qairito_cuidado.gif" alt="qairito-hazardous"></img></td>
+<tr>
+<td class="inca-qairito1"><img class="inca-qairito" id="qairito-good" src="img/qairito/qairito_buena.gif" alt="qairito-good"></img></td>
+<td class="inca-qairito1"><img class="inca-qairito" id="qairito-moderate" src="img/qairito/qairito_moderada.gif" alt="qairito-moderate" ></img></td>
+<td class="inca-qairito1"><img class="inca-qairito" id="qairito-bad" src="img/qairito/qairito_mala.gif" alt="qairito-bad" ></img></td>
+<td class="inca-qairito1"><img class="inca-qairito" id="qairito-hazardous" src="img/qairito/qairito_cuidado.gif" alt="qairito-hazardous"></img></td>
 </tr>
 </tbody>
 </table>
@@ -31,8 +32,8 @@ const navbar = (structure) => `
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li class="menu-btn" id="home-menu" type="button"><a >Home</a></li>
-    <li class="menu-btn" id="return-menu" type="button"><a >Map</a></li>
+    <li class="menu-btn" id="home-menu"><a >Home</a></li>
+    <li class="menu-btn" id="return-menu"><a >Map</a></li>
     </ul> 
     <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
         <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
@@ -50,8 +51,8 @@ const navbar = (structure) => `
 
 <!-- Mobile menu -->
 <ul id="mobile-nav" class="sidenav">
-<li class="menu-btn" id="home-menu-mobile" type="button"><a>Home</a></li>
-<li class="menu-btn" id="return-menu-mobile" type="button"><a>Map</a></li>
+<li class="menu-btn" id="home-menu-mobile" ><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mobile" ><a>Map</a></li>
 <li class="menu-btn" id="legend-menu-mobile"><a class="dropdown-trigger" href="#" data-target="dropdown2">Legend</a></li>
 <li class="menu-btn" id="download-mob-menu"><a>Download</a></li>
 <li class="menu-btn" id="dashboard-menu-mob"><a>Dashboard</a></li>
@@ -65,8 +66,8 @@ const navbarDrone = `
 <nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li class="menu-btn" id="home-menu" type="button"><a >Home</a></li>
-    <li class="menu-btn" id="return-menu-drone" type="button"><a >Map</a></li>
+    <li class="menu-btn" id="home-menu"><a >Home</a></li>
+    <li class="menu-btn" id="return-menu-drone"><a >Map</a></li>
     </ul> 
     <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
         <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
@@ -83,8 +84,8 @@ const navbarDrone = `
 
 <!-- Mobile menu -->
 <ul id="mobile-nav" class="sidenav">
-<li class="menu-btn" id="home-menu-mobile" type="button"><a>Home</a></li>
-<li class="menu-btn" id="return-menu-mobile-drone" type="button"><a>Map</a></li>
+<li class="menu-btn" id="home-menu-mobile"><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mobile-drone"><a>Map</a></li>
 <li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>
 <li class="menu-btn" id="flight-menu-mob"><a>Flights</a></li>
 <li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>
