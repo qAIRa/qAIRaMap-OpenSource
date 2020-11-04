@@ -20,7 +20,9 @@ Data available: modules and drone in Madre de Dios (UNICEF project) and any othe
 <img src="./build/img/qAIRaMap.jpeg" alt="web view" width="400">
 </p>
 
-You can look for a more detailed documentation [here](https://qaira.github.io/)
+You can look for a more detailed documentation [here.](https://qaira.github.io/)
+
+Feel welcome to join our [forum](https://unicef-if.discourse.group/c/projects/qaira/11) with UNICEF.
 
 ## Getting Started
 
