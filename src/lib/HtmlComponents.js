@@ -1,6 +1,7 @@
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
+<div class="animate__animated animate__swing" id="over_map_qairito"></div>
 <div class="animate__animated animate__swing" id="over_map">
 <table class="centered">
 <h6><strong>Air Quality Index (INCA)</strong></h6>
@@ -63,7 +64,7 @@ ${structure}
 
 const navbarDrone = `
 <div class="navbar-fixed">
-<nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
+<nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
     <li class="menu-btn" id="home-menu"><a >Home</a></li>
@@ -290,7 +291,7 @@ const chartView = `
 
 const landbar = `
 <div class="navbar-fixed">
-<nav id="nav-menu-bar" class="transparent" style="padding: 0px 10px;">
+<nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
     <ul id="menu-left-bar" class="left hide-on-med-and-down">
     </ul> 
@@ -303,31 +304,92 @@ const landbar = `
 </div>
 `;
 
+// const landpage = `
+// <div id="background"></div>
+// <div class="row valign-wrapper" style="position: absolute; top:16em" id="foreground">
+
+// <div class="row">
+//     <div class="col s6 m4 l4 animate__animated animate__zoomIn" id="qhawax_map">
+//       <div class="card hoverable" style="border-radius: 25px;width: min-content;">
+//         <div class="card-image valign-wrapper" >
+//           <img src="img/qHAWAX_v3.png" >
+//         </div>
+//         <div class="card-content">
+//           <p class="blue-grey-text text-darken-3">Map with qHAWAX modules for monitoring air quality.</p>
+//         </div>
+//       </div>
+//     </div>
+
+//     <div class="col s6 m4 l4 animate__animated animate__zoomIn" id="andean_map">
+//       <div class="card hoverable" style="border-radius: 25px;width: min-content;">
+//         <div class="card-image valign-wrapper" >
+//           <img src="img/andeanDrone.png" >
+//         </div>
+//         <div class="card-content">
+//         <p class="blue-grey-text text-darken-3">Map with Andean Drones for monitoring air quality.</p>
+//       </div>
+//       </div>
+//     </div>
+
+//     </div>
+
+//   </div>
+  
+// `;
+
 const landpage = `
 <div id="background"></div>
-<div class="row valign-wrapper" style="position: absolute; top:16em" id="foreground">
-    <div class="col s3  animate__animated animate__zoomIn" id="qhawax_map">
-      <div class="card hoverable" style="border-radius: 25px">
-        <div class="card-image valign-wrapper" style="height: 14em">
-          <img src="img/qHAWAX_v3.png" style="width: 14em; margin:auto">
+<div class="wrapper">
+  <div class="cards_wrap">
+
+    <div class="card_item hoverable z-depth-5" id="qhawax_map">
+      <div class="card_inner">
+        <div class="card_top">
+          <img src="img/qHAWAX_v3.png" alt="qHAWAX" style="width:auto ; height:180px;" />
         </div>
-        <div class="card-content">
-          <p class="blue-grey-text text-darken-3">Map with qHAWAX modules for monitoring air quality.</p>
+        <div class="card_bottom">
+          <div class="card_category">
+            qHAWAX
+          </div>
+          <div class="card_info">
+            <p class="title">Description</p>
+            <p>
+            Map with qHAWAX modules for monitoring air quality.
+            </p>
+          </div>
+          <div class="card_creator">
+            qAIRa
+          </div>
         </div>
       </div>
     </div>
-    <div class="col s3 animate__animated animate__zoomIn" id="andean_map">
-      <div class="card hoverable" style="border-radius: 25px">
-        <div class="card-image valign-wrapper" style="height: 14em">
-          <img src="img/andeanDrone.png" style="width: 14em; margin:auto">
+
+
+    <div class="card_item hoverable z-depth-5" id="andean_map">
+      <div class="card_inner">
+        <div class="card_top">
+          <img src="img/andeanDrone.png" alt="Andean Drone" style="width:auto ; height:180px;"/>
         </div>
-        <div class="card-content">
-        <p class="blue-grey-text text-darken-3">Map with Andean Drones for monitoring air quality.</p>
-      </div>
+        <div class="card_bottom">
+          <div class="card_category">
+            Andean Drone
+          </div>
+          <div class="card_info">
+            <p class="title">Description</p>
+            <p>
+            Map with Andean Drones for monitoring air quality.
+            </p>
+          </div>
+          <div class="card_creator">
+            qAIRa
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
-  
+</div>
+
 `;
 
 export {

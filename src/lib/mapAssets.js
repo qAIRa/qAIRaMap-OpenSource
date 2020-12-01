@@ -24,11 +24,7 @@ const addZero = i => {
 	return i;
 };
 
-const formatDateDB = (timestamp) => {
-  const date = new Date(Date.parse(timestamp) + 5 * 3600 * 1000);
-  return (addZero(date.getHours()) + addZero(date.getMinutes()) + addZero(date.getSeconds())
-  );
-};
+const formatDateDB = timestamp => addZero(new Date(Date.parse(timestamp)).getHours()) + 'h';
 
 const ECAlimits = (sensor) => {
   switch (sensor) {
@@ -53,12 +49,16 @@ const drawChart = async(sensor, qhawaxId) => {
     width:
     window.innerWidth >= 800 ? window.innerWidth * 0.5 : window.innerWidth * 0.85,
     height: window.innerHeight * 0.6,
-    title: `${qhawaxId}: Concentración de ${sensor} de las últimas 24 horas (µg/m3)`,
+    title: `${qhawax_id}: Concentration of ${sensor}<br> from the last 24 hours <sub>(µg/m3)</sub>`,
     showlegend: true,
     colorway: ['#0000FF', '#FF0000'],
+    legend:{
+			orientation:'h',
+			y:window.innerWidth >= 800? -0.1:2,
+				},
     xaxis: {
       title: {
-        text: 'Hora del día',
+        text: 'Time',
         font: {
           family: 'Courier New, monospace',
           size: 12,
@@ -68,7 +68,7 @@ const drawChart = async(sensor, qhawaxId) => {
     },
     yaxis: {
       title: {
-        text: 'Concentración (µg/m3)',
+        text: 'Concentration <sub>(µg/m3)</sub>',
         font: {
           family: 'Courier New, monospace',
           size: 12,
