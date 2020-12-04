@@ -1,6 +1,7 @@
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
+<div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
 <div class="animate__animated animate__swing" id="over_map_qairito"></div>
 <div class="animate__animated animate__swing" id="over_map">
 <table class="centered">
@@ -227,8 +228,8 @@ const viewBoard = `
                 <th align="justify">UV</th>    
                 <th align="justify">dB</th>
                 <th align="justify">°C</th>
-                <th align="justify">H (%)</th>
-                <th align="justify">P<br>(kPa)</th>
+                <th align="justify" scope="row">H (%)</th>
+                <th align="justify" scope="row">P<br>(hPa)</th>
                 <th align="justify">Conection</th>
               </tr>
             </thead>
@@ -243,15 +244,17 @@ const viewBoard = `
           </table>
 `;
 
-const chartView = `
-<div class="row edition-element">
+const chartView = `<div class="row edition-element">
 <h4 class="center">Real Time Graphics</h4>
-<select class="browser-default" name="" id="selectQhawax">
-<option value="" disabled selected> Select a qHAWAX</option>
+<div class="col s4  ">
+<label for="selectQhawax">qHAWAX</label>
+  <select class="browser-default" name="" id="selectQhawax">
+  <option value="" disabled selected> Select a qHAWAX</option>
 </select>
 </div>
 <div class="col s4  ">
-<select class="browser-default" name="" id="selectTime">
+<label for="selectTime">Graphic time</label>
+  <select class="browser-default" name="" id="selectTime">
 <option value="" disabled selected> Select time in minutes</option>
 <option value="5"> 5 </option>
 <option value="10"> 10 </option>
@@ -268,25 +271,9 @@ const chartView = `
 <a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
 </div>
 </div>
-<div class="row">
-<div id="chart1" class="chart"></div><br>
-        <div id="chart2" class="chart"></div><br>
-        <div id="chart3" class="chart"></div><br>
-        <div id="chart4" class="chart"></div><br>
-        <div id="chart5" class="chart"></div><br>
-        <div id="chart6" class="chart"></div><br>
-        <div id="chart7" class="chart"></div><br>
-        <div id="chart8" class="chart"></div><br>
-        <div id="chart9" class="chart"></div><br>
-        <div id="chart10" class="chart"></div><br>
-        <div id="chart11" class="chart"></div><br>
-        <div id="chart12" class="chart"></div><br>
-        <div id="chart13" class="chart"></div><br>
-        <div id="chart14" class="chart"></div><br>
-        <div id="chart15" class="chart"></div><br>
-        </div>
-    </div>
-        
+      <div class="row" id="charts"></div>
+  </div>
+      
 `;
 
 const landbar = `
@@ -304,38 +291,6 @@ const landbar = `
 </div>
 `;
 
-// const landpage = `
-// <div id="background"></div>
-// <div class="row valign-wrapper" style="position: absolute; top:16em" id="foreground">
-
-// <div class="row">
-//     <div class="col s6 m4 l4 animate__animated animate__zoomIn" id="qhawax_map">
-//       <div class="card hoverable" style="border-radius: 25px;width: min-content;">
-//         <div class="card-image valign-wrapper" >
-//           <img src="img/qHAWAX_v3.png" >
-//         </div>
-//         <div class="card-content">
-//           <p class="blue-grey-text text-darken-3">Map with qHAWAX modules for monitoring air quality.</p>
-//         </div>
-//       </div>
-//     </div>
-
-//     <div class="col s6 m4 l4 animate__animated animate__zoomIn" id="andean_map">
-//       <div class="card hoverable" style="border-radius: 25px;width: min-content;">
-//         <div class="card-image valign-wrapper" >
-//           <img src="img/andeanDrone.png" >
-//         </div>
-//         <div class="card-content">
-//         <p class="blue-grey-text text-darken-3">Map with Andean Drones for monitoring air quality.</p>
-//       </div>
-//       </div>
-//     </div>
-
-//     </div>
-
-//   </div>
-  
-// `;
 
 const landpage = `
 <div id="background"></div>
@@ -392,6 +347,135 @@ const landpage = `
 
 `;
 
+const infowindow = (qhawax) =>`
+<p>${qhawax.name}: ${qhawax.comercial_name}</p>
+<div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
+        <li class="tab col s2"><a href="#test2" >Tiempo Real</a></li>
+        <li class="tab col s2"><a href="#test3" >Tiempo</a></li>
+        <li class="tab col s2"><a href="#test4">Gráficos</a></li>
+      </ul>
+</div>
+    <div id="test1" class="col s12"></div>
+    <div id="test2" class="col s12"></div>
+    <div id="test3" class="col s12"></div>
+    <div id="test4" class="col s12"></div>
+
+`;
+
+const pannelInca = (inca, color)=> `
+<table class="responsive-table stripped centered pannel-inca">
+        <thead>
+          <tr>
+              <th>${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}</th>
+              <th>${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Ozono (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
+              <th>${window.innerWidth > 768 ? 'Dióxido de Azúfre (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}2,5&micro;</th>
+              <th>${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}10&micro;</th>
+              <th>Hora</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td bgcolor="${color.result.CO.color}">${notNull(inca.CO)}</td>
+            <td bgcolor="${color.result.NO2.color}">${notNull(inca.NO2)}</td>
+            <td bgcolor="${color.result.O3.color}">${notNull(inca.O3)}</td>
+            <td bgcolor="${color.result.H2S.color}">${notNull(inca.H2S)}</td>
+            <td bgcolor="${color.result.SO2.color}">${notNull(inca.SO2)}</td>
+            <td bgcolor="${color.result.PM25.color}">${notNull(inca.PM25)}</td>
+            <td bgcolor="${color.result.PM10.color}">${notNull(inca.PM10)}</td>
+            <td>${color.time}</td>
+          </tr>
+        </tbody>
+      </table>
+`
+const pannelRealTime = (socket)=> `
+<table class="responsive-table stripped centered pannel-inca">
+        <thead>
+          <tr>
+              <th>${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>) ' : 'NO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Ozono <br> (O<sub>3</sub>)' : 'O<sub>3</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Dióxido de Azúfre  <br> (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Material Particulado PM2,5&micro' : 'PM2,5&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Material Particulado PM10&micro' : 'PM10&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>${notNull(socket.CO_ug_m3)}</td>
+            <td>${notNull(socket.NO2_ug_m3)}</td>
+            <td>${notNull(socket.O3_ug_m3)}</td>
+            <td>${notNull(socket.H2S_ug_m3)}</td>
+            <td>${socket.ID==='qH007'?'__':notNull(socket.SO2_ug_m3)}</td>
+            <td>${notNull(socket.PM25)}</td>
+            <td>${notNull(socket.PM10)}</td>
+          </tr>
+        </tbody>
+      </table>
+`
+
+const pannelMeteo = (zone,meteo,uv)=> `
+<p>Tipo de zona: ${zone.zone}</p>
+<table class="responsive-table stripped centered pannel-inca">
+        <thead>
+          <tr>
+              <th>${window.innerWidth > 768 ? 'Ruido' : '<i class="small material-icons">volume_up</i>'}<sub>(dB)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Temperatura ' : 'T '}<sub>(°C)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Ultra Violeta ' : 'UV '}<sub>(UVI)</sub><br></th>
+              <th>${window.innerWidth > 768 ? 'Presión ' : 'P '}<sub>(hPa)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Humedad ' : 'HR '}<sub>(%)</sub></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td bgcolor="${zone.color}">${notNull(meteo.spl)}</td>
+            <td >${notNull(meteo.temperature)}</td>
+            <td bgcolor="${uv.color}">${notNull(meteo.UV)}</td>
+            <td >${notNull(meteo.pressure)}</td>
+            <td >${notNull(meteo.humidity)}</td>
+          </tr>
+        </tbody>
+      </table>
+`
+const pannelGraphics = (qhawax)=> `
+<p >Gráficos de las últimas 24 horas. Click en <i class="tiny material-icons">remove_red_eye</i></p>
+<table class="responsive-table stripped centered pannel-inca">
+    <thead id="graph-head">
+          <tr>
+              <th >${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}</th>
+              <th >${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Ozono (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
+              <th >${window.innerWidth > 768 ? 'Dióxido de Azúfre (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}2,5&micro;</th>
+              <th >${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}10&micro;</th>
+          </tr>
+    </thead> 
+
+    <tbody>
+    <tr>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="CO">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="NO2">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="O3">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="H2S">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="SO2">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="PM25">remove_red_eye</i></a></td>
+      <td class="infowindow-graph icon-eye" ><a class="modal-trigger" href="#modalGraphic" ><i class="material-icons icon-green" data-infograph="${qhawax.name}" data-label="PM10">remove_red_eye</i></a></td>
+    </tr>
+  </tbody>
+
+      </table>
+      
+`
+
 export {
   viewMap,
   navbar,
@@ -402,4 +486,9 @@ export {
   dropdown,
   landpage,
   landbar,
+  infowindow,
+  pannelGraphics,
+  pannelInca,
+  pannelMeteo,
+  pannelRealTime
 };

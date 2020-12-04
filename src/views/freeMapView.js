@@ -23,6 +23,8 @@ const viewFreeMap = () => {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
   map.markers = [];
+	map.latitude = [];
+	map.longitude = [];
 
   const socket = io.connect(
     'https://qairamapnapi-dev-opensource.qairadrones.com/',
@@ -37,6 +39,12 @@ const viewFreeMap = () => {
 
   request(map);
 
+  mapElem.querySelector('#over_map').addEventListener('mouseenter',(e)=>{
+		M.Toast.dismissAll();
+		M.toast({html: 'You can click on a leaf for more information.',
+		classes: 'orange darken-1 rounded',
+		displayLength: 2000})
+  })
   return mapElem;
 };
 

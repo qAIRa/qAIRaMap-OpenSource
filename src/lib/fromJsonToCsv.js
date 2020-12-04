@@ -17,32 +17,15 @@ const json2csv = (jsonData, jsonFields) => {
   return csvStr;
 };
 
-const download = (content, fileName, mimeType) => {
-  const a = document.createElement('a');
-  mimeType = mimeType || 'application/octet-stream';
+const download = (csvcontent, fileName) => {
+	const uInt8 = new TextEncoder().encode(csvcontent)
+	const fileStream = streamSaver.createWriteStream(`${fileName}+.csv`, {
+		size: uInt8.byteLength, // (optional filesize) Will show progress
+		writableStrategy: undefined, // (optional)
+		readableStrategy: undefined  // (optional)
+	  })
+		new Response(csvcontent).body.pipeTo(fileStream)
 
-  if (navigator.msSaveBlob) {
-    // IE10
-    navigator.msSaveBlob(
-      new Blob([content], {
-        type: mimeType,
-      }),
-      fileName
-    );
-  } else if (URL && 'download' in a) {
-    //html5 A[download]
-    a.href = URL.createObjectURL(
-      new Blob([content], {
-        type: mimeType,
-      }),
-    );
-    a.setAttribute('download', fileName);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } else {
-    location.href =	'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
-  }
-};
+}
 
 export { json2csv, download };

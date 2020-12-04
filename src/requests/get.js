@@ -11,17 +11,17 @@ const requestAllQhawax = async() => {
 };
 
 const requestAverageMeasurement = async(qhawax, sensor) => {
-  const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`).catch((err) => handleError(err));
+  const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`).catch((err) => handleError(err));
   return await response.json();
 };
 
 const requestBinnacle = async(ID) => {
-  const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/get_all_observations_by_qhawax/?qhawaxId=${ID}`).catch((err) => handleError(err));
+  const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawaxId=${ID}`).catch((err) => handleError(err));
   return await response.json();
 };
 
 const requestStatus = async(ID) => {
-  const response = await fetch(`https://qairamapnapi-dev-opensource.qairadrones.com/api/qhawax_status/?name=${ID}`).catch((err) => console.log(err));
+  const response = await fetch(`${APISource}qhawax_status/?name=${ID}`);
   return await response.text();
 };
 const downloadData = async(check, id, init, end) => {
@@ -33,14 +33,18 @@ const downloadData = async(check, id, init, end) => {
   return await response.json();
 };
 const requestInstallationDate = async(ID) => {
-  const response = await fetch(`${APISource}GetInstallationDate/?qhawaxId=${ID}`).catch((err) => console.log(err));
+  const response = await fetch(`${APISource}GetInstallationDate/?qhawaxId=${ID}`);
   return await response.text();
 };
 
 const requestGraphicsData = async(qhawax, time) => {
-  const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`).catch((err) => console.log(err));
+  const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`);
   return await response.json();
 };
+
+const requestDroneTelemetry = async() => {
+  
+}
 export {
   requestAverageMeasurement,
   requestAllQhawax,

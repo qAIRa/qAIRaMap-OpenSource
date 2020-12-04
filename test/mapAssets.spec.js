@@ -4,7 +4,6 @@ import {
 	airQuality,
 	qhawaxLeaf,
 	zoneColorNoise,
-	indexValue,
 	setQhawaxInfowindow,
 	uvColor,
 	ECAlimits,
@@ -145,23 +144,23 @@ test('airQuality', () =>{
 	expect(airQuality(dataAirQuality)).toStrictEqual(resultAirQuality);
 });
 
-test('indexValue', () =>{
-	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
-});
+// test('indexValue', () =>{
+// 	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
+// });
 
 test('zoneColorNoise', () =>{
 	expect(zoneColorNoise(dataIndexValue)).toStrictEqual(resultZoneColorNoise);
 });
 
-test('ECAlimits', () =>{
-	expect(ECAlimits('CO')).toStrictEqual(10000);
-	expect(ECAlimits('NO2')).toStrictEqual(100);
-	expect(ECAlimits('O3')).toStrictEqual(100);
-	expect(ECAlimits('H2S')).toStrictEqual(150);
-	expect(ECAlimits('SO2')).toStrictEqual(250);
-	expect(ECAlimits('PM25')).toStrictEqual(50);
-	expect(ECAlimits('PM10')).toStrictEqual(100);
-});
+// test('ECAlimits', () =>{
+// 	expect(ECAlimits('CO')).toStrictEqual(10000);
+// 	expect(ECAlimits('NO2')).toStrictEqual(100);
+// 	expect(ECAlimits('O3')).toStrictEqual(100);
+// 	expect(ECAlimits('H2S')).toStrictEqual(150);
+// 	expect(ECAlimits('SO2')).toStrictEqual(250);
+// 	expect(ECAlimits('PM25')).toStrictEqual(50);
+// 	expect(ECAlimits('PM10')).toStrictEqual(100);
+// });
 
 test('addZero', () =>{
 	expect(addZero(2)).toStrictEqual('02');
