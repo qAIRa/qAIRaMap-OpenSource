@@ -384,6 +384,22 @@ main {
 	padding: 0;
 	border-radius: 20px;
 }
+
+#over_map_drones {
+	position: absolute;
+	bottom: 21px;
+    right: 4%;
+	z-index: 5;
+	background-color: #fff;
+	border: 1px solid #999;
+	text-align: center;
+	height: 200px;
+    width: 500px;
+	padding: 0;
+	border-radius: 20px;
+	overflow-y: scroll;
+}
+
 td{
 	border-radius: 5px;
 }

@@ -1,3 +1,5 @@
 node_modules/
 .env
 coverage/
+src/lib/telemetry.json
+src/lib/telemetry_workshop.json

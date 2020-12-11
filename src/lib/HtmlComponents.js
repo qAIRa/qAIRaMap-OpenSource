@@ -29,6 +29,31 @@ const viewMap = `
 </div>
 `;
 
+const droneChart = `
+<div class="animate__animated animate__zoomIn z-depth-4" id="over_map_drones">
+<h6><strong>Active Andean Drones</strong></h6>
+<table class=" centered" style="max-height:100px;">
+<thead>
+  <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Position</th>
+  </tr>
+</thead>
+<tbody>
+        </tbody>
+      </table>
+</div>
+`;
+
+const droneChartRow = (name, position)=>`
+<tr class="drone_position" id="${position.lat},${position.lng}">
+<td><i class="material-icons small scale-transition">airplanemode_active</i></td>
+<td>${name}</td>
+<td>Lat: ${position.lat}, Lng: ${position.lng}</td>
+</tr>
+`;
+
 const navbar = (structure) => `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
@@ -490,5 +515,7 @@ export {
   pannelGraphics,
   pannelInca,
   pannelMeteo,
-  pannelRealTime
+  pannelRealTime,
+  droneChart,
+  droneChartRow
 };
