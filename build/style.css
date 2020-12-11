@@ -347,6 +347,7 @@ main {
 	text-align: center;
 	border-radius: 20px;
 	width: max-content;
+	max-width: 60%;
 }
 #over_map_qairito {
 	position: absolute;
@@ -698,6 +699,10 @@ textarea.materialize-textarea {
 		height: 518px;
 		width: 192px;
 	}
+	#over_map_drones{
+		width: 332px;
+		height: 150px;
+	}
 	.pannel-inca {
 		margin: 6px 0px 0px 3px;
 	}
@@ -716,6 +721,11 @@ textarea.materialize-textarea {
 		height: 100px;
 		left: 0;
 	}
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
 }
 
 

@@ -16,7 +16,7 @@ const requestAverageMeasurement = async(qhawax, sensor) => {
 };
 
 const requestBinnacle = async(ID) => {
-  const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawaxId=${ID}`).catch((err) => handleError(err));
+  const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawax_id=${ID}`).catch((err) => handleError(err));
   return await response.json();
 };
 
@@ -24,16 +24,13 @@ const requestStatus = async(ID) => {
   const response = await fetch(`${APISource}qhawax_status/?name=${ID}`);
   return await response.text();
 };
-const downloadData = async(check, id, init, end) => {
-  const URL = check
-    ? `${APISource}valid_processed_measurements_period/?qhawaxId=${id}&initial_timestamp=${init}&final_timestamp=${end}`
-    : `${APISource}average_valid_processed_period/?qhawaxId=${id}&initial_timestamp=${init}&final_timestamp=${end}`;
-
-  const response = await fetch(URL).catch((err) => handleError(err));
+const downloadData = async(id, init, end) => {
+  const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`)
+  .catch((err) => handleError(err));
   return await response.json();
 };
 const requestInstallationDate = async(ID) => {
-  const response = await fetch(`${APISource}GetInstallationDate/?qhawaxId=${ID}`);
+  const response = await fetch(`${APISource}GetInstallationDate/?qhawax_id=${ID}`);
   return await response.text();
 };
 

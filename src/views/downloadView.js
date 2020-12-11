@@ -46,18 +46,18 @@ const requestQhawaxs = async(element) => {
   const addOptions = element.querySelector('#selectQhawax');
   qhawax_list.forEach((qhawax) => {
     const option = document.createElement('option');
-    option.setAttribute('value', qhawax.qhawaxId);
+    option.setAttribute('value', qhawax.qhawax_id);
     option.innerText =	qhawax.name + ': ' + qhawax.comercial_name;;
     array_qhawax.push(qhawax);
     addOptions.appendChild(option);
   });
 };
 
-const requestDownload = async(switchData, init, end) => {
+const requestDownload = async(init, end) => {
   let filename = '';
-  const json = await downloadData(switchData.checked, selectedParameters.id, init, end);
+  const json = await downloadData( selectedParameters.id, init, end);
   array_qhawax.forEach((qhawax) => {
-    filename +=	Number(selectedParameters.id) === Number(qhawax.qhawaxId)
+    filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
       ? `${qhawax.name}`
 				  + '-'
 				  + `${qhawax.comercial_name}`
@@ -65,8 +65,9 @@ const requestDownload = async(switchData, init, end) => {
   });
 
   const csvContent = json2csv(json, csvFields);
-  download(csvContent, `${filename}.csv`, 'text/csv;encoding:utf-8');
-  window.location.reload();
+  csvContent!=='' ? download(csvContent, filename):M.Toast.dismissAll()||M.toast({ html: 'No hay data válida para el periodo.',
+	displayLength: 3000, });
+	 setTimeout(()=>window.location.reload(), 2000)
 };
 
 const installationDateReq = async(selection, element) => {
@@ -119,8 +120,6 @@ const downloadView = () => {
   const selection = downloadElem.querySelectorAll('select');
   M.FormSelect.init(selection);
 
-  const switchData = downloadElem.querySelector('#select-data');
-
   selection[0].onchange = () => {
     installationDateReq(selection, downloadElem);
   };
@@ -139,7 +138,7 @@ const downloadView = () => {
     } else if (Date.parse(initial_value) >= Date.parse(final_value)) {
       openModalDateAlert();
     } else {
-			 	requestDownload(switchData, initial_timestamp, final_timestamp);
+			 	requestDownload(initial_timestamp, final_timestamp);
       finalToast();
       const pannel = document.querySelector('.card-pannel');
       pannel.innerHTML = waitingLoader;

@@ -186,14 +186,9 @@ const viewDownload = `
     <div class="col s12 m6 offset-s0.5 offset-m3">
         <div class="card-pannel z-depth-5">
             <form action=""class="form-download">
-                <h5 class="center-align">Download the air quality data</h5>
+                <h5 class="center-align">Download the hourly average air quality data</h5><br>
                 <div class="row">
                     <div class="col s10 m6 offset-s1 offset-m3">
-                              <div class="switch center-align">
-                              <label> Hourly average <input type="checkbox" checked="checked" id="select-data"> <span class="lever">
-                              </span> Raw Data
-                              </label>
-                              </div><br>
                         <select class="browser-default center-align" name="" id="selectQhawax">
                         <option value="" disabled selected> Select a qHAWAX</option>
                         </select>

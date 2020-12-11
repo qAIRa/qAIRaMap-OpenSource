@@ -3,3 +3,4 @@ node_modules/
 coverage/
 src/lib/telemetry.json
 src/lib/telemetry_workshop.json
+build/index.bundle.js
