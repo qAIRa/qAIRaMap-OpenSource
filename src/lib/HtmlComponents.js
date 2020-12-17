@@ -1,3 +1,4 @@
+const notNull = (value) => value===null ||value < 0 ? '__': value;
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
@@ -372,9 +373,9 @@ const infowindow = (qhawax) =>`
 <div class="col s12">
       <ul class="tabs">
         <li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
-        <li class="tab col s2"><a href="#test2" >Tiempo Real</a></li>
-        <li class="tab col s2"><a href="#test3" >Tiempo</a></li>
-        <li class="tab col s2"><a href="#test4">Gráficos</a></li>
+        <li class="tab col s2"><a href="#test2" >Real Time</a></li>
+        <li class="tab col s2"><a href="#test3" >Weather</a></li>
+        <li class="tab col s2"><a href="#test4">Graphics</a></li>
       </ul>
 </div>
     <div id="test1" class="col s12"></div>
@@ -388,14 +389,14 @@ const pannelInca = (inca, color)=> `
 <table class="responsive-table stripped centered pannel-inca">
         <thead>
           <tr>
-              <th>${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}</th>
-              <th>${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
-              <th>${window.innerWidth > 768 ? 'Ozono (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
-              <th>${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
-              <th>${window.innerWidth > 768 ? 'Dióxido de Azúfre (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
-              <th>${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}2,5&micro;</th>
-              <th>${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}10&micro;</th>
-              <th>Hora</th>
+              <th>${window.innerWidth > 768 ? 'Carbon monoxide (CO)' : 'CO'}</th>
+              <th>${window.innerWidth > 768 ? 'Nitrogen dioxide (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Ozone (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Hydrogen sulfide (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
+              <th>${window.innerWidth > 768 ? 'Sulfur dioxide (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
+              <th>${window.innerWidth > 768 ? 'Particulate material ' : 'PM'}2,5&micro;</th>
+              <th>${window.innerWidth > 768 ? 'Particulate material ' : 'PM'}10&micro;</th>
+              <th>Hour</th>
           </tr>
         </thead>
 
@@ -416,14 +417,13 @@ const pannelInca = (inca, color)=> `
 const pannelRealTime = (socket)=> `
 <table class="responsive-table stripped centered pannel-inca">
         <thead>
-          <tr>
-              <th>${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>) ' : 'NO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Ozono <br> (O<sub>3</sub>)' : 'O<sub>3</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Dióxido de Azúfre  <br> (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Material Particulado PM2,5&micro' : 'PM2,5&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Material Particulado PM10&micro' : 'PM10&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Carbon monoxide (CO)' : 'CO'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Nitrogen dioxide (NO<sub>2</sub>) ' : 'NO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Ozone <br> (O<sub>3</sub>)' : 'O<sub>3</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Hydrogen sulfide (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Sulfur dioxide  <br> (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Particulate material PM2,5&micro' : 'PM2,5&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Particulate material PM10&micro' : 'PM10&micro'}<sub>(&microg/m<sup>3</sup>)</sub></th>
           </tr>
         </thead>
 
@@ -442,15 +442,15 @@ const pannelRealTime = (socket)=> `
 `
 
 const pannelMeteo = (zone,meteo,uv)=> `
-<p>Tipo de zona: ${zone.zone}</p>
+<p>Zone Type: ${zone.zone}</p>
 <table class="responsive-table stripped centered pannel-inca">
         <thead>
           <tr>
-              <th>${window.innerWidth > 768 ? 'Ruido' : '<i class="small material-icons">volume_up</i>'}<sub>(dB)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Temperatura ' : 'T '}<sub>(°C)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Ultra Violeta ' : 'UV '}<sub>(UVI)</sub><br></th>
-              <th>${window.innerWidth > 768 ? 'Presión ' : 'P '}<sub>(hPa)</sub></th>
-              <th>${window.innerWidth > 768 ? 'Humedad ' : 'HR '}<sub>(%)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Noise' : '<i class="small material-icons">volume_up</i>'}<sub>(dB)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Temperature ' : 'T '}<sub>(°C)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Ultra Violet ' : 'UV '}<sub>(UVI)</sub><br></th>
+              <th>${window.innerWidth > 768 ? 'Pressure ' : 'P '}<sub>(hPa)</sub></th>
+              <th>${window.innerWidth > 768 ? 'Humidity ' : 'HR '}<sub>(%)</sub></th>
           </tr>
         </thead>
 
@@ -466,17 +466,16 @@ const pannelMeteo = (zone,meteo,uv)=> `
       </table>
 `
 const pannelGraphics = (qhawax)=> `
-<p >Gráficos de las últimas 24 horas. Click en <i class="tiny material-icons">remove_red_eye</i></p>
+<p >Graphics from the last 24 hours. Click en <i class="tiny material-icons">remove_red_eye</i></p>
 <table class="responsive-table stripped centered pannel-inca">
     <thead id="graph-head">
-          <tr>
-              <th >${window.innerWidth > 768 ? 'Monóxido de Carbono (CO)' : 'CO'}</th>
-              <th >${window.innerWidth > 768 ? 'Dióxido de Nitrógeno (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
-              <th >${window.innerWidth > 768 ? 'Ozono (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
-              <th >${window.innerWidth > 768 ? 'Sulfuro de Hidrógeno (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
-              <th >${window.innerWidth > 768 ? 'Dióxido de Azúfre (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
-              <th >${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}2,5&micro;</th>
-              <th >${window.innerWidth > 768 ? 'Material Particulado ' : 'PM'}10&micro;</th>
+              <th >${window.innerWidth > 768 ? 'Carbon monoxide (CO)' : 'CO'}</th>
+              <th >${window.innerWidth > 768 ? 'Nitrogen dioxide (NO<sub>2</sub>)' : 'NO<sub>2</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Ozone (O<sub>3</sub>)' : 'O<sub>3</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Hydrogen sulfide (H<sub>2</sub>S)' : 'H<sub>2</sub>S'}</th>
+              <th >${window.innerWidth > 768 ? 'Sulfur dioxide (SO<sub>2</sub>)' : 'SO<sub>2</sub>'}</th>
+              <th >${window.innerWidth > 768 ? 'Particulate material ' : 'PM'}2,5&micro;</th>
+              <th >${window.innerWidth > 768 ? 'Particulate material ' : 'PM'}10&micro;</th>
           </tr>
     </thead> 
 

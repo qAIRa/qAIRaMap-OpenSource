@@ -358,8 +358,7 @@ main {
 }
 #qairito-back {
 	position: absolute;
-    bottom: -50px;
-    left: -15px;
+    bottom: 15px;
     text-align: center;
     width: 130px;
     height: 130px;
@@ -374,14 +373,14 @@ main {
 
 #over_map_infowindow {
 	position: absolute;
-	top: 80px;
-    right: 25px;
+	top: 15px;
+	right: 25px;
 	z-index: 5;
 	background-color: #fff;
 	border: 1px solid #999;
 	text-align: center;
-	height: 264px;
-    width: 710px;
+	height: 253px;
+    width: 616px;
 	padding: 0;
 	border-radius: 20px;
 }
@@ -407,6 +406,7 @@ td{
 .pannel-inca{
 	margin: -13px 0px 0px 3px;
 	table-layout: fixed;
+	font-size: small;
 }
 
 .inca-title {
@@ -575,6 +575,32 @@ textarea.materialize-textarea {
 .bold {
 	font-weight: bold;
 }
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: var(--blue);
+}
+.tabs .tab a {
+	color: var(--blue);
+
+  }
+  
+  .tabs .tab a:hover {
+	color:var(--blue);
+
+  }
+  
+  .tabs .tab a:focus.active {
+	color:var(--blue);
+
+	background-color: rgba(38, 166, 153, 0.329);
+
+  }
+  
+  .tabs .indicator {
+	background-color:#26a69a;
+
+  }
 #nav-menu-bar{
 	background-color: var(--blue);
 }
@@ -657,6 +683,16 @@ textarea.materialize-textarea {
 .cards_wrap .card_bottom .card_creator {
   text-align: center;
 }
+i.icon-green {
+    color: #009966;
+}
+.icon-eye{
+	padding-block-start: 0;
+	padding-block-end: 0;
+}
+#graph-head{
+	width: 120px;
+}
 
 @media (max-width: 1024px) {
   .cards_wrap .card_item {
@@ -694,7 +730,7 @@ textarea.materialize-textarea {
 		margin: 6px;
 	}
 	#over_map_infowindow {
-		top: 70px;
+		top: 2px;
 		right: 11px;
 		height: 518px;
 		width: 192px;

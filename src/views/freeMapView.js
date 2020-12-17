@@ -14,6 +14,9 @@ const viewFreeMap = () => {
   const mapElem = document.createElement('div');
   navBarClient(mapElem, viewMap);
 
+  const modals = mapElem.querySelectorAll('.modal');
+	M.Modal.init(modals);
+
   const map = new google.maps.Map(mapElem.querySelector('#map'), {
     center: {
       lat: -12.04318,

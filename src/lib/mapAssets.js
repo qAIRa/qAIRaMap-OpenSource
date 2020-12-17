@@ -44,7 +44,7 @@ const drawChart = async (sensor, qhawax_id) => {
 				? window.innerWidth * 0.5
 				: window.innerWidth * 0.85,
 		height: window.innerHeight * 0.6,
-		title: `${qhawax_id}: Concentración de ${sensor}<br> de las últimas 24 horas <sub>(µg/m3)</sub>`,
+		title: `${qhawax_id}: Concentration of ${sensor}<br> from the last 24 hours <sub>(µg/m3)</sub>`,
 		showlegend: true,
 		colorway: ['#0000FF', '#FF0000'],
 		legend:{
@@ -53,7 +53,7 @@ const drawChart = async (sensor, qhawax_id) => {
 				},
 		xaxis: {
 			title: {
-				text: 'Hora del día',
+				text: 'Time of the day',
 				font: {
 					family: 'Courier New, monospace',
 					size: 12,
@@ -63,7 +63,7 @@ const drawChart = async (sensor, qhawax_id) => {
 		},
 		yaxis: {
 			title: {
-				text: 'Concentración <sub>(µg/m3)</sub>',
+				text: 'Concentration <sub>(µg/m3)</sub>',
 				font: {
 					family: 'Courier New, monospace',
 					size: 12,
@@ -73,16 +73,13 @@ const drawChart = async (sensor, qhawax_id) => {
 		},
 	};
 	let data = [];
-	// const response = await fetch(
-	// 	`${APISource}gas_average_measurement/?qhawax=${qhawax_id}&gas=${sensor}`
-	// );
 	const json = await requestAverageMeasurement(qhawax_id,sensor)
 	let yValues = [];
 	let xValues = [];
 	let yECA = [];
 	Object.entries(json).forEach(d => {
 		yValues.push(d[1].sensor);
-		xValues.push(formatDateDB(d[1].timestamp));
+		xValues.push(formatDateDB(d[1].timestamp_zone));
 		yECA.push(ECAlimits(sensor));
 		let trace1 = {};
 		let trace2 = {};
@@ -96,7 +93,7 @@ const drawChart = async (sensor, qhawax_id) => {
 			(trace2 = {
 				y: yECA,
 				x: xValues,
-				name: 'Límite ECA',
+				name: 'Limit ECA',
 				type: 'scatter',
 			}),
 		];
@@ -120,7 +117,7 @@ const airQuality = data => {
 	}
 	Object.entries(sensors).forEach(([key, value]) => sensors[key]=data[key]);
 
-	const time =addZero(new Date(data.timestamp).getHours()) + ':' + addZero(new Date(data.timestamp).getMinutes());
+	const time =addZero(new Date(data.timestamp_zone).getHours()) + ':' + addZero(new Date(data.timestamp_zone).getMinutes());
 	const limits = {
 		PM10:[0,50,100,167],
 		SO2:[0,50,100,625],
