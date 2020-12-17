@@ -4,38 +4,54 @@ import { requestAllQhawax } from '../requests/get.js';
 import { SocketSource } from '../index.js';
 
 const ECAlimits = {
-	CO_ug_m3:30000,NO2_ug_m3:200,O3_ug_m3:100,H2S_ug_m3:150,SO2_ug_m3:250,PM25:50,PM10:100,ID:0,lat:0,lon:0,UV:20,spl:0,timestamp:0,humidity:0,pressure:0,termperature:0,PM1:0
+	CO_ug_m3:30000,
+	NO2_ug_m3:200,
+	O3_ug_m3:100,
+	H2S_ug_m3:150,
+	SO2_ug_m3:250,
+	PM25:50,
+	PM10:100,
+	ID:0,
+	lat:0,
+	lon:0,
+	UV:20,
+	spl:0,
+	timestamp:0,
+	humidity:0,
+	pressure:0,
+	termperature:0,
+	PM1:0
   }
   
   let valuesForDashboard = {
-	ID:{value:null,color:''},
-	lat:{value:null,color:''},
-	lon:{value:null,color:''},
-	UV:{value:null,color:''},
-	spl:{value:null,color:''},
-	timestamp:{value:null,color:''},
-	PM1:{value:null,color:''},
-	humidity:{value:null,color:''},
-	pressure:{value:null,color:''},
-	temperature:{value:null,color:''},
-	I_temperature:{value:null,color:''},
-	PM10:{value:null,color:''},
-	SO2_ug_m3:{value:null,color:''},
-	CO_ug_m3:{value:null,color:''},
-	H2S_ug_m3:{value:null,color:''},
-	PM25:{value:null,color:''},
-	O3_ug_m3:{value:null,color:''},
-	NO2_ug_m3:{value:null,color:''},
+	ID:null,
+	lat:null,
+	lon:null,
+	UV:null,
+	spl:null,
+	timestamp:null,
+	PM1:null,
+	humidity:null,
+	pressure:null,
+	temperature:null,
+	I_temperature:null,
+	PM10:null,
+	SO2_ug_m3:null,
+	CO_ug_m3:null,
+	H2S_ug_m3:null,
+	PM25:null,
+	O3_ug_m3:null,
+	NO2_ug_m3:null,
   }
   
   
   const indexValue = (data) => {
 	Object.entries(valuesForDashboard).forEach(([key]) => { 
-	  valuesForDashboard[key].value=data[key]
-	  valuesForDashboard[key].value >= ECAlimits[key] ||
-	  valuesForDashboard[key].value < 0  ||
-	  valuesForDashboard[key].value ===null
-	  ? valuesForDashboard[key].color= 'red' : valuesForDashboard[key].color= 'black';
+	  valuesForDashboard[key]=data[key]
+	  valuesForDashboard[key] >= ECAlimits[key] ||
+	  valuesForDashboard[key] < 0  ||
+	  valuesForDashboard[key] ===null
+	  ? valuesForDashboard[key]='_': valuesForDashboard[key]=data[key];
 	 });
   return valuesForDashboard;
 	
@@ -49,19 +65,19 @@ const ECAlimits = {
   const dashboardRowActive =(data,q,value)=>`
   <td><strong>${data.ID}</strong></td>
   <td>${q.comercial_name}</td>
-  <td>${new Date(Date.parse(value.timestamp.value)).toLocaleString('es-ES')}</td>
-  <td style="color:${value.SO2_ug_m3.color}">${value.SO2_ug_m3.value=== null?'no value':value.SO2_ug_m3.value.toFixed(1)}</td>
-  <td style="color:${value.NO2_ug_m3.color}">${value.NO2_ug_m3.value=== null?'no value':value.NO2_ug_m3.value.toFixed(1)}</td>
-  <td style="color:${value.CO_ug_m3.color}">${value.CO_ug_m3.value=== null?'no value':value.CO_ug_m3.value.toFixed(1)}</td>
-  <td style="color:${value.H2S_ug_m3.color}">${value.H2S_ug_m3.value=== null?'no value':value.H2S_ug_m3.value.toFixed(1)}</td>
-  <td style="color:${value.O3_ug_m3.color}">${value.O3_ug_m3.value=== null?'no value':value.O3_ug_m3.value.toFixed(1)}</td>
-  <td style="color:${value.PM25.color}">${value.PM25.value=== null?'no value':value.PM25.value.toFixed(1)}</td>
-  <td style="color:${value.PM10.color}">${value.PM10.value=== null?'no value':value.PM10.value.toFixed(1)}</td>
-  <td style="color:${value.UV.color}">${value.UV.value=== null?'no value':value.UV.value.toFixed(0)}</td>
-  <td>${value.spl.value=== null?'no value':value.spl.value.toFixed(1)}</td>
-  <td>${value.temperature.value=== null?'no value':value.temperature.value.toFixed(1)}</td>
-  <td>${value.humidity.value=== null?'no value':value.humidity.value.toFixed(1)}</td>
-  <td>${value.pressure.value=== null?'no value':(value.pressure.value).toFixed(1)}</td>
+  <td>${new Date(Date.parse(value.timestamp)).toLocaleString('es-ES')}</td>
+  <td>${value.SO2_ug_m3}</td>
+  <td>${value.NO2_ug_m3}</td>
+  <td>${value.CO_ug_m3}</td>
+  <td>${value.H2S_ug_m3}</td>
+  <td>${value.O3_ug_m3}</td>
+  <td>${value.PM25}</td>
+  <td>${value.PM10}</td>
+  <td>${value.UV}</td>
+  <td>${value.spl}</td>
+  <td>${value.temperature}</td>
+  <td>${value.humidity}</td>
+  <td>${value.pressure}</td>
   <td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
 
 const request = async (element, qhawax_asigned, company) => {
