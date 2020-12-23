@@ -6,7 +6,8 @@ import { requestAllQhawax } from '../requests/get.js';
 const request = async (map) => {
   const qhawax_list = await requestAllQhawax();
   qhawax_list.forEach((qhawax) => {
-    drawQhawaxMap(map, qhawax);
+    if(qhawax.lat!==null)
+      drawQhawaxMap(map, qhawax);
   });
 };
 
@@ -18,11 +19,6 @@ const viewFreeMap = () => {
 	M.Modal.init(modals);
 
   const map = new google.maps.Map(mapElem.querySelector('#map'), {
-    center: {
-      lat: -12.04318,
-      lng: -77.02824,
-    },
-    zoom: 12,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
   map.markers = [];
@@ -34,9 +30,9 @@ const viewFreeMap = () => {
   );
   socket.on('update_inca', (res) => {
     if (qhawax.name === res.name) {
-      qhawax.main_inca = res.main_inca;
-
-      drawQhawaxMap(map, qhawax);
+        qhawax.main_inca = res.main_inca;
+        if(qhawax.lat!==null)
+          drawQhawaxMap(map, qhawax);
     }
   });
 

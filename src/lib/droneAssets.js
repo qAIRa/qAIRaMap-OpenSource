@@ -1,6 +1,5 @@
 import { droneChartRow } from '../lib/HtmlComponents.js';
 const showActiveDrones = (element, drone, map) => {
-console.log(element, drone)
 const tableRows = element.querySelector('tbody')
 const latlng = {
     lat: parseFloat(drone.lat),
@@ -8,7 +7,6 @@ const latlng = {
   };
 tableRows.innerHTML += droneChartRow(drone.comercial_name,latlng)
 
-map.setZoom(11);
         const marker = new google.maps.Marker({
           position: latlng,
           map: map,
@@ -22,6 +20,16 @@ map.setZoom(11);
         // const infowindow = new google.maps.InfoWindow();
         // infowindow.setContent(drone.comercial_name);
         // infowindow.open(map, marker);
+    map.markers.push(marker);
+
+	const bounds = new google.maps.LatLngBounds();
+	for (let i = 0; i < map.markers.length; i++) {
+		bounds.extend(map.markers[i].getPosition());
+	}
+	map.fitBounds(bounds);
+    const zoom = map.getZoom();
+    console.log(zoom);
+	map.setZoom(zoom < 13 ? 13 : zoom);
 const icons = element.getElementsByClassName('scale-transition')
 
     setInterval(()=>{

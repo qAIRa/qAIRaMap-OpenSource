@@ -39,10 +39,7 @@ const requestGraphicsData = async(qhawax, time) => {
   return await response.json();
 };
 
-// const requestDroneTelemetry = async() => {
-//   const response = await fetch('../src/lib/telemetry_workshop.json')
-//   return await response.json();
-// }
+
 export {
   requestAverageMeasurement,
   requestAllQhawax,
