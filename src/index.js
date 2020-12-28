@@ -1,7 +1,7 @@
 import { changeView } from './lib/viewController.js';
 
-const APISource = 'https://openqairamapnap.qairadrones.com/api/';
-const SocketSource = 'https://openqairamapnap.qairadrones.com/';
+const APISource = 'https://openqairamapnapi.qairadrones.com/api/';
+const SocketSource = 'https://openqairamapnapi.qairadrones.com/';
 
 window.onload = () => {
   document.getElementById('loader').classList.add('hide');
