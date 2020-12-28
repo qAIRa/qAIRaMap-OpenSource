@@ -280,7 +280,7 @@ const setPannelData = (qhawax, map) => {
 			qhawax_inca_list.forEach(qhawax_inca => {
 				if (qhawax.name===qhawax_inca.qhawax_name) {
 					pannelAll.classList.remove('none')
-					pannelAll.innerHTML=infowindow(qhawax)
+					pannelAll.innerHTML=`<p>${qhawax.name}: ${qhawax.comercial_name}</p>`+infowindow;
 					overMapQ.innerHTML=`<div id="qairito-back" style="background-image: url(${qairito(qhawax.main_inca).b});"><img id="qairito-back-img" src="${qairito(qhawax.main_inca).q}" alt=""></img></div>`
 					const tabs = document.querySelector('.tabs')
 					M.Tabs.init(tabs);

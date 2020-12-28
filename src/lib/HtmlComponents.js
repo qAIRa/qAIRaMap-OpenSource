@@ -55,7 +55,7 @@ const droneChartRow = (name, position)=>`
 </tr>
 `;
 
-const navbar = (structure) => `
+const navbar = `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
@@ -86,41 +86,7 @@ const navbar = (structure) => `
 <li class="menu-btn" id="dashboard-menu-mob"><a>Dashboard</a></li>
 <li class="menu-btn" id="graphics-menu-mob"><a>Graphics</a></li>
 </ul>
-${structure}
-`;
 
-const navbarDrone = `
-<div class="navbar-fixed">
-<nav id="nav-menu-bar" style="padding: 0px 10px;">
-<div id="nav-wrapper-menu-bar" class="nav-wrapper">
-    <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li class="menu-btn" id="home-menu"><a >Home</a></li>
-    <li class="menu-btn" id="return-menu-drone"><a >Map</a></li>
-    </ul> 
-    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
-        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
-    </a>
-    <ul id="menu-list-bar" class="right hide-on-med-and-down">
-    <li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
-    <li class="menu-btn" id="flight-menu"><a>Flights</a></li>
-    <li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
-    </ul>
-    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
-</div>
-</nav>
-</div>
-
-<!-- Mobile menu -->
-<ul id="mobile-nav" class="sidenav">
-<li class="menu-btn" id="home-menu-mobile"><a>Home</a></li>
-<li class="menu-btn" id="return-menu-mobile-drone"><a>Map</a></li>
-<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>
-<li class="menu-btn" id="flight-menu-mob"><a>Flights</a></li>
-<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>
-</ul>
-`;
-
-const dropdown = `
 <!-- Modal Air INCA Structure -->
         <div id="modalAirInca" class="modal">
             <span class="modal-close right">X</span>
@@ -180,7 +146,38 @@ const dropdown = `
             <li class="divider" tabindex="-1"></li>
             <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
         </ul>
-        `;
+`;
+
+const navbarDrone = `
+<div class="navbar-fixed">
+<nav id="nav-menu-bar" style="padding: 0px 10px;">
+<div id="nav-wrapper-menu-bar" class="nav-wrapper">
+    <ul id="menu-left-bar" class="left hide-on-med-and-down">
+    <li class="menu-btn" id="home-menu"><a >Home</a></li>
+    <li class="menu-btn" id="return-menu-drone"><a >Map</a></li>
+    </ul> 
+    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+    </a>
+    <ul id="menu-list-bar" class="right hide-on-med-and-down">
+    <li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
+    <li class="menu-btn" id="flight-menu"><a>Flights</a></li>
+    <li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
+    </ul>
+    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+</div>
+</nav>
+</div>
+
+<!-- Mobile menu -->
+<ul id="mobile-nav" class="sidenav">
+<li class="menu-btn" id="home-menu-mobile"><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mobile-drone"><a>Map</a></li>
+<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>
+<li class="menu-btn" id="flight-menu-mob"><a>Flights</a></li>
+<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>
+</ul>
+`;
 
 const viewDownload = `
 <div class="row background-download">
@@ -368,8 +365,7 @@ const landpage = `
 
 `;
 
-const infowindow = (qhawax) =>`
-<p>${qhawax.name}: ${qhawax.comercial_name}</p>
+const infowindow =`
 <div class="col s12">
       <ul class="tabs">
         <li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
@@ -502,7 +498,6 @@ export {
   viewDownload,
   viewBoard,
   chartView,
-  dropdown,
   landpage,
   landbar,
   infowindow,

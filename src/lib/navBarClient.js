@@ -1,11 +1,11 @@
-import { navbar, dropdown, navbarDrone } from './HtmlComponents.js';
+import { navbar, navbarDrone } from './HtmlComponents.js';
 
 import { goTo } from './viewController.js';
 
 const navBarClient = (element, display) => {
   const menuNavBar = document.querySelector('header');
 
-  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : navbar(dropdown);
+  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : navbar;
   element.innerHTML = display;
 
   const dropMenu = document.querySelectorAll('.dropdown-trigger');
