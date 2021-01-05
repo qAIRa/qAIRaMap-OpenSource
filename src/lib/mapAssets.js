@@ -234,10 +234,6 @@ let incaResult = {
 	SO2:null,
 }
 const incaValues=(inca)=>{
-	inca.qhawax_name==='qH010' ? inca.O3=null : inca.O3;
-	inca.qhawax_name==='qH008' ? inca.NO2=null : inca.NO2;
-	inca.qhawax_name==='qH007' ? inca.SO2=null : inca.SO2;
-
 	incaResult.PM10 =inca.PM10===null?'__': inca.PM10;
 	incaResult.SO2 =inca.SO2===null?'__': inca.SO2;
 	incaResult.CO =inca.CO===null?'__': inca.CO;
