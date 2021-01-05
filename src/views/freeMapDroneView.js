@@ -1,4 +1,3 @@
-import { drawQhawaxMap } from '../lib/mapAssets.js';
 import { showActiveDrones} from '../lib/droneAssets.js';
 import { navBarClient } from '../lib/navBarClient.js';
 import { viewMap, droneChart } from '../lib/HtmlComponents.js';

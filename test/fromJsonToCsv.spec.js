@@ -9,12 +9,20 @@ test('from json to csv', () => {
 		expect.stringContaining(csv)
     );
     });
-// test('download', () => {
-//     window.URL.createObjectURL = jest.fn();
-//     window.navigator.msSaveOrOpenBlob = null;
-//   afterEach(() => {
-//     window.URL.createObjectURL.mockReset();
-//   });
-// 	download(csv, `filename.csv`, 'text/csv;encoding:utf-8')
-//     expect(window.navigator.msSaveOrOpenBlob).toBe(null);
-//     });
+test('download', () => {
+    window.URL.createObjectURL = jest.fn();
+    window.navigator.msSaveOrOpenBlob = null;
+    window.TextEncoder = jest.fn()
+    window.Response = jest.fn()
+   TextEncoder.prototype.encode = jest.fn()
+   Response.prototype.body = jest.fn()
+   Response.prototype.body.pipeTo = jest.fn()
+    window.streamSaver = jest.fn()
+    streamSaver.createWriteStream = jest.fn()
+  afterEach(() => {
+    window.URL.createObjectURL.mockReset();
+  });
+  require('../node_modules/streamsaver/StreamSaver.js')
+	download(csv, `filename.csv`, 'text/csv;encoding:utf-8')
+    expect(window.navigator.msSaveOrOpenBlob).toBe(null);
+    });

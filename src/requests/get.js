@@ -26,7 +26,6 @@ const requestStatus = async(ID) => {
 };
 const downloadData = async(id, init, end) => {
   const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`)
-  .catch((err) => handleError(err));
   return await response.json();
 };
 const requestInstallationDate = async(ID) => {

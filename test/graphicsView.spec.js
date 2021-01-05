@@ -37,23 +37,16 @@ test('format for date', () => {
 	expect(dateFormat('2020-07-29 23:00:00')).toStrictEqual('23:00:00');
 })
 
-// it('create traces for graphic', () => {
-//       document.body.innerHTML =
-// '<div id="chart1" class="chart">'+'</div>'
-// '<div id="chart2" class="chart">'+'</div>'
-// '<div id="chart3" class="chart">'+'</div>'
-// '<div id="chart4" class="chart">'+'</div>'
-// '<div id="chart5" class="chart">'+'</div>'
-// '<div id="chart6" class="chart">'+'</div>'
-// '<div id="chart7" class="chart">'+'</div>'
-// const charts = document.querySelectorAll('.chart')
-// fetch.mockResponseOnce(JSON.stringify(response))
-// global.Plotly = jest.fn()
-// Plotly.newPlot = jest.fn()
-//   return createTraces(5,'qH004',charts).then(data => expect(data).toEqual(
-//     expect.not.arrayContaining(result)),
-//   );
-// });
+it('create traces for graphic', () => {
+      document.body.innerHTML =` <div class="row" id="charts"></div>`
+const charts = document.querySelectorAll('.chart')
+fetch.mockResponseOnce(JSON.stringify(response))
+global.Plotly = jest.fn()
+Plotly.newPlot = jest.fn()
+  return createTraces(5,'qH004').then(data => expect(data).toEqual(
+    expect.not.arrayContaining(result)),
+  );
+});
 
 const html = '[object HTMLDivElement]';
 

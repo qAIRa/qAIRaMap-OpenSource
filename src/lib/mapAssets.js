@@ -345,7 +345,7 @@ const setInfowindow = (qhawax, map)=>{
 		}); break;
 	}
 }
-const drawQhawaxMap = (map, qhawax, company) => {
+const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
 		marker => marker.id === qhawax.name
 	);
@@ -430,6 +430,11 @@ export {
 	uvColor,
 	optionsDatePicker,
 	optionsTimePicker,
-	addZero
+	addZero,
+	ECAlimits,
+	qairito,
+	incaValues,
+	setPannelData,
+	setInfowindow
 };
 

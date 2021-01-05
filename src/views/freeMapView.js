@@ -25,16 +25,14 @@ const viewFreeMap = () => {
 	map.latitude = [];
 	map.longitude = [];
 
-  const socket = io.connect(
-    'https://qairamapnapi-dev-opensource.qairadrones.com/',
-  );
-  socket.on('update_inca', (res) => {
-    if (qhawax.name === res.name) {
-        qhawax.main_inca = res.main_inca;
-        if(qhawax.lat!==null)
-          drawQhawaxMap(map, qhawax);
-    }
-  });
+  // const socket = io.connect(`${SocketSource}`);
+  // socket.on('update_inca', (res) => {
+  //   if (qhawax.name === res.name) {
+  //       qhawax.main_inca = res.main_inca;
+  //       if(qhawax.lat!==null)
+  //         drawQhawaxMap(map, qhawax);
+  //   }
+  // });
 
   request(map);
 

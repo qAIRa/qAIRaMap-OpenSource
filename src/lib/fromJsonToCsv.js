@@ -19,9 +19,9 @@ const json2csv = (jsonData, jsonFields) => {
 const download = (csvcontent, fileName) => {
 	const uInt8 = new TextEncoder().encode(csvcontent)
 	const fileStream = streamSaver.createWriteStream(`${fileName}+.csv`, {
-		size: uInt8.byteLength, // (optional filesize) Will show progress
-		writableStrategy: undefined, // (optional)
-		readableStrategy: undefined  // (optional)
+		// size: uInt8.byteLength, // (optional filesize) Will show progress
+		// writableStrategy: undefined, // (optional)
+		// readableStrategy: undefined  // (optional)
 	  })
 		new Response(csvcontent).body.pipeTo(fileStream)
 

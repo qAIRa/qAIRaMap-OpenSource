@@ -56,6 +56,7 @@ const requestQhawaxs = async(element) => {
 const requestDownload = async(init, end) => {
   let filename = '';
   const json = await downloadData( selectedParameters.id, init, end);
+  console.log(json);
   array_qhawax.forEach((qhawax) => {
     filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
       ? `${qhawax.name}`
@@ -95,6 +96,7 @@ const installationDateReq = async(selection, element) => {
 const initialToast = () => {
   M.toast({ html: 'First select a module!' });
   M.toast({ html: 'Please complete all fields.' });
+  return 'init';
 };
 
 const finalToast = () => {
@@ -106,6 +108,7 @@ const finalToast = () => {
     html: 'We are preparing your data!',
     displayLength: 6000,
   });
+  return 'final'
 };
 
 const downloadView = () => {
@@ -138,7 +141,9 @@ const downloadView = () => {
     } else if (Date.parse(initial_value) >= Date.parse(final_value)) {
       openModalDateAlert();
     } else {
-			 	requestDownload(initial_timestamp, final_timestamp);
+      console.log(initial_timestamp, final_timestamp);
+         requestDownload(initial_timestamp, final_timestamp)
+         
       finalToast();
       const pannel = document.querySelector('.card-pannel');
       pannel.innerHTML = waitingLoader;
@@ -148,4 +153,13 @@ const downloadView = () => {
   return downloadElem;
 };
 
-export { downloadView, reorderDate, withLocalTime, requestQhawaxs };
+export { 
+  downloadView, 
+  reorderDate, 
+  withLocalTime, 
+  requestQhawaxs, 
+  requestDownload, 
+  installationDateReq,
+  initialToast,
+  finalToast
+};

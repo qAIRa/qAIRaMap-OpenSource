@@ -117,15 +117,10 @@ const viewGraphics = () => {
 	 requestOptions(graphElem);
 
 	let selectedQhawax = '';
-	selection[0].onchange = () => {
-		selectedQhawax = selection[0].value.toString();
-	};
+	selection[0].onchange = () => {	selectedQhawax = selection[0].value.toString();};
 	let selectedTime = Number;
-	selection[1].onchange = () => {
-		selectedTime = selection[1].value;
-	};
+	selection[1].onchange = () => {	selectedTime = selection[1].value;};
 	
-
 	graphBtn.addEventListener('click', () => {
 		createTraces(selectedTime, selectedQhawax);
 

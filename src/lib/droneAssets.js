@@ -15,46 +15,34 @@ tableRows.innerHTML += droneChartRow(drone.comercial_name,latlng)
 			scaledSize: new google.maps.Size(35, 35),
 		},
             id: drone.name,
-            animation: google.maps.Animation.DROP,
+            // animation: google.maps.Animation.DROP,
         });
-        // const infowindow = new google.maps.InfoWindow();
-        // infowindow.setContent(drone.comercial_name);
-        // infowindow.open(map, marker);
     map.markers.push(marker);
-
 	const bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < map.markers.length; i++) {
 		bounds.extend(map.markers[i].getPosition());
 	}
 	map.fitBounds(bounds);
     const zoom = map.getZoom();
-    console.log(zoom);
 	map.setZoom(zoom < 13 ? 13 : zoom);
 const icons = element.getElementsByClassName('scale-transition')
 
     setInterval(()=>{
         for (const icon of icons)
-        {
-        icon.classList.add('scale-out') 
-        icon.classList.remove('scale-in') 
-        }
+        {icon.classList.add('scale-out');
+        icon.classList.remove('scale-in')}
         }, 1000);
     setInterval(()=>{
-            for (const icon of icons)
-            {
-            icon.classList.add('scale-in') 
-            icon.classList.remove('scale-out') 
-            }
-            }, 2000);
+        for (const icon of icons)
+        {icon.classList.add('scale-in') ;
+        icon.classList.remove('scale-out')}
+        }, 2000);
 const rowPosition = element.getElementsByClassName('drone_position')
 
 for (const r of rowPosition)
-    r.addEventListener('click',e=>{
+    r.addEventListener('click',e=>{ 
         const result = e.currentTarget.id.split(',')
-        const position = {
-            lat:parseFloat(result[0]),
-            lng:parseFloat(result[1])
-        }
+        const position = { lat:parseFloat(result[0]), lng:parseFloat(result[1])}
         map.panTo(position)
     })
 

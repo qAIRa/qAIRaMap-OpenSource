@@ -1,14 +1,23 @@
 import {
-	drawQhawaxMap,
+	drawQhawaxMap,//ok
 	drawChart,
-	airQuality,
-	qhawaxLeaf,
-	zoneColorNoise,
-	setQhawaxInfowindow,
-	uvColor,
-	ECAlimits,
-	addZero
+	airQuality,//ok
+	qhawaxLeaf,//ok
+	zoneColorNoise,//ok
+	qairito,
+	uvColor,//ok
+	ECAlimits,//ok
+	addZero, //ok
+	incaValues,
+	setPannelData,
+	setInfowindow
 } from '../src/lib/mapAssets';
+import { viewMap } from '../src/lib/HtmlComponents.js';
+import { initialize } from "@googlemaps/jest-mocks";
+
+beforeEach(() => {
+    initialize();
+  })
 
 
 const dataAirQuality = {
@@ -20,13 +29,13 @@ const dataAirQuality = {
 	PM25: 62,
 	SO2: 0,
 	main_inca: 600,
-	qhawaxId: 8,
-	qhawax_name: "qH008",
-	timestamp: "2020-07-29 23:00:00"
+	qhawaxId: 1,
+	qhawax_name: "qH004",
+	timestamp_zone: "Mon, 04 Jan 2021 18:00:00 GMT"
 };
 
 const resultAirQuality = {
-	time: "23:00",
+	time: "13:00",
 	result:{
 		CO: {color: "#009966", label: "Good"},
 		H2S: {color: "#009966", label: "Good"},
@@ -144,24 +153,69 @@ test('airQuality', () =>{
 	expect(airQuality(dataAirQuality)).toStrictEqual(resultAirQuality);
 });
 
-// test('indexValue', () =>{
-// 	expect(indexValue(dataIndexValue)).toStrictEqual(resultIndexValue);
-// });
 
 test('zoneColorNoise', () =>{
 	expect(zoneColorNoise(dataIndexValue)).toStrictEqual(resultZoneColorNoise);
 });
 
-// test('ECAlimits', () =>{
-// 	expect(ECAlimits('CO')).toStrictEqual(10000);
-// 	expect(ECAlimits('NO2')).toStrictEqual(100);
-// 	expect(ECAlimits('O3')).toStrictEqual(100);
-// 	expect(ECAlimits('H2S')).toStrictEqual(150);
-// 	expect(ECAlimits('SO2')).toStrictEqual(250);
-// 	expect(ECAlimits('PM25')).toStrictEqual(50);
-// 	expect(ECAlimits('PM10')).toStrictEqual(100);
-// });
+test('ECAlimits', () =>{
+	expect(ECAlimits('CO')).toStrictEqual(10000);
+	expect(ECAlimits('NO2')).toStrictEqual(100);
+	expect(ECAlimits('O3')).toStrictEqual(100);
+	expect(ECAlimits('H2S')).toStrictEqual(150);
+	expect(ECAlimits('SO2')).toStrictEqual(250);
+	expect(ECAlimits('PM25')).toStrictEqual(50);
+	expect(ECAlimits('PM10')).toStrictEqual(100);
+});
 
 test('addZero', () =>{
 	expect(addZero(2)).toStrictEqual('02');
 });
+
+const qhawax = {
+	area_name: "Residential Zone",
+	comercial_name: "FaberCastell",
+	eca_noise_id: 2,
+	id: 4,
+	lat: -12,
+	lon: -77,
+	main_inca: -1,
+	mode: "Cliente",
+	name: "qH004",
+	qhawax_id: 1,
+	qhawax_type: "STATIC",
+	state: "OFF"
+}
+
+test('drawQhawaxMap', () => {
+    google.maps.Map=jest.fn();
+    google.maps.MapTypeId=jest.fn();
+    google.maps.MapTypeId.ROADMAP=jest.fn();
+    require('../build/js/materialize.min.js')
+	document.body.innerHTML = '<header></header>' + viewMap;
+	const map = new google.maps.Map(document.querySelector('#map'), {
+	});
+	map.addListener=jest.fn()
+	map.fitBounds=jest.fn()
+	map.getZoom=jest.fn()
+	map.setZoom=jest.fn()
+	map.markers = []
+  expect(drawQhawaxMap(map,qhawax)).toBe(undefined);
+  })
+
+  test('setQhawaxInfowindow', () => {
+    google.maps.Map=jest.fn();
+    google.maps.MapTypeId=jest.fn();
+    google.maps.MapTypeId.ROADMAP=jest.fn();
+    require('../build/js/materialize.min.js')
+	document.body.innerHTML = '<header></header>' + viewMap;
+	const map = new google.maps.Map(document.querySelector('#map'), {
+	});
+	map.addListener=jest.fn()
+	map.fitBounds=jest.fn()
+	map.getZoom=jest.fn()
+	map.setZoom=jest.fn()
+	map.markers = []
+  expect(setQhawaxInfowindow(map,qhawax)).toBe(undefined);
+  })
+  
