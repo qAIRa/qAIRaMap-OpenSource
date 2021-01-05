@@ -428,7 +428,7 @@ const pannelRealTime = (socket)=> `
 <td>${notNull(socket.NO2_ug_m3)}</td>
 <td>${notNull(socket.O3_ug_m3)}</td>
 <td>${notNull(socket.H2S_ug_m3)}</td>
-<td>${socket.ID==='qH007'?'__':notNull(socket.SO2_ug_m3)}</td>
+<td>${notNull(socket.SO2_ug_m3)}</td>
 <td>${notNull(socket.PM25)}</td>
 <td>${notNull(socket.PM10)}</td>
 </tr>
