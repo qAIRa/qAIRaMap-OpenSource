@@ -35,7 +35,7 @@ const dataAirQuality = {
 };
 
 const resultAirQuality = {
-	time: "13:00",
+	time: "18:00",
 	result:{
 		CO: {color: "#009966", label: "Good"},
 		H2S: {color: "#009966", label: "Good"},
@@ -71,7 +71,7 @@ const dataIndexValue = {
 	pressure: 99655.75,
 	spl: 50.4,
 	temperature: 14.5,
-	timestamp: "2020-07-29 23:53:19",
+	timestamp: "2020-01-04 00:00:00",
 	zone: "Zona Residencial"
 };
 
@@ -98,6 +98,12 @@ const resultZoneColorNoise = {
 	color: "#cc0033",
 	zone: "Zona Residencial"
 };
+
+describe('Timezones', () => {
+    it('should always be UTC', () => {
+        expect(new Date().getTimezoneOffset()).toBe(0);
+    });
+});
 
 test('qhawaxLeaf for each state of the qhawax', () => {
 	expect(qhawaxLeaf(-1)).toStrictEqual(
@@ -203,7 +209,7 @@ test('drawQhawaxMap', () => {
   expect(drawQhawaxMap(map,qhawax)).toBe(undefined);
   })
 
-  test('setQhawaxInfowindow', () => {
+  test('setInfowindow', () => {
     google.maps.Map=jest.fn();
     google.maps.MapTypeId=jest.fn();
     google.maps.MapTypeId.ROADMAP=jest.fn();
@@ -216,6 +222,6 @@ test('drawQhawaxMap', () => {
 	map.getZoom=jest.fn()
 	map.setZoom=jest.fn()
 	map.markers = []
-  expect(setQhawaxInfowindow(map,qhawax)).toBe(undefined);
+  expect(setInfowindow(map,qhawax)).toBe(undefined);
   })
   

@@ -233,6 +233,7 @@ let incaResult = {
 	PM25:null,
 	SO2:null,
 }
+
 const incaValues=(inca)=>{
 	incaResult.PM10 =inca.PM10===null?'__': inca.PM10;
 	incaResult.SO2 =inca.SO2===null?'__': inca.SO2;

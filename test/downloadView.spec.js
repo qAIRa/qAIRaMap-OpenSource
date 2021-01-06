@@ -37,7 +37,7 @@ test('reorder Date', () =>{
 });
 
 const str2 = '09-26-2020 12:00:00';
-const resulttime = '26-09-2020 17:00:00';
+const resulttime = '26-09-2020 12:00:00';
 test('local time', () =>{
 	expect(withLocalTime(str2)).toStrictEqual(resulttime);
 });

@@ -36,7 +36,8 @@
 			"./build/",
 			"/node_modules/",
 			"/coverage/"
-		]
+		],
+		"globalSetup": "./global-setup.js"
 	},
 	"repository": {
 		"type": "git",

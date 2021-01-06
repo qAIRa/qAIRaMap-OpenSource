@@ -64,7 +64,7 @@ const dashboardRow = (q) =>`
 const dashboardRowActive =(data,q,value)=>`
 <td><strong>${data.ID}</strong></td>
 <td>${q.comercial_name}</td>
-<td>${new Date(Date.parse(value.timestamp)).toLocaleString('es-ES')}</td>
+<td>${new Date(Date.parse(value.timestamp)).toLocaleString('en-EN')}</td>
 <td>${value.SO2_ug_m3}</td>
 <td>${value.NO2_ug_m3}</td>
 <td>${value.CO_ug_m3}</td>

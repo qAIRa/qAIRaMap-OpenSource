@@ -27,8 +27,8 @@ lon: -77.082687,
 pressure: 1007.81,
 spl: 19,
 temperature: 25.9,
-timestamp: "2020-12-30 19:30:46.0-05:00",
-timestamp_zone: "2020-12-30 19:30:46.0-05:00",
+timestamp: "2020-01-01 00:30:00.0-05:00",
+timestamp_zone: "2020-01-01 00:30:00.0-05:00",
 zone: "Residential Zone",
 }
 const q = {name:'qH004', comercial_name:'The Boss'}
@@ -40,7 +40,7 @@ const rowOutput = `
 const activeRowOutput = `
 <td><strong>qH004</strong></td>
 <td>The Boss</td>
-<td>30/12/2020 19:30:46</td>
+<td>1/1/2020, 5:30:00 AM</td>
 <td>_</td>
 <td>_</td>
 <td>705.964</td>
@@ -54,7 +54,7 @@ const activeRowOutput = `
 <td>_</td>
 <td>_</td>
 <td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
-const indexResult = {"CO_ug_m3": 705.964, "H2S_ug_m3": "_", "ID": "qH004", "I_temperature": "_", "NO2_ug_m3": "_", "O3_ug_m3": "_", "PM1": "_", "PM10": 44.792, "PM25": 23.261, "SO2_ug_m3": "_", "UV": 0, "humidity": "_", "lat": "_", "lon": "_", "pressure": "_", "spl": "_", "temperature": 25.9, "timestamp": "2020-12-30 19:30:46.0-05:00"}
+const indexResult = {"CO_ug_m3": 705.964, "H2S_ug_m3": "_", "ID": "qH004", "I_temperature": "_", "NO2_ug_m3": "_", "O3_ug_m3": "_", "PM1": "_", "PM10": 44.792, "PM25": 23.261, "SO2_ug_m3": "_", "UV": 0, "humidity": "_", "lat": "_", "lon": "_", "pressure": "_", "spl": "_", "temperature": 25.9, "timestamp": "2020-01-01 00:30:00.0-05:00"}
 
 test('indexValue: values for dashboard display', () => {
 expect(indexValue(data)).toStrictEqual(indexResult);
