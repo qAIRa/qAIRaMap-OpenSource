@@ -55,7 +55,7 @@ const ECAlimits = {
 	 });
   return valuesForDashboard;
   };
-  
+
 const dashboardRow = (q) =>`
 <td><strong>${q.name}</strong></td>
 <td>${q.comercial_name}</td>

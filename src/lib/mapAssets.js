@@ -235,13 +235,9 @@ let incaResult = {
 }
 
 const incaValues=(inca)=>{
-	incaResult.PM10 =inca.PM10===null?'__': inca.PM10;
-	incaResult.SO2 =inca.SO2===null?'__': inca.SO2;
-	incaResult.CO =inca.CO===null?'__': inca.CO;
-	incaResult.H2S =inca.H2S===null?'__': inca.H2S;
-	incaResult.PM25 =inca.PM25===null?'__': inca.PM25;
-	incaResult.O3 =inca.O3===null?'__': inca.O3;
-	incaResult.NO2 =inca.NO2===null?'__': inca.NO2;
+	Object.entries(inca).forEach(o=>{
+		incaResult[o[0]]===undefined?'__':incaResult[o[0]]=o[1];
+		});
 	return incaResult;
 }
 

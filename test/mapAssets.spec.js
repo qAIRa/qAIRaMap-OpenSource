@@ -8,15 +8,18 @@ import {
 	uvColor,//ok
 	ECAlimits,//ok
 	addZero, //ok
-	incaValues,
+	incaValues,//ok
 	setPannelData,
 	setInfowindow
 } from '../src/lib/mapAssets';
 import { viewMap } from '../src/lib/HtmlComponents.js';
 import { initialize } from "@googlemaps/jest-mocks";
+import { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks()
 
 beforeEach(() => {
-    initialize();
+	initialize();
+	fetch.resetMocks()
   })
 
 
@@ -76,22 +79,13 @@ const dataIndexValue = {
 };
 
 const resultIndexValue = {
-	CO: 20,
-	H2S: 31.5,
-	NO2: 186.7,
-	O3: 38.6,
-	PM1: 23.487,
-	PM10: 32.7,
-	PM25: 21.3,
+	CO: 20.022,
+	H2S: 31.481,
+	NO2: 186.679,
+	O3: 38.582,
+	PM10: 32.728,
+	PM25: 21.325,
 	SO2: 0,
-	UV: 0,
-	humidity: 94.7,
-	lat: "-12.10306",
-	lng: "-76.98917",
-	pressure: 99.7,
-	spl: 50.4,
-	temperature: 14.5,
-	time: "29 de Julio de 2020, 23:53"
 };
 
 const resultZoneColorNoise = {
@@ -164,6 +158,10 @@ test('zoneColorNoise', () =>{
 	expect(zoneColorNoise(dataIndexValue)).toStrictEqual(resultZoneColorNoise);
 });
 
+test('incaValues', () =>{
+	expect(incaValues(dataIndexValue)).toStrictEqual(resultIndexValue);
+});
+
 test('ECAlimits', () =>{
 	expect(ECAlimits('CO')).toStrictEqual(10000);
 	expect(ECAlimits('NO2')).toStrictEqual(100);
@@ -223,5 +221,10 @@ test('drawQhawaxMap', () => {
 	map.setZoom=jest.fn()
 	map.markers = []
   expect(setInfowindow(map,qhawax)).toBe(undefined);
+  })
+
+  test('setPannelData', () => {
+	document.body.innerHTML = viewMap;
+  expect(setPannelData(qhawax,map)).toBe(undefined);
   })
   
