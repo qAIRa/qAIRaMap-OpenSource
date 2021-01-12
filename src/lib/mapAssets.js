@@ -286,28 +286,25 @@ const setInfowindow = (qhawax, map)=>{
 		}); break;
 	}
 }
-
+const markerZoom = (zoom) =>{
+		switch(true){
+			case zoom < 11: return 45;
+			case zoom >= 11 && zoom < 14: return 50;
+			case zoom >= 14:return 70;
+			default: break;
+		}
+}
 const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
 		marker => marker.id === qhawax.name
 	);
 	map.addListener('zoom_changed', () => {
-		if (map.zoom >= 0 && map.zoom < 11) {
-			map.markers.forEach(marker => {
-				marker.icon.scaledSize.width = 45;
-				marker.icon.scaledSize.height = 45;
-			});
-		} else if (map.zoom >= 11 && map.zoom < 14) {
-			map.markers.forEach(marker => {
-				marker.icon.scaledSize.width = 50;
-				marker.icon.scaledSize.height = 50;
-			});
-		} else if (map.zoom >= 14) {
-			map.markers.forEach(marker => {
-				marker.icon.scaledSize.width = 70;
-				marker.icon.scaledSize.height = 70;
-			});
-		}
+		const zoom = map.getZoom();
+		map.markers.forEach(marker => {
+			marker.icon.scaledSize.width = markerZoom(zoom);
+			marker.icon.scaledSize.height = markerZoom(zoom);
+		});
+		
 	});
 
 	if (previous_marker_index != -1) {
