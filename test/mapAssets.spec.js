@@ -7,7 +7,6 @@ import {
 	qairito,
 	uvColor,//ok
 	ECAlimits,//ok
-	addZero, //ok
 	incaValues,//ok
 	setPannelData,
 	setInfowindow
@@ -172,9 +171,7 @@ test('ECAlimits', () =>{
 	expect(ECAlimits('PM10')).toStrictEqual(100);
 });
 
-test('addZero', () =>{
-	expect(addZero(2)).toStrictEqual('02');
-});
+
 
 const qhawax = {
 	area_name: "Residential Zone",

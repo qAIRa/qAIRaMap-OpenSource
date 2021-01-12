@@ -2,7 +2,7 @@ import { navBarClient } from '../lib/navBarClient.js';
 import { chartView } from '../lib/HtmlComponents.js';
 import { requestAllQhawax, requestStatus, requestGraphicsData } from '../requests/get.js';
 import { SocketSource } from '../index.js';
-import { addZero } from '../lib/mapAssets.js';
+import { addZero } from '../lib/helpers.js';
 import { configuration } from '../lib/graphAssets.js';
 
 

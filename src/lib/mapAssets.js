@@ -1,16 +1,17 @@
 import { configuration} from '../lib/graphAssets.js';
 import {APISource, SocketSource} from '../index.js';
 import { requestAverageMeasurement} from '../requests/get.js';
+import { 
+	addZero,
+	formatDateDB,
+    elementMeteo,
+    elementRT,
+    incaResult,
+    uvColors,
+    noiseLimits,
+    qualityColor
+ } from '../lib/helpers.js';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../lib/HtmlComponents.js';
-
-const addZero = i => {
-	if (i < 10) {
-		i = '0' + i;
-	}
-	return i;
-};
-const formatDateDB = timestamp => addZero(new Date(Date.parse(timestamp)).getHours()) + 'h';
-	
 
 const ECAlimits = sensor => {
 	switch (sensor) {
@@ -100,15 +101,6 @@ const drawChart = async (sensor, qhawax_id) => {
 	Plotly.newPlot(chart, data, layout, configuration);
 };
 
-
-const qualityColor ={
-	good:{color: '#009966',label: 'Good' },
-	moderate:{color: '#ffde33',label: 'Moderate'},
-	bad:{color: '#ff9933',label: 'Bad'},
-	hazardous:{color: '#cc0033',label: 'Danger' },
-	noinfo:{color: 'transparent',label: '' }
-}
-
 const airQuality = data => {
 	let sensors = {
 		PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null
@@ -144,6 +136,7 @@ const airQuality = data => {
 		result,
 	};
 };
+
 const qhawaxLeaf = inca => {
 	let leaf = '';
 	switch (inca) {
@@ -180,12 +173,6 @@ const qairito = inca => {
 	return gif;
 };
 
-const noiseLimits = {
-	'Zona de Protección Especial':{day:50, night:40},
-	'Zona Residencial':{day:60, night:50},
-	'Zona Comercial':{day:70, night:60},
-	'Zona Industrial':{day:80, night:70},
-}
 const zoneColorNoise = data =>{
 	const newDate = new Date(data.timestamp);
 	let colorData = {color:'transparent', zone:data.zone}
@@ -203,16 +190,7 @@ const zoneColorNoise = data =>{
 	return colorData;
 };
 
-const uvColors = {
-	Null:{color:'transparent',label:''},
-	Minimum: { color: '#009966', label: 'Minimum' },
-	Low: { color: '#ffde33', label: 'Low' },
-	Moderate: { color: '#ff9933', label: 'Moderate' },
-	High: { color: '#cc0033', label: 'High' },
-	Extreme: { color: 'darkmagenta', label: 'Extreme' },
-  
-  };
-  const uvColor = (uvValue) => (
+const uvColor = (uvValue) => (
 	  uvValue===null?uvColors.Null:
 	  uvValue >= 0 && uvValue < 2
 	? uvColors.Minimum
@@ -224,41 +202,11 @@ const uvColors = {
 		  ? uvColors.High
 		  : uvColors.Extreme);
 
-let incaResult = {
-	CO:null,
-	H2S:null,
-	NO2:null,
-	O3:null,
-	PM10:null,
-	PM25:null,
-	SO2:null,
-}
-
 const incaValues=(inca)=>{
 	Object.entries(inca).forEach(o=>{
 		incaResult[o[0]]===undefined?'__':incaResult[o[0]]=o[1];
 		});
 	return incaResult;
-}
-
-
-const ejemploMeteo = {
-	spl:'__',
-	temperature:'__',
-	pressure:'__',
-	humidity:'__',
-	UV:'__'
-}
-
-
-const ejemploRT = {
-	CO_ug_m3:'__',
-    NO2_ug_m3:'__',
-    O3_ug_m3:'__',
-    H2S_ug_m3:'__',
-	SO2_ug_m3:'__',
-	PM25:'__',
-	PM10:'__'
 }
 
 const setPannelData = (qhawax, map) => {
@@ -291,8 +239,8 @@ const setPannelData = (qhawax, map) => {
 							drawChart(qhawax_sensor, qhawax_id);
 							})
 						})
-						REALT.innerHTML = pannelRealTime(ejemploRT)
-						METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},ejemploMeteo,{color:'#fff',label:''})
+						REALT.innerHTML = pannelRealTime(elementRT)
+						METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},elementMeteo,{color:'#fff',label:''})
 						const socket = io.connect(`${SocketSource}`);
 						socket.on(qhawax.name, data =>{
 						REALT.innerHTML = pannelRealTime(data);
@@ -338,6 +286,7 @@ const setInfowindow = (qhawax, map)=>{
 		}); break;
 	}
 }
+
 const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
 		marker => marker.id === qhawax.name
@@ -405,15 +354,6 @@ const drawQhawaxMap = (map, qhawax) => {
 };
 
 
-const optionsDatePicker = {
-    format: 'mm-dd-yyyy',
-};
-
-const optionsTimePicker = {
-	twelveHour: false,
-	vibrate: false,
-};
-
 export {
 	drawQhawaxMap,
 	drawChart,
@@ -421,9 +361,6 @@ export {
 	qhawaxLeaf,
 	zoneColorNoise,
 	uvColor,
-	optionsDatePicker,
-	optionsTimePicker,
-	addZero,
 	ECAlimits,
 	qairito,
 	incaValues,

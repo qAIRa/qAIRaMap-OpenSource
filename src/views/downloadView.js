@@ -6,7 +6,7 @@ import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { navBarClient } from '../lib/navBarClient.js';
 import { viewDownload } from '../lib/HtmlComponents.js';
 import { requestAllQhawax, downloadData, requestInstallationDate } from '../requests/get.js';
-import { optionsDatePicker, optionsTimePicker } from '../lib/mapAssets.js';
+import { optionsDatePicker, optionsTimePicker } from '../lib/helpers.js';
 
 const reorderDate = (str) => str.split('-').reverse().join('-');
 
