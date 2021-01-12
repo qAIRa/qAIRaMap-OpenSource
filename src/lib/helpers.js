@@ -70,6 +70,19 @@ const qualityColor ={
 	noinfo:{color: 'transparent',label: '' }
 }
 
+let sensors = {
+	PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null
+}
+const limits = {
+	PM10:[0,50,100,167],
+	SO2:[0,50,100,625],
+	CO:[0,50,100,150],
+	H2S:[0,50,100,1000],
+	PM25:[0,50,100,500],
+	O3:[0,50,100,175],
+	NO2:[0,50,100,150]
+}
+
 export {
     addZero,
     formatDateDB,
@@ -80,5 +93,7 @@ export {
     incaResult,
     uvColors,
     noiseLimits,
-    qualityColor
+	qualityColor,
+	sensors,
+	limits
 };

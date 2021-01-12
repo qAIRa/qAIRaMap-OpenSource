@@ -9,7 +9,9 @@ import {
     incaResult,
     uvColors,
     noiseLimits,
-    qualityColor
+	qualityColor,
+	sensors,
+	limits
  } from '../lib/helpers.js';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../lib/HtmlComponents.js';
 
@@ -101,22 +103,9 @@ const drawChart = async (sensor, qhawax_id) => {
 	Plotly.newPlot(chart, data, layout, configuration);
 };
 
-const airQuality = data => {
-	let sensors = {
-		PM10:null, SO2:null, CO:null, H2S:null, PM25:null, O3:null, NO2:null
-	}
+const airQuality = data => {	
 	Object.entries(sensors).forEach(([key, value]) => sensors[key]=data[key]);
-
 	const time =addZero(new Date(data.timestamp_zone).getHours()) + ':' + addZero(new Date(data.timestamp_zone).getMinutes());
-	const limits = {
-		PM10:[0,50,100,167],
-		SO2:[0,50,100,625],
-		CO:[0,50,100,150],
-		H2S:[0,50,100,1000],
-		PM25:[0,50,100,500],
-		O3:[0,50,100,175],
-		NO2:[0,50,100,150]
-	}
 	let result={}
 		Object.entries(sensors).forEach(([keyS, valueS]) => {
 			result[keyS] = 
@@ -131,10 +120,7 @@ const airQuality = data => {
 			: qualityColor.noinfo
 			if (valueS===null){result[keyS]=qualityColor.noinfo}
 		});
-	return {
-		time,
-		result,
-	};
+	return {time,result};
 };
 
 const qhawaxLeaf = inca => {
