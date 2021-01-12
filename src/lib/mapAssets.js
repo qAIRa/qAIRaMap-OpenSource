@@ -257,17 +257,17 @@ const setPannelData = (qhawax, map) => {
 }
 const setInfowindow = (qhawax, map)=>{
 	let options = {
-		html: `Failed to get data.`,
+		html: `${qhawax.comercial_name}: Module ${qhawax.name}`,
 		classes: 'grey darken-1 rounded',
 		displayLength: 6000,
 	}
 	switch (qhawax.main_inca) {
-		case -1:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} Off.`; return M.toast(options);
-		case  0:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} waiting for valid data.`; return M.toast(options);
-		case  1:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} waiting for average data.`; return M.toast(options);
-		case -2:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} in maintenance.`; return M.toast(options);
+		case -1:options.html+= ` Off.`; return M.toast(options);
+		case  0:options.html+= ` waiting for valid data.`; return M.toast(options);
+		case  1:options.html+= ` waiting for average data.`; return M.toast(options);
+		case -2:options.html+= ` in maintenance.`; return M.toast(options);
 		case 50: case 100: case 500: case 600:setPannelData(qhawax,map);break;
-		default: return M.toast(options);
+		default: options.html= ` Failed to get data.`; return M.toast(options);
 	}
 }
 
