@@ -255,37 +255,22 @@ const setPannelData = (qhawax, map) => {
 			overMapQ.classList.add('none')
 		});
 }
-
 const setInfowindow = (qhawax, map)=>{
+	let options = {
+		html: `Failed to get data.`,
+		classes: 'grey darken-1 rounded',
+		displayLength: 6000,
+	}
 	switch (qhawax.main_inca) {
-		case -1:M.toast({
-			html: `${qhawax.comercial_name}: Module ${qhawax.name} Off.`,
-			classes: 'grey darken-1 rounded',
-			displayLength: 6000,
-		}); break;
-		case 0:M.toast({
-			html: `${qhawax.comercial_name}: Module ${qhawax.name} waiting for valid data.`,
-			classes: 'grey darken-1 rounded',
-			displayLength: 6000,
-		}); break;
-		case 1:M.toast({
-			html: `${qhawax.comercial_name}: Module ${qhawax.name} waiting for average data.`,
-			classes: 'grey darken-1 rounded',
-			displayLength: 6000,
-		}); break;
-		case -2:M.toast({
-			html: `${qhawax.comercial_name}: Module ${qhawax.name} in maintenance.`,
-			classes: 'grey darken-1 rounded',
-			displayLength: 6000,
-		}); break;
-		case 50: case 100: case 500: case 600:setPannelData(qhawax,map); break;
-		default: M.toast({
-			html: `Failed to get data.`,
-			classes: 'grey darken-1 rounded',
-			displayLength: 6000,
-		}); break;
+		case -1:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} Off.`; return M.toast(options);
+		case  0:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} waiting for valid data.`; return M.toast(options);
+		case  1:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} waiting for average data.`; return M.toast(options);
+		case -2:options.html= `${qhawax.comercial_name}: Module ${qhawax.name} in maintenance.`; return M.toast(options);
+		case 50: case 100: case 500: case 600:setPannelData(qhawax,map);break;
+		default: return M.toast(options);
 	}
 }
+
 const markerZoom = (zoom) =>{
 		switch(true){
 			case zoom < 11: return 45;

@@ -9,7 +9,7 @@ import {
 	ECAlimits,//ok
 	incaValues,//ok
 	setPannelData,
-	setInfowindow
+	setInfowindow,
 } from '../src/lib/mapAssets';
 import { viewMap } from '../src/lib/HtmlComponents.js';
 import { initialize } from "@googlemaps/jest-mocks";
@@ -204,21 +204,6 @@ test('drawQhawaxMap', () => {
   expect(drawQhawaxMap(map,qhawax)).toBe(undefined);
   })
 
-  test('setInfowindow', () => {
-    google.maps.Map=jest.fn();
-    google.maps.MapTypeId=jest.fn();
-    google.maps.MapTypeId.ROADMAP=jest.fn();
-    require('../build/js/materialize.min.js')
-	document.body.innerHTML = '<header></header>' + viewMap;
-	const map = new google.maps.Map(document.querySelector('#map'), {
-	});
-	map.addListener=jest.fn()
-	map.fitBounds=jest.fn()
-	map.getZoom=jest.fn()
-	map.setZoom=jest.fn()
-	map.markers = []
-  expect(setInfowindow(map,qhawax)).toBe(undefined);
-  })
 
   test('setPannelData', () => {
 	document.body.innerHTML = viewMap;
