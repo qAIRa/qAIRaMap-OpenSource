@@ -1,11 +1,11 @@
-import { droneChartRow } from '../lib/HtmlComponents.js';
+// import { droneChartRow } from '../lib/HtmlComponents.js';
 const showActiveDrones = (element, drone, map) => {
-const tableRows = element.querySelector('tbody')
-const latlng = {
-    lat: parseFloat(drone.lat),
-    lng: parseFloat(drone.lon),
-  };
-tableRows.innerHTML += droneChartRow(drone.comercial_name,latlng)
+// const tableRows = element.querySelector('tbody')
+// const latlng = {
+//     lat: parseFloat(drone.lat),
+//     lng: parseFloat(drone.lon),
+//   };
+// tableRows.innerHTML += droneChartRow(drone.comercial_name,latlng)
 
         const marker = new google.maps.Marker({
           position: latlng,
@@ -18,6 +18,7 @@ tableRows.innerHTML += droneChartRow(drone.comercial_name,latlng)
             // animation: google.maps.Animation.DROP,
         });
     map.markers.push(marker);
+    // map.markers[map.markers.push(marker).length-1];
 	const bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < map.markers.length; i++) {
 		bounds.extend(map.markers[i].getPosition());

@@ -81,7 +81,8 @@ const dashboardRowActive =(data,q,value)=>`
 
 const callSocket = (q, row_table) => {
 	const socket = io.connect(`${SocketSource}`);
-		socket.on('new_data_summary_processed', data => {
+		socket.on(`${q.name}_processed`, data => {
+			console.log(data);
 			if (q.name === data.ID) {
 				const value = indexValue(data);
 				let row_data = dashboardRowActive(data,q,value);
@@ -89,6 +90,8 @@ const callSocket = (q, row_table) => {
 			}
 		});
 }
+
+
 const createRow = (element, qhawax_asigned) => {
 	const table_body = element.querySelector('tbody');
 	qhawax_asigned.forEach(q => {

@@ -145,7 +145,7 @@ const viewGraphics = () => {
 			'UV',
 			'UVA',
 			'UVB']
-		socket.on('new_data_summary_processed', res => {
+		socket.on(`${selectedQhawax}_processed`, res => {
 			if (res.ID === selectedQhawax) {
 				let index=0;
 				sensors.forEach(s=>{

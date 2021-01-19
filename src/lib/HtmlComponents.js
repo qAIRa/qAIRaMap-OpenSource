@@ -33,13 +33,14 @@ const viewMap = `
 
 const droneChart = `
 <div class="animate__animated animate__zoomIn z-depth-4" id="over_map_drones">
-<h6><strong>Active Andean Drones</strong></h6>
+<h6><strong>Available Andean Drones</strong></h6>
 <table class=" centered" style="max-height:100px;">
 <thead>
 <tr>
 <th></th>
 <th>Name</th>
-<th>Position</th>
+<th>Last Position</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
@@ -48,11 +49,12 @@ const droneChart = `
 </div>
 `;
 
-const droneChartRow = (name, position)=>`
+const droneChartRow = (q, position, status)=>`
 <tr class="drone_position" id="${position.lat},${position.lng}">
-<td><i class="material-icons small scale-transition">airplanemode_active</i></td>
-<td>${name}</td>
-<td>Lat: ${position.lat}, Lng: ${position.lng}</td>
+<td><img class="drone_icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg" alt="drone_icon"></td>
+<td>${q.comercial_name}</td>
+<td id="${q.name}_position">Lat: ${position.lat}, Lng: ${position.lng}</td>
+<td id="${q.name}_status"> ${status}</td>
 </tr>
 `;
 

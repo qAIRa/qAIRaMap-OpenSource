@@ -6,7 +6,7 @@ import { requestAllQhawax } from '../requests/get.js';
 const request = async (map) => {
   const qhawax_list = await requestAllQhawax();
   qhawax_list.forEach((qhawax) => {
-    if(qhawax.lat!==null)
+    if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
       drawQhawaxMap(map, qhawax);
   });
 };

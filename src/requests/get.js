@@ -10,6 +10,11 @@ const requestAllQhawax = async() => {
   return await response.json();
 };
 
+const requestAllDrones = async() => {
+  const response = await fetch(`${APISource}AllDronesInMap/`).catch((err) => handleError(err));
+  return await response.json();
+};
+
 const requestAverageMeasurement = async(qhawax, sensor) => {
   const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`).catch((err) => handleError(err));
   return await response.json();
@@ -48,5 +53,5 @@ export {
   requestInstallationDate,
   handleError,
   requestGraphicsData,
- 
+ requestAllDrones
 };

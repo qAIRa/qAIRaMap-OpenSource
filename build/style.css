@@ -694,6 +694,10 @@ i.icon-green {
 	width: 120px;
 }
 
+.drone_icon{
+	height:18px;
+}
+
 @media (max-width: 1024px) {
   .cards_wrap .card_item {
     width: 33.3%;
