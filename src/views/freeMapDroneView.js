@@ -5,66 +5,116 @@ import { viewMap, droneChart } from '../lib/HtmlComponents.js';
 import { requestAllDrones } from '../requests/get.js';
 import { SocketSource } from '../index.js';
 
-const addLine = (flightPath,map) => {
-  flightPath.setMap(map);
+const addLine = (polyline,map) => {
+  polyline.setMap(map);
 }
 
-const removeLine = (flightPath,map) => {
-  flightPath.setMap(null);
+const removeLine = (polyline, name, socket) => {
+  polyline.setMap(null);
+  socket.removeListener(`${name}_telemetry`);
 }
 
-let latlng = {}
+let latlng = {};
 
-
-const callSocket = (drone, map, element, marker) => {
+const callSocketFlight = (drone, map, element, marker, socket) => {
   const flightPlanCoordinates = [];
-	const socket = io.connect(`${SocketSource}`);
-		socket.on(`${drone.name}_processed`, data => {
-      console.log(data);
+  let polylinesArray = [];
+  const status = element.querySelector(`#${drone.name}_status`);
+  const position = element.querySelector(`#${drone.name}_position`);
+
+		socket.on(`${drone.name}_telemetry`, data => {
       latlng = {
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lon),
       };
        flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-       console.log('flightPlanCoordinates',flightPlanCoordinates);
-       const flightPath = new google.maps.Polyline({
+       const polyline = new google.maps.Polyline({
         path: flightPlanCoordinates,
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 2
         });
         marker.setPosition(latlng);
-        addLine(flightPath,map)
-
-    const status = element.querySelector(`#${data.ID}_status`)
-    const position = element.querySelector(`#${data.ID}_position`)
+        addLine(polyline,map)
+        
+        polylinesArray.push(polyline)
+    
 
     status.innerText = 'ON';
-    position.innerText = `lat:${latlng.lat},lng:${latlng.lng}`;
+    position.innerText = `lat:${latlng.lat.toFixed(5)},lng:${latlng.lng.toFixed(5)}`;
     })
+
+   socket.on(`${drone.name}_landing`, data => {
+    console.log(data);
+    M.toast({
+    html: `${drone.name}: The Andean Drone ${drone.comercial_name} has landed now.`,
+		classes: 'white-text blue darken-1 rounded',
+    displayLength: 6000
+    })
+    setTimeout(polylinesArray.forEach(p=>removeLine(p, drone.name, socket)) , 10000)
+    status.innerText = 'OFF';
+  })
 }
 
+const takeoff = (drone,map, element, marker, socket)=>{
+
+  socket.on(`${drone.name}_takeoff`, data => {
+    console.log(data);
+    M.toast({
+    html: `${drone.name}: The Andean Drone ${drone.comercial_name} has taken off now.`,
+		classes: 'orange darken-1 rounded',
+    displayLength: 6000
+    })
+    callSocketFlight(drone,map, element, marker, socket)
+  })
+
+};
+
 const request = async (map, element) => {
+  const socket = io.connect(`${SocketSource}`);
   const qhawax_list = await requestAllDrones();
-  const tableRows = element.querySelector('tbody')
-  qhawax_list.forEach((a_drone) => {
-    
-    latlng = {
-      lat: parseFloat(a_drone.lat),
-      lng: parseFloat(a_drone.lon),
-    };
-  tableRows.innerHTML += droneChartRow(a_drone,latlng,'OFF')
-  const marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        icon: {
-        url: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg',
-        scaledSize: new google.maps.Size(35, 35),
-        },
-              id: a_drone.name,
-          });
-  callSocket(a_drone,map, element, marker)
-  });
+  const tableRows = element.querySelector('tbody');
+  const pannelDrones = element.querySelector('#over_map_drones');
+  if (qhawax_list.length>=1){
+    pannelDrones.classList.remove('none')
+    qhawax_list.forEach((a_drone) => {
+      latlng = {
+        lat: parseFloat(a_drone.lat),
+        lng: parseFloat(a_drone.lon),
+      };
+    tableRows.innerHTML += droneChartRow(a_drone,latlng,'OFF')
+    const marker = new google.maps.Marker({
+          position: latlng,
+          map: map,
+          icon: {
+          url: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg',
+          scaledSize: new google.maps.Size(35, 35),
+          },
+          id: a_drone.name,
+    });
+    map.markers.push(marker)
+     takeoff(a_drone,map,element, marker, socket)
+     console.log(map.markers.length);
+     const bounds = new google.maps.LatLngBounds();
+     for (let i = 0; i < map.markers.length; i++) {
+       bounds.extend(map.markers[i].getPosition());
+     }
+     map.fitBounds(bounds);
+     const zoom = map.getZoom();
+     map.setZoom(zoom > 13 ? 13 : zoom);
+    });
+
+  }else {
+    pannelDrones.classList.add('none')
+    M.toast({
+      html: `There are no Andean Drones available at the moment.`,
+      classes: 'grey darken-1 rounded',
+      displayLength: 6000
+      })
+  }
+
+ 
+ 
 };
 
 const viewFreeDrone = () => {
@@ -75,16 +125,14 @@ const viewFreeDrone = () => {
   const wrapper = mapElem.querySelector('#wrapper_map')
   wrapper.insertAdjacentHTML('afterbegin',droneChart)
 
-  const droneTable = mapElem.querySelector('#over_map_drones');
-
   const map = new google.maps.Map(mapElem.querySelector('#map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: { lat: -12.1215361, lng: -77.0463574},
     zoom: 8,
   });
-  map.markers = [];
+  map.markers=[];
   request(map, mapElem)
-
+  
   return mapElem;
 };
 
