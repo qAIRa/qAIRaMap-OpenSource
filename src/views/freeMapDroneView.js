@@ -1,5 +1,6 @@
-import { showActiveDrones} from '../lib/droneAssets.js';
+
 import { droneChartRow } from '../lib/HtmlComponents.js';
+import { infoWindow} from '../lib/infowindow.js';
 import { navBarClient } from '../lib/navBarClient.js';
 import { viewMap, droneChart } from '../lib/HtmlComponents.js';
 import { requestAllDrones } from '../requests/get.js';
@@ -16,13 +17,15 @@ const removeLine = (polyline, name, socket) => {
 
 let latlng = {};
 
-const callSocketFlight = (drone, map, element, marker, socket) => {
+const callSocketFlight = (drone, map, element, marker, socket, infowindow, start) => {
   const flightPlanCoordinates = [];
   let polylinesArray = [];
   const status = element.querySelector(`#${drone.name}_status`);
   const position = element.querySelector(`#${drone.name}_position`);
 
 		socket.on(`${drone.name}_telemetry`, data => {
+      data.start = new Date(new Date().getTime()-new Date(start).getTime())
+      console.log(data);
       latlng = {
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lon),
@@ -36,7 +39,8 @@ const callSocketFlight = (drone, map, element, marker, socket) => {
         });
         marker.setPosition(latlng);
         addLine(polyline,map)
-        
+        infowindow.setContent(infoWindow(data))
+        infowindow.open(map, marker);
         polylinesArray.push(polyline)
     
 
@@ -56,16 +60,16 @@ const callSocketFlight = (drone, map, element, marker, socket) => {
   })
 }
 
-const takeoff = (drone,map, element, marker, socket)=>{
+const takeoff = (drone,map, element, marker, socket, infowindow)=>{
 
   socket.on(`${drone.name}_takeoff`, data => {
-    console.log(data);
     M.toast({
     html: `${drone.name}: The Andean Drone ${drone.comercial_name} has taken off now.`,
 		classes: 'orange darken-1 rounded',
     displayLength: 6000
     })
-    callSocketFlight(drone,map, element, marker, socket)
+    console.log(data);
+    callSocketFlight(drone,map, element, marker, socket, infowindow,data)
   })
 
 };
@@ -93,15 +97,22 @@ const request = async (map, element) => {
           id: a_drone.name,
     });
     map.markers.push(marker)
-     takeoff(a_drone,map,element, marker, socket)
-     console.log(map.markers.length);
-     const bounds = new google.maps.LatLngBounds();
+     
+
+
+     const infowindow = new google.maps.InfoWindow({
+      // maxWidth: 200,
+    });
+
+    takeoff(a_drone,map,element, marker, socket, infowindow)
+    
+    const bounds = new google.maps.LatLngBounds();
      for (let i = 0; i < map.markers.length; i++) {
        bounds.extend(map.markers[i].getPosition());
      }
      map.fitBounds(bounds);
      const zoom = map.getZoom();
-     map.setZoom(zoom > 13 ? 13 : zoom);
+     map.setZoom(zoom > 8 ? 8 : zoom);
     });
 
   }else {
