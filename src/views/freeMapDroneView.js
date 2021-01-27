@@ -86,6 +86,7 @@ const request = async (map, element) => {
         lat: parseFloat(a_drone.lat),
         lng: parseFloat(a_drone.lon),
       };
+      console.log(a_drone);
     tableRows.innerHTML += droneChartRow(a_drone,latlng,'OFF')
     const marker = new google.maps.Marker({
           position: latlng,

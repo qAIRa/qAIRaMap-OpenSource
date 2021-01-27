@@ -14,6 +14,8 @@ beforeEach(() => {
     fetch.resetMocks()
  
   })
+
+
   describe('testing fetch calls', () => {
     
     
@@ -111,5 +113,6 @@ beforeEach(() => {
   })
 
   test('handle error', () =>{
+    require('../build/js/materialize.min.js')
     expect(handleError('error').statusText).toStrictEqual('OK');
   });

@@ -114,11 +114,27 @@ const htmlRealTime= `
 
 const htmlDroneChart = `
 <tr class="drone_position" id="-12.135387,-77.025062">
-<td><i class="material-icons small scale-transition">airplanemode_active</i></td>
-<td>Wakanda Forever</td>
-<td>Lat: -12.135387, Lng: -77.025062</td>
+<td><img class="drone_icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg" alt="drone_icon"></td>
+<td>Wakanda Awakening</td>
+<td id="qH006_position">Lat: -12.13539, Lng: -77.02506</td>
+<td id="qH006_status"> OFF</td>
 </tr>
 `;
+
+const drone ={
+  area_name: "Residential Zone",
+  comercial_name: "Wakanda Awakening",
+  eca_noise_id: 2,
+  id: 179,
+  lat: -12.0706992694318,
+  lon: -77.0805159418931,
+  main_inca: -1,
+  mode: "Customer",
+  name: "qH006",
+  qhawax_id: 179,
+  qhawax_type: "AEREAL",
+  state: "OFF"
+}
 
   const qhawax = {
     area_name: "Comercial Zone",
@@ -220,5 +236,5 @@ const position = {lat: -12.135387, lng: -77.025062}
 
 test('droneChartRow', () => {
   document.body.innerHTML = `<tbody></tbody>`;
-expect(droneChartRow('Wakanda Forever', position)).toBe(htmlDroneChart);
+expect(droneChartRow(drone, position,'OFF')).toBe(htmlDroneChart);
 })

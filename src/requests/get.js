@@ -1,15 +1,16 @@
 import { APISource } from '../index.js';
 
 const handleError = (err) => {
-  new Response(JSON.stringify({
+  M.toast({
+    html: `Please check your internet connection.`,
+    classes: 'grey darken-1 rounded',
+    displayLength: 6000
+    })
+return  new Response(JSON.stringify({
   code: 400,
   message: 'Stupid network Error xD',
 }))
-M.toast({
-  html: `Please check your internet connection.`,
-  classes: 'grey darken-1 rounded',
-  displayLength: 6000
-  })
+
 };
 
 const requestAllQhawax = async() => {
