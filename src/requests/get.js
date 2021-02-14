@@ -11,131 +11,100 @@ return  new Response(JSON.stringify({
 };
 
 const requestAllQhawax = async() => {
-  try{
-    const response = await fetch(`${APISource}AllQhawaxInMap/`)
+    const response = await fetch(`${APISource}AllQhawaxInMap/`).catch(e=>handleError(e))
     return await response.json();
-
-  }catch(e){
-    return handleError(e);
-  }
 };
 
 const requestAllDrones = async() => {
-  try{
-    const response = await fetch(`${APISource}AllDronesInMap/`)
+
+    const response = await fetch(`${APISource}AllDronesInMap/`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestAverageMeasurement = async(qhawax, sensor) => {
-  try{
-    const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`)
+
+    const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestBinnacle = async(ID) => {
-  try{
-    const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawax_id=${ID}`)
+
+    const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawax_id=${ID}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestStatus = async(ID) => {
-  try{
-    const response = await fetch(`${APISource}qhawax_status/?name=${ID}`)
+
+    const response = await fetch(`${APISource}qhawax_status/?name=${ID}`).catch(e=>handleError(e))
     return await response.text();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const downloadData = async(id, init, end) => {
-  try{
-    const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`)
+
+    const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestInstallationDate = async(ID) => {
-  try{
-  const response = await fetch(`${APISource}GetInstallationDate/?qhawax_id=${ID}`);
+
+  const response = await fetch(`${APISource}GetInstallationDate/?qhawax_id=${ID}`).catch(e=>handleError(e))
   return await response.text();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestGraphicsData = async(qhawax, time) => {
-  try{
-    const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`);
+
+    const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 };
 
 const requestFlightList = async(init, end) => {
-  try{
-    const response = await fetch(`${APISource}get_drone_flights_period_time?initial_timestamp=${init}&final_timestamp=${end}`);
+
+    const response = await fetch(`${APISource}get_drone_flights_period_time?initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 const requestQhawaxFlight = async(name, init, end) => {
-  try{
-    const response = await fetch(`${APISource}processed_measurements_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+
+    const response = await fetch(`${APISource}processed_measurements_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 const requestTelemetryFlight = async(name, init, end) => {
-  try{
-    const response = await fetch(`${APISource}telemetry_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+
+    const response = await fetch(`${APISource}telemetry_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 const lastStartFlight = async(name)=>{
-  try{
-  const response = await fetch(`${APISource}flight_log_info_by_qhawax_name/?name=${name}`)
+
+  const response = await fetch(`${APISource}flight_log_info_by_qhawax_name/?name=${name}`).catch(e=>handleError(e))
   return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 
 const getFlyingDrones = async()=>{
-  try{
-    const response = await fetch(`${APISource}flight_log_info_during_flight`)
+
+    const response = await fetch(`${APISource}flight_log_info_during_flight`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 const getInFlightSensor = async(data)=>{
-  try{
-    const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`)
+
+    const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`).catch(e=>handleError(e))
     return await response.json();
-  }catch(e){
-    return handleError(e);
-  }
+
 }
 
 
