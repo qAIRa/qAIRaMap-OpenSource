@@ -1,5 +1,5 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { simulation} from '../lib/HtmlComponents.js';
+import { simulation} from '../html/simulation.js';
 import { requestQhawaxFlight, requestTelemetryFlight } from '../requests/get.js';
 
 const telemetryFlight = async(id, start, end, map, element)=> {

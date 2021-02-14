@@ -7,7 +7,7 @@
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
 		"test:silent":"jest --reporters jest-silent-reporter",
-		"test:coveralls": "jest --coverage --runInBand && coveralls < coverage/lcov.info",
+		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
 		"start": "npm run webpack",

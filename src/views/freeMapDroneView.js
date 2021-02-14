@@ -1,5 +1,5 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { viewDrones, droneSelection } from '../lib/HtmlComponents.js';
+import { viewDrones, droneSelection } from '../html/freeMapDrone.js';
 import { firstMap} from '../lib/mapAssets.js';
 import { requestDrones} from '../lib/droneAssets.js';
 

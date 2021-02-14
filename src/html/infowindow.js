@@ -1,68 +1,4 @@
-import {duration, notNull } from "./helpers.js";
-
-
-
-
-
-
-
-
-// const droneChart = `
-// <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_drones">
-// <h6><strong>Available Andean Drones</strong></h6>
-// <table class=" centered striped highlight responsive-table" style="max-height:100px;">
-// <thead>
-// <tr>
-// <th></th>
-// <th>Name</th>
-// <th>Last Position</th>
-// <th>Status</th>
-// </tr>
-// </thead>
-// <tbody>
-// </tbody>
-// </table>
-// </div>
-// `;
-
-// const droneChart = `
-// <div class="animate__animated animate__zoomIn z-depth-4 none over_map_drones">
-// <div class="btn-group">
-// <button id="CO" >Carbon monoxide (CO)<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="CO2" >Carbon dioxide (CO<sub>2</sub>) <sub>(ppm)</sub></button>
-// <button id="NO2" >Nitrogen dioxide (NO<sub>2</sub>) <sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="O3" >Ozone <br> (O<sub>3</sub>)<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="H2S" >Hydrogen sulfide (H<sub>2</sub>S)<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="SO2" >Sulfur dioxide  <br> (SO<sub>2</sub>)<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="PM25" >Particulate material PM2,5&micro<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="PM10" >Particulate material PM10&micro<sub>(&microg/m<sup>3</sup>)</sub></button>
-// <button id="VOC" >Volatile Organic Compounds (VOC)<sub>(ppm)</sub></button>
-// </div>
-// </div>
-// `;
-
-
-// const droneChartRow = (q, position, status)=>`
-// <tr class="drone_position" id="${position.lat},${position.lng}">
-// <td><img class="drone_icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg" alt="drone_icon"></td>
-// <td>${q.comercial_name}</td>
-// <td id="${q.name}_position">Lat: ${position.lat.toFixed(5)}, Lng: ${position.lng.toFixed(5)}</td>
-// <td id="${q.name}_status"> ${status}</td>
-// </tr>
-//   `;
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { notNull } from '../lib/helpers.js';
 
 const infowindow =`
 <div class="col s12">
@@ -185,13 +121,6 @@ const pannelGraphics = (qhawax)=> `
 </tbody>
 </table>
 `;
-
-
-
-
-
-
-
 
 
 export {

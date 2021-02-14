@@ -1,4 +1,4 @@
-import { flightViewElem, card } from '../lib/HtmlComponents.js'
+import { flightViewElem, card } from '../html/flights.js';
 import { navBarQhawax } from '../lib/navBarQhawax.js';
 import { requestFlightList } from '../requests/get.js';
 import { goTo } from '../lib/viewController.js';

@@ -1,5 +1,5 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import {viewBoard } from '../lib/HtmlComponents.js'
+import {viewBoard} from '../html/dashboard.js'
 import { noParametersRequest} from '../requests/get.js';
 import { socket } from '../index.js';
 

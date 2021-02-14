@@ -1,4 +1,4 @@
-import { navbar, navbarDrone } from './HtmlComponents.js';
+import { navbar, navbarDrone } from '../html/navBar.js';
 
 import { goTo } from './viewController.js';
 

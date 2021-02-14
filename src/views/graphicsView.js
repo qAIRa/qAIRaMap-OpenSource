@@ -1,5 +1,5 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { chartView } from '../lib/HtmlComponents.js';
+import { chartView } from '../html/graphics.js';
 import { oneParameterRequest, requestGraphicsData, noParametersRequest } from '../requests/get.js';
 import { socket } from '../index.js';
 import { addZero } from '../lib/helpers.js';

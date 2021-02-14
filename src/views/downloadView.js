@@ -4,7 +4,7 @@ import {
 } from '../lib/pickerErrors.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { viewDownload } from '../lib/HtmlComponents.js';
+import {viewDownload} from '../html/download.js';
 import { downloadData, noParametersRequest, oneParameterRequest } from '../requests/get.js';
 import { optionsDatePicker, optionsTimePicker, toast } from '../lib/helpers.js';
 

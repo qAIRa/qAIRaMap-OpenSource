@@ -1,4 +1,4 @@
-import { landbar, landpage } from '../lib/HtmlComponents.js';
+import { landbar, landpage } from '../html/landpage.js';
 import { goTo } from '../lib/viewController.js';
 
 const landPage = () => {

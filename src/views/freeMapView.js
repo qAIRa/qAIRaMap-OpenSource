@@ -1,6 +1,6 @@
 import { drawQhawaxMap , firstMap } from '../lib/mapAssets.js';
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { viewMap } from '../lib/HtmlComponents.js';
+import { viewMap } from '../html/freeMap.js';
 import { noParametersRequest} from '../requests/get.js';
 import { toast } from '../lib/helpers.js';
 

@@ -11,7 +11,7 @@ import {
 	setPannelData,
 	setInfowindow,
 } from '../src/lib/mapAssets';
-import { viewMap } from '../src/lib/HtmlComponents.js';
+import { viewMap } from '../src/html/freeMap.js';
 import { initialize } from "@googlemaps/jest-mocks";
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
