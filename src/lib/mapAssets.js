@@ -270,7 +270,7 @@ export const setInfowindow = (qhawax, map)=>{
 	}
 };
 
-export const markerZoom = (zoom) =>{
+const markerZoom = (zoom) =>{
 		switch(true){
 			case zoom < 11: return 45;
 			case zoom >= 11 && zoom < 14: return 50;
@@ -278,6 +278,19 @@ export const markerZoom = (zoom) =>{
 			default: break;
 		}
 };
+
+const newMarker = (qhawax,map) =>new google.maps.Marker({
+	position: {
+		lat: qhawax.lat,
+		lng: qhawax.lon,
+	},
+	map: map,
+	icon: {
+		url: qhawaxLeaf(qhawax.main_inca),
+		scaledSize: new google.maps.Size(35, 35),
+	},
+	id: qhawax.name,
+});
 
 export const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
@@ -289,7 +302,6 @@ export const drawQhawaxMap = (map, qhawax) => {
 			marker.icon.scaledSize.width = markerZoom(zoom);
 			marker.icon.scaledSize.height = markerZoom(zoom);
 		});
-		
 	});
 
 	if (previous_marker_index != -1) {
@@ -297,30 +309,14 @@ export const drawQhawaxMap = (map, qhawax) => {
 		map.markers.splice(previous_marker_index, 1);
 	}
 	
-
-	const qhawax_marker = new google.maps.Marker({
-		position: {
-			lat: qhawax.lat,
-			lng: qhawax.lon,
-		},
-		map: map,
-		icon: {
-			url: qhawaxLeaf(qhawax.main_inca),
-			scaledSize: new google.maps.Size(35, 35),
-		},
-		id: qhawax.name,
-	});
-	qhawax_marker.addListener('click', () => {
-		setInfowindow(qhawax, map)
-	});
+	const qhawax_marker = newMarker(qhawax,map)
+	qhawax_marker.addListener('click', () => {setInfowindow(qhawax, map)});
 	qhawax_marker.addListener('mouseover', () => {
 		M.Toast.dismissAll();
 		toast(`${qhawax_marker.id}: "${qhawax.comercial_name}"`,'green darken-1 rounded')
 	});
 
-	
 	map.markers.push(qhawax_marker);
-
 	const bounds = new google.maps.LatLngBounds();
 	map.markers.forEach(m=> bounds.extend(m.getPosition()))
 	map.fitBounds(bounds);
