@@ -1,16 +1,11 @@
 import { addZero } from '../lib/helpers.js';
+import { format } from 'date-fns'
 
-const index = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const json2csv = (jsonData, jsonFields) => {
   let csvStr = jsonFields.join(',') + '\n';
-
   for (let i = 0; i < jsonData.length; i++) {
-    const newFormat = new Date(jsonData[i].timestamp_zone)
-    const year = String(newFormat).slice(11,24);
-    const month = String(addZero(index.findIndex(m => m === String(newFormat).slice(4,7))+1));
-    const day = String(newFormat).slice(8,10);
-    jsonData[i].timestamp_zone = day+'/'+month+'/'+year;
+    jsonData[i].timestamp_zone = format(new Date(jsonData[i].timestamp_zone), 'dd/MM/yyyy HH:mm:ss');
     csvStr += Object.getOwnPropertyNames(jsonData[i]).map(e => jsonData[i][e]).join(',') + '\n';
   }
   return csvStr;

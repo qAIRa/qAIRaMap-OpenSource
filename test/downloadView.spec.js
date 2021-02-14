@@ -5,8 +5,6 @@ import {
   requestQhawaxs, 
   requestDownload, 
   installationDateReq,
-  initialToast,
-  finalToast
 } from '../src/views/downloadView.js';
 import {  downloadData} from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
@@ -26,7 +24,7 @@ test('download page', () => {
     <header></header>
       <div id="content-page"></div>
     `;
-    require('../build/js/materialize.min.js')
+    global.M = require('../build/js/materialize.min.js');
 	expect(downloadView().toString()).toMatch(html);
 })
 
@@ -42,13 +40,6 @@ test('local time', () =>{
 	expect(withLocalTime(str2)).toStrictEqual(resulttime);
 });
 
-test('initialToast', () =>{
-	expect(initialToast()).toStrictEqual('init');
-});
-
-test('finalToast', () =>{
-	expect(finalToast()).toStrictEqual('final');
-});
 
 const resp = {
   CO_ug_m3: null,

@@ -1,4 +1,21 @@
 import {viewDashboard, indexValue, request, dashboardRow, dashboardRowActive } from '../src/views/dashboardView.js';
+import { 
+
+  requestAllQhawax,
+
+} from '../src/requests/get.js';
+import { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks()
+beforeEach(() => {
+    fetch.resetMocks()
+ 
+  })
+
+// global.fetch = jest.fn(() =>
+//   Promise.resolve({
+//     json: () => Promise.resolve({ rates: { CAD: 1.42 } }),
+//   })
+// );
 
 const data = {
 CO: 613.882,
@@ -71,11 +88,12 @@ expect(dashboardRowActive(data,q,indexResult)).toStrictEqual(activeRowOutput);
 const html = '[object HTMLDivElement]';
 
 test('viewDashboard: dashboard page', () => {
+  
   document.body.innerHTML = `
   <header></header>
     <div id="content-page"></div>
   `;
-  require('../build/js/materialize.min.js')
+  global.M = require('../build/js/materialize.min.js');
 expect(viewDashboard().toString()).toMatch(html);
 })
 
@@ -117,5 +135,5 @@ const element =`
 test('request: dashboard page', () => {
   document.body.innerHTML = element;
   require('../build/js/materialize.min.js')
-expect(request(HTMLDivElement).toString()).toBe('[object Promise]');
+  expect(request(HTMLDivElement).toString()).toBe('[object Promise]');
 })

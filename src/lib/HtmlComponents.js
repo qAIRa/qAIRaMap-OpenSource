@@ -1,4 +1,7 @@
-const notNull = (value) => value===null ||value < 0 ? '__': value;
+import {duration, notNull } from "./helpers.js";
+
+
+
 
 const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
@@ -7,7 +10,7 @@ const viewMap = `
 <div class="animate__animated animate__swing" id="over_map_qairito"></div>
 <div class="animate__animated animate__swing" id="over_map">
 <table class="centered">
-<h6><strong>Air Quality Index (INCA)</strong></h6>
+<caption><strong>Air Quality Index (INCA)</strong></caption>
 <thead><tr><th class="inca-color1">Good</th><th class="inca-color1">Moderate</th><th class="inca-color1">Bad</th><th class="inca-color1">Hazardous</th></tr></thead>
 <tbody><tr><td bgcolor="#009966" class="inca-color"></td>
 <td bgcolor="#ffde33" class="inca-color"></td>
@@ -31,51 +34,115 @@ const viewMap = `
 </div>
 `;
 
-const droneChart = `
-<div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_drones">
-<h6><strong>Available Andean Drones</strong></h6>
-<table class=" centered striped highlight responsive-table" style="max-height:100px;">
-<thead>
-<tr>
-<th></th>
-<th>Name</th>
-<th>Last Position</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
+const viewDrones=`
+<div class="wrapper_map" id="wrapper_map">
+<div class="animate__animated animate__fadeInDown" id="map"></div>
+<div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
+<div class="animate__animated animate__swingnone " id="over_map_qairito"></div>
+<div class="animate__animated animate__swing " id="over_map_drones_colors">
+<table class="centered">
+<thead><th class="inca-color1">Good</th><th class="inca-color1">Moderate</th><th class="inca-color1">Bad</th><th class="inca-color1">Hazardous</th></thead>
+<tbody><tr>
+<td bgcolor="#009966" class="inca-color"></td>
+<td bgcolor="#ffde33" class="inca-color"></td>
+<td bgcolor="#ff9933" class="inca-color"></td>
+<td bgcolor="#cc0033" class="inca-color"></td></tr>
 </tbody>
 </table>
 </div>
-`;
+</div>
+`
 
-const droneChartRow = (q, position, status)=>`
-<tr class="drone_position" id="${position.lat},${position.lng}">
-<td><img class="drone_icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg" alt="drone_icon"></td>
-<td>${q.comercial_name}</td>
-<td id="${q.name}_position">Lat: ${position.lat.toFixed(5)}, Lng: ${position.lng.toFixed(5)}</td>
-<td id="${q.name}_status"> ${status}</td>
-</tr>
-`;
+// const droneChart = `
+// <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_drones">
+// <h6><strong>Available Andean Drones</strong></h6>
+// <table class=" centered striped highlight responsive-table" style="max-height:100px;">
+// <thead>
+// <tr>
+// <th></th>
+// <th>Name</th>
+// <th>Last Position</th>
+// <th>Status</th>
+// </tr>
+// </thead>
+// <tbody>
+// </tbody>
+// </table>
+// </div>
+// `;
+
+// const droneChart = `
+// <div class="animate__animated animate__zoomIn z-depth-4 none over_map_drones">
+// <div class="btn-group">
+// <button id="CO" >Carbon monoxide (CO)<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="CO2" >Carbon dioxide (CO<sub>2</sub>) <sub>(ppm)</sub></button>
+// <button id="NO2" >Nitrogen dioxide (NO<sub>2</sub>) <sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="O3" >Ozone <br> (O<sub>3</sub>)<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="H2S" >Hydrogen sulfide (H<sub>2</sub>S)<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="SO2" >Sulfur dioxide  <br> (SO<sub>2</sub>)<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="PM25" >Particulate material PM2,5&micro<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="PM10" >Particulate material PM10&micro<sub>(&microg/m<sup>3</sup>)</sub></button>
+// <button id="VOC" >Volatile Organic Compounds (VOC)<sub>(ppm)</sub></button>
+// </div>
+// </div>
+// `;
+
+const droneSelection =`
+<div class="animate__animated animate__zoomIn z-depth-4 over_map_droneselection row">
+<div class="col s12">
+<select class="browser-default col s6" name="" id="selectDrone">
+<option value="" disabled selected>Andean Drone</option>
+</select>
+<select class="browser-default col s6" name="" id="selectSensor">
+<option value="" disabled selected>Sensor</option>
+<option value="CO">CO</option>
+<option value="CO2">CO<sub>2</sub></option>
+<option value="NO2">NO<sub>2</sub></option>
+<option value="O3">O<sub>3</sub></option>
+<option value="H2S">H<sub>2</sub>S</option>
+<option value="SO2">SO<sub>2</sub></option>
+<option value="PM25">PM<sub>2,5</sub></option>
+<option value="PM10">PM<sub>10</sub></option>
+<option value="VOC">VOC</option>
+</select>
+<button id="draw-btn" class="btn waves-effect waves-light col s4 offset-s4 disabled" >Draw
+<i class="material-icons right">send</i>
+</button>
+</div>
+
+
+
+</div>
+
+`
+
+// const droneChartRow = (q, position, status)=>`
+// <tr class="drone_position" id="${position.lat},${position.lng}">
+// <td><img class="drone_icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg" alt="drone_icon"></td>
+// <td>${q.comercial_name}</td>
+// <td id="${q.name}_position">Lat: ${position.lat.toFixed(5)}, Lng: ${position.lng.toFixed(5)}</td>
+// <td id="${q.name}_status"> ${status}</td>
+// </tr>
+//   `;
 
 const navbar = `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
-    <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li class="menu-btn" id="home-menu"><a >Home</a></li>
-    <li class="menu-btn" id="return-menu"><a >Map</a></li>
-    </ul> 
-    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
-        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
-    </a>
-    <ul id="menu-list-bar" class="right hide-on-med-and-down">
-    <li class="menu-btn" id="legend-menu"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
-    <li class="menu-btn" id="download-menu"><a>Download</a></li>
-    <li class="menu-btn" id="dashboard-menu"><a>Dashboard</a></li>
-    <li class="menu-btn" id="graphics-menu"><a>Graphics</a></li>
-    </ul>
-    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+<ul id="menu-left-bar" class="left hide-on-med-and-down">
+<li class="menu-btn" id="home-menu"><a >Home</a></li>
+<li class="menu-btn" id="return-menu"><a >Map</a></li>
+</ul> 
+<a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+<img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+</a>
+<ul id="menu-list-bar" class="right hide-on-med-and-down">
+<li class="menu-btn" id="legend-menu"><a class="dropdown-trigger" href="#" data-target="dropdown1">Legend</a></li>
+<li class="menu-btn" id="download-menu"><a>Download</a></li>
+<li class="menu-btn" id="dashboard-menu"><a>Dashboard</a></li>
+<li class="menu-btn" id="graphics-menu"><a>Graphics</a></li>
+</ul>
+<a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
 </div>
 </nav>
 </div>
@@ -91,83 +158,83 @@ const navbar = `
 </ul>
 
 <!-- Modal Air INCA Structure -->
-        <div id="modalAirInca" class="modal">
-            <span class="modal-close right">X</span>
-            <div class="modal-content center">
-                <p><a href="http://www.minam.gob.pe/wp-content/uploads/2016/07/RM-N%C2%B0-181-2016-MINAM.pdf"> Source: Resolución Ministerial N°-181-2016-MINAM.</a>
-                </p><img class="responsive-img" src="/img/INCA - Calidad del Aire.png" alt="Tabla colores INCA" />
-            </div>
-            <div class="modal-footer"></div>
-        </div>
- <!-- Modal Ruido ECA Structure -->
-        <div id="modalRuidoEca" class="modal">
-            <span class="modal-close right">X</span>
-            <div class="modal-content center">
-                <p> <a href="https://www.oefa.gob.pe/?wpfb_dl=19087">  Source: Contaminación Sonora OEFA </a> </p>
-                <img class="responsive-img" src="/img/ECA-Ruido.png" alt="Tabla colores ECA-Ruido"/>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
- <!-- Modal UV ECA Structure -->
-        <div id="modalUVEca" class="modal">
-            <span class="modal-close right">X</span>
-            <div class="modal-content center">
-                <p><a href="https://apps.who.int/iris/bitstream/handle/10665/42633/9243590073.pdf;jsessionid=A51BDAB9660F30189903E31DAAF806ED?sequence=1" > Source: OMS-Radiación Ultravioleta-2003</a>
-                </p>
-                <img class="responsive-img" src="/img/Indice-UV.png" alt="Tabla colores UV"/>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
+<div id="modalAirInca" class="modal">
+<span class="modal-close right">X</span>
+<div class="modal-content center">
+<p><a href="http://www.minam.gob.pe/wp-content/uploads/2016/07/RM-N%C2%B0-181-2016-MINAM.pdf"> Source: Resolución Ministerial N°-181-2016-MINAM.</a>
+</p><img class="responsive-img" src="/img/INCA - Calidad del Aire.png" alt="Tabla colores INCA" />
+</div>
+<div class="modal-footer"></div>
+</div>
+<!-- Modal Ruido ECA Structure -->
+<div id="modalRuidoEca" class="modal">
+<span class="modal-close right">X</span>
+<div class="modal-content center">
+<p> <a href="https://www.oefa.gob.pe/?wpfb_dl=19087">  Source: Contaminación Sonora OEFA </a> </p>
+<img class="responsive-img" src="/img/ECA-Ruido.png" alt="Tabla colores ECA-Ruido"/>
+</div>
+<div class="modal-footer"></div>
+</div>
+<!-- Modal UV ECA Structure -->
+<div id="modalUVEca" class="modal">
+<span class="modal-close right">X</span>
+<div class="modal-content center">
+<p><a href="https://apps.who.int/iris/bitstream/handle/10665/42633/9243590073.pdf;jsessionid=A51BDAB9660F30189903E31DAAF806ED?sequence=1" > Source: OMS-Radiación Ultravioleta-2003</a>
+</p>
+<img class="responsive-img" src="/img/Indice-UV.png" alt="Tabla colores UV"/>
+</div>
+<div class="modal-footer"></div>
+</div>
 
 <!-- Modal Aire ECA Structure -->
-        <div id="modalAireEca" class="modal">
-            <span class="modal-close right">X</span>
-            <div class="modal-content center">
-                <p><a href="http://www.minam.gob.pe/wp-content/uploads/2017/06/DS-003-2017-MINAM.pdf"> Source: DS Nº 003-2017-MINAM </a>
-                </p>
-                <img class="responsive-img" src="/img/ECA-aire.png" alt="Tabla ECA Aire"/>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
- <!-- Dropdown Structure 1-->
-        <ul id="dropdown1" class="dropdown-content">
-            <li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
-        </ul>
+<div id="modalAireEca" class="modal">
+<span class="modal-close right">X</span>
+<div class="modal-content center">
+<p><a href="http://www.minam.gob.pe/wp-content/uploads/2017/06/DS-003-2017-MINAM.pdf"> Source: DS Nº 003-2017-MINAM </a>
+</p>
+<img class="responsive-img" src="/img/ECA-aire.png" alt="Tabla ECA Aire"/>
+</div>
+<div class="modal-footer"></div>
+</div>
+<!-- Dropdown Structure 1-->
+<ul id="dropdown1" class="dropdown-content">
+<li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
+</ul>
 <!-- Dropdown Structure 2-->
-        <ul id="dropdown2" class="dropdown-content">
-            <li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
-        </ul>
+<ul id="dropdown2" class="dropdown-content">
+<li><a class="modal-trigger" href="#modalAirInca">Gas Legend (INCA)</a></li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalRuidoEca">Noise Legend (ECA)</a></li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalUVEca">UV Legend (ECA)</a> </li>
+<li class="divider" tabindex="-1"></li>
+<li><a class="modal-trigger" href="#modalAireEca">Air Legend (ECA)</a> </li>
+</ul>
 `;
 
 const navbarDrone = `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
-    <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    <li class="menu-btn" id="home-menu"><a >Home</a></li>
-    <li class="menu-btn" id="return-menu-drone"><a >Map</a></li>
-    </ul> 
-    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
-        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
-    </a>
-    <ul id="menu-list-bar" class="right hide-on-med-and-down">
-    <li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
-    <li class="menu-btn" id="flight-menu"><a>Flights</a></li>
-    <li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
-    </ul>
-    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+<ul id="menu-left-bar" class="left hide-on-med-and-down">
+<li class="menu-btn" id="home-menu"><a >Home</a></li>
+<li class="menu-btn" id="return-menu-drone"><a >Map</a></li>
+</ul> 
+<a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+<img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+</a>
+<ul id="menu-list-bar" class="right hide-on-med-and-down">
+<li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
+<li class="menu-btn" id="flight-menu"><a>Flights</a></li>
+<li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
+</ul>
+<a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
 </div>
 </nav>
 </div>
@@ -184,47 +251,47 @@ const navbarDrone = `
 
 const viewDownload = `
 <div class="row background-download">
-    <div class="col s12 m6 offset-s0.5 offset-m3">
-        <div class="card-pannel z-depth-5">
-            <form action=""class="form-download">
-                <h5 class="center-align">Download the hourly average air quality data</h5><br>
-                <div class="row">
-                    <div class="col s10 m6 offset-s1 offset-m3">
-                        <select class="browser-default center-align" name="" id="selectQhawax">
-                        <option value="" disabled selected> Select a qHAWAX</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="container">
-                  <div class="row center-align">
-                    <div class="col s6">
-                      <label for="initDate">Initial Date</label>
-                      <input type="text" class="datepicker center-align" name="initDate">
-                    </div>
-                    <div class="col s6">
-                        <label for="initHour">Initial Time</label>
-                        <input type="text" class="timepicker center-align" name="initHour">
-                    </div>
-                </div>
-                </div>
-                <div class="container">
-                  <div class="row center-align">
-                    <div class="col s6">
-                        <label for="endDate">Final Date</label>
-                        <input type="text" class="datepicker center-align" name="endDate">
-                      </div>
-                    <div class="col s6">
-                      <label for="endHour">Final Time</label>
-                      <input type="text" class="timepicker center-align" name="endHour">
-                    </div>
-                  </div>
-                  <div class="row">
-                  <div class="center-align">
-                  <button id="submit-btn" class="btn waves-effect waves-light" >Download
-                    <i class="material-icons right">send</i>
-                  </button>
-                </div>
-                </div>
+<div class="col s12 m6 offset-s0.5 offset-m3">
+<div class="card-pannel z-depth-5">
+<form action=""class="form-download">
+<h5 class="center-align">Download the hourly average air quality data</h5><br>
+<div class="row">
+<div class="col s10 m6 offset-s1 offset-m3">
+<select class="browser-default center-align" name="" id="selectQhawax">
+<option value="" disabled selected> Select a qHAWAX</option>
+</select>
+</div>
+</div>
+<div class="container">
+<div class="row center-align">
+<div class="col s6">
+<label for="initDate">Initial Date</label>
+<input type="text" class="datepicker center-align" name="initDate">
+</div>
+<div class="col s6">
+<label for="initHour">Initial Time</label>
+<input type="text" class="timepicker center-align" name="initHour">
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row center-align">
+<div class="col s6">
+<label for="endDate">Final Date</label>
+<input type="text" class="datepicker center-align" name="endDate">
+</div>
+<div class="col s6">
+<label for="endHour">Final Time</label>
+<input type="text" class="timepicker center-align" name="endHour">
+</div>
+</div>
+<div class="row">
+<div class="center-align">
+<button id="submit-btn" class="btn waves-effect waves-light" >Download
+<i class="material-icons right">send</i>
+</button>
+</div>
+</div>
 </form>
 <p class="center"><strong><sub>
 The data has not passed a quality control.</sub></strong></p>
@@ -269,13 +336,13 @@ const chartView = `<div class="row edition-element">
 <h4 class="center">Real Time Graphics</h4>
 <div class="col s4  ">
 <label for="selectQhawax">qHAWAX</label>
-  <select class="browser-default" name="" id="selectQhawax">
-  <option value="" disabled selected> Select a qHAWAX</option>
+<select class="browser-default" name="" id="selectQhawax">
+<option value="" disabled selected> Select a qHAWAX</option>
 </select>
 </div>
 <div class="col s4  ">
 <label for="selectTime">Graphic time</label>
-  <select class="browser-default" name="" id="selectTime">
+<select class="browser-default" name="" id="selectTime">
 <option value="" disabled selected> Select time in minutes</option>
 <option value="5"> 5 </option>
 <option value="10"> 10 </option>
@@ -292,21 +359,21 @@ const chartView = `<div class="row edition-element">
 <a class="waves-effect waves-light btn" id="graphicBtn">Graph</a>
 </div>
 </div>
-      <div class="row" id="charts"></div>
-  </div>
-      
+<div class="row" id="charts"></div>
+</div>
+
 `;
 
 const landbar = `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
 <div id="nav-wrapper-menu-bar" class="nav-wrapper">
-    <ul id="menu-left-bar" class="left hide-on-med-and-down">
-    </ul> 
-    <a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
-        <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
-    </a>
-    <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+<ul id="menu-left-bar" class="left hide-on-med-and-down">
+</ul> 
+<a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+<img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+</a>
+<a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
 </div>
 </nav>
 </div>
@@ -316,71 +383,71 @@ const landbar = `
 const landpage = `
 <div id="background"></div>
 <div class="wrapper">
-  <div class="cards_wrap">
+<div class="cards_wrap">
 
-    <div class="card_item hoverable z-depth-5" id="qhawax_map">
-      <div class="card_inner">
-        <div class="card_top">
-          <img src="img/qHAWAX_v3.png" alt="qHAWAX" style="width:auto ; height:180px;" />
-        </div>
-        <div class="card_bottom">
-          <div class="card_category">
-            qHAWAX
-          </div>
-          <div class="card_info">
-            <p class="title">Description</p>
-            <p>
-            Map with qHAWAX modules for monitoring air quality.
-            </p>
-          </div>
-          <div class="card_creator">
-            qAIRa
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="card_item hoverable z-depth-5" id="qhawax_map">
+<div class="card_inner">
+<div class="card_top">
+<img src="img/qHAWAX_v3.png" alt="qHAWAX" style="width:auto ; height:180px;" />
+</div>
+<div class="card_bottom">
+<div class="card_category">
+qHAWAX
+</div>
+<div class="card_info">
+<p class="title">Description</p>
+<p>
+Map with qHAWAX modules for monitoring air quality.
+</p>
+</div>
+<div class="card_creator">
+qAIRa
+</div>
+</div>
+</div>
+</div>
 
 
-    <div class="card_item hoverable z-depth-5" id="andean_map">
-      <div class="card_inner">
-        <div class="card_top">
-          <img src="img/andeanDrone.png" alt="Andean Drone" style="width:auto ; height:180px;"/>
-        </div>
-        <div class="card_bottom">
-          <div class="card_category">
-            Andean Drone
-          </div>
-          <div class="card_info">
-            <p class="title">Description</p>
-            <p>
-            Map with Andean Drones for monitoring air quality.
-            </p>
-          </div>
-          <div class="card_creator">
-            qAIRa
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="card_item hoverable z-depth-5" id="andean_map">
+<div class="card_inner">
+<div class="card_top">
+<img src="img/andeanDrone.png" alt="Andean Drone" style="width:auto ; height:180px;"/>
+</div>
+<div class="card_bottom">
+<div class="card_category">
+Andean Drone
+</div>
+<div class="card_info">
+<p class="title">Description</p>
+<p>
+Map with Andean Drones for monitoring air quality.
+</p>
+</div>
+<div class="card_creator">
+qAIRa
+</div>
+</div>
+</div>
+</div>
 
-  </div>
+</div>
 </div>
 
 `;
 
 const infowindow =`
 <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
-        <li class="tab col s2"><a href="#test2" >Real Time</a></li>
-        <li class="tab col s2"><a href="#test3" >Weather</a></li>
-        <li class="tab col s2"><a href="#test4">Graphics</a></li>
-      </ul>
+<ul class="tabs">
+<li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
+<li class="tab col s2"><a href="#test2" >Real Time</a></li>
+<li class="tab col s2"><a href="#test3" >Weather</a></li>
+<li class="tab col s2"><a href="#test4">Graphics</a></li>
+</ul>
 </div>
-    <div id="test1" class="col s12"></div>
-    <div id="test2" class="col s12"></div>
-    <div id="test3" class="col s12"></div>
-    <div id="test4" class="col s12"></div>
+<div id="test1" class="col s12"></div>
+<div id="test2" class="col s12"></div>
+<div id="test3" class="col s12"></div>
+<div id="test4" class="col s12"></div>
 
 `;
 
@@ -490,20 +557,101 @@ const pannelGraphics = (qhawax)=> `
 </table>
 `;
 
+
+const flightViewElem = `
+<form class="form-flights container">
+<h5 class="center-align">Please select a period to list the flights</h5><br>
+<div class="container">
+<div class="row center-align">
+<div class="col s6">
+<label for="initDate">Initial Date</label>
+<input type="text" class="datepicker center-align" name="initDate">
+</div>
+<div class="col s6">
+<label for="endDate">Final Date</label>
+<input type="text" class="datepicker center-align" name="endDate">
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="center-align">
+<button id="submit-btn" class="btn waves-effect waves-light" >Show Flights
+<i class="material-icons right">send</i>
+</button>
+</div>
+</div>
+</form>
+`;
+
+
+const card = (flight)=>`
+<div class="col s12 m7 l4">
+<div class="card horizontal drone-card">
+<div class="card-image drone-img">
+<img style="border-radius: 20px;" src="img/andeanDrone.png">
+<p class="card-title">${flight.qhawax_name}</p>
+</div>
+<div class="card-stacked">
+<div class="card-content">
+<table>
+<caption>${flight.flight_detail}</caption>
+<caption>${flight.flight_start.slice(0,10)}</caption>
+<tr>
+<td>Start time</td>
+<td>${flight.flight_start.slice(11,19)}</td>
+</tr>
+<tr>
+<td>End time</td>
+<td>${flight.flight_end.slice(11,19)}</td>
+</tr>
+<tr>
+<td>Total (min)</td>
+<td>${duration(flight)}</td>
+</tr>
+</table>
+</div>
+<div class="card-action">
+<div class="center-align">
+<button id="${flight.qhawax_name}" class="btn waves-effect waves-light simulation-btn"
+data-start="${flight.flight_start}"
+data-end="${flight.flight_end}"
+>SIMULATION
+<i class="material-icons right">send</i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+`;
+
+const simulation = `
+<div class="wrapper_map" id="wrapper_map">
+<div class="animate__animated animate__fadeInDown" id="map"></div>
+</div>
+`;
+
 export {
-  viewMap,
-  navbar,
-  navbarDrone,
-  viewDownload,
-  viewBoard,
-  chartView,
-  landpage,
-  landbar,
-  infowindow,
-  pannelGraphics,
-  pannelInca,
-  pannelMeteo,
-  pannelRealTime,
-  droneChart,
-  droneChartRow
+viewMap,
+navbar,
+navbarDrone,
+viewDownload,
+viewBoard,
+chartView,
+landpage,
+landbar,
+infowindow,
+pannelGraphics,
+pannelInca,
+pannelMeteo,
+pannelRealTime,
+// droneChart,
+// droneChartRow,
+flightViewElem,
+card,
+simulation,
+viewDrones, 
+droneSelection
 };

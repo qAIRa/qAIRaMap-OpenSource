@@ -309,33 +309,6 @@ main {
   .slogan{
 	  margin-top: 3em;
   }
-  /* #over_map {
-	position: absolute;
-	bottom: 10px;
-	left: 2%;
-	background-color: rgb(255, 255, 255, 0.6);
-	border: 1px solid #999;
-	text-align: center;
-	border-radius: 20px;
-	width: min-content;
-}
-
-.inca-color {
-    height: 0.5em;
-    padding: 0;
-}
-.inca-color1 {
-    margin: 0;
-    padding: 0;
-}
-.inca-qairito {
-	width: 3em;
-}
-
-.inca-qairito1 {
-	padding: 0;
-	margin:0;
-} */
 
 
 #over_map {
@@ -349,6 +322,18 @@ main {
 	width: max-content;
 	max-width: 60%;
 }
+#over_map_drones_colors{
+	position: absolute;
+    top: 0.5em;
+    right: 4em;
+    font-family: inherit;
+    background-color: rgb(255, 255, 255, 0.6);
+    border: 1px solid #999;
+    text-align: center;
+    width: max-content;
+    max-width: 60%;
+}
+
 #over_map_qairito {
 	position: absolute;
 	bottom: 10px;
@@ -385,7 +370,7 @@ main {
 	border-radius: 20px;
 }
 
-#over_map_drones {
+/* #over_map_drones {
 	position: absolute;
 	bottom: 21px;
     right: 4%;
@@ -398,7 +383,53 @@ main {
 	padding: 0;
 	border-radius: 20px;
 	overflow-y: scroll;
+} */
+
+.over_map_drones {
+	position: absolute;
+	z-index: 5;
+	background-color: #fff;
+	border: 1px solid #999;
+	text-align: center;
+    max-width: min-content ;
+	padding: 0;
+	top: 5em;
+    left: 0.7em;
 }
+
+.over_map_droneselection {
+	position: absolute;
+	z-index: 5;
+	background-color: #fff;
+	border: 1px solid #999;
+	text-align: center;
+	width: 400px;
+	padding: 0;
+	bottom: 0;
+	left: 0.7em;
+	border-radius: 20px;
+	display: flex;
+}
+
+.btn-group button {
+	background-color:var(--blue); /* Blue background */
+	border: 1px solid white; /* white border */
+	color: white; /* White text */
+	padding: 10px 24px; /* Some padding */
+	cursor: pointer; /* Pointer/hand icon */
+	width: 100%; /* Set a width if needed */
+	display: block; /* Make the buttons appear below each other */
+	font-size: 10px;
+  }
+  
+  .btn-group button:not(:last-child) {
+	border-bottom: none; /* Prevent double borders */
+  }
+  
+  /* Add a background color on hover */
+  .btn-group button:hover {
+	background-color: rgba(30, 165, 203);;
+  }
 
 td{
 	border-radius: 5px;
@@ -415,11 +446,13 @@ td{
 }
 .inca-color {
     height: 0.5em;
-    padding: 0;
+	padding: 0;
+	border-radius: 0;
 }
 .inca-color1 {
     margin: 0;
-    padding: 0.1em;
+	padding: 0.1em;
+	font-weight: 100;
 }
 .inca-qairito {
 	width: 3em;
@@ -697,6 +730,24 @@ i.icon-green {
 .drone_icon{
 	height:18px;
 }
+.form-flights {
+	background-color: var(--white-alpha);
+	padding: 1em;
+	border-radius: 20px;
+	margin-top: 1em;
+    margin-bottom: 1em;
+}
+ .drone-card{
+	background-color: var(--white-alpha);
+	border-radius: 20px;
+ }
+ .card .card-image .card-title{
+	color: rgba(0,0,0,0.87)
+ }
+
+ .drone-img{
+	 max-width: 40%;
+ }
 
 
 
@@ -749,9 +800,16 @@ i.icon-green {
 		height: 518px;
 		width: 192px;
 	}
-	#over_map_drones{
+	#over_map_drones_colors{
+		top:4em;
+		left:0.7em;
+	}
+	/* #over_map_drones{
 		width: 332px;
 		height: 150px;
+	} */
+	.over_map_droneselection{
+		width: 250px;
 	}
 	.pannel-inca {
 		margin: 6px 0px 0px 3px;

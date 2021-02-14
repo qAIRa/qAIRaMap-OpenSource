@@ -2,7 +2,7 @@ import { navbar, navbarDrone } from './HtmlComponents.js';
 
 import { goTo } from './viewController.js';
 
-const navBarClient = (element, display) => {
+const navBarQhawax = (element, display) => {
   const menuNavBar = document.querySelector('header');
 
   menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : navbar;
@@ -27,11 +27,11 @@ const navBarClient = (element, display) => {
     case 'dashboard-menu': case 'dashboard-menu-mob': btn.addEventListener('click', () => goTo('dashboard')); break;
     case 'graphics-menu': case 'graphics-menu-mob': btn.addEventListener('click', () => goTo('graphics')); break;
     case 'graphics-menu-drone': case 'graphics-menu-mob-drone': btn.addEventListener('click', () => goTo('graphicsDrone')); break;
-    case 'flight-menu': case 'flight-menu-mob': btn.addEventListener('click', () => goTo('flight')); break;
+    case 'flight-menu': case 'flight-menu-mob': btn.addEventListener('click', () => goTo('flightsDrone')); break;
     default:
       break;
     }
   });
 };
 
-export { navBarClient };
+export { navBarQhawax };

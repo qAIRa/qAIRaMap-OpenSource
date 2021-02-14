@@ -13,7 +13,7 @@ beforeEach(() => {
     google.maps.Map=jest.fn();
     google.maps.MapTypeId=jest.fn();
     google.maps.MapTypeId.ROADMAP=jest.fn();
-    require('../build/js/materialize.min.js')
+    global.M = require('../build/js/materialize.min.js');
     document.body.innerHTML = '<header></header>' + viewMap;
   expect(viewFreeDrone().toString()).toBe('[object HTMLDivElement]');
   })

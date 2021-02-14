@@ -55,6 +55,6 @@ test('graphics page', () => {
     <header></header>
       <div id="content-page"></div>
     `;
-    require('../build/js/materialize.min.js')
+    global.M = require('../build/js/materialize.min.js');
 	expect(viewGraphics().toString()).toMatch(html);
 })

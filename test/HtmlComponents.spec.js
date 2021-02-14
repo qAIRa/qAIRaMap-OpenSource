@@ -3,7 +3,6 @@ import {
     pannelInca,
     pannelMeteo,
     pannelRealTime,
-    droneChartRow
   } from '../src/lib/HtmlComponents.js';
 
   const htmlGraph = `
@@ -234,7 +233,3 @@ const position = {lat: -12.135387, lng: -77.025062}
   expect(pannelRealTime(realTime)).toBe(htmlRealTime);
 })
 
-test('droneChartRow', () => {
-  document.body.innerHTML = `<tbody></tbody>`;
-expect(droneChartRow(drone, position,'OFF')).toBe(htmlDroneChart);
-})

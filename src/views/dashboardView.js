@@ -1,7 +1,7 @@
-import { navBarClient } from '../lib/navBarClient.js';
+import { navBarQhawax } from '../lib/navBarQhawax.js';
 import {viewBoard } from '../lib/HtmlComponents.js'
 import { requestAllQhawax } from '../requests/get.js';
-import { SocketSource } from '../index.js';
+import { socket } from '../index.js';
 
 const ECAlimits = {
 	CO_ug_m3:30000,
@@ -80,9 +80,7 @@ const dashboardRowActive =(data,q,value)=>`
 <td><i class="material-icons" style="color:#32CD32">wifi</i></td>`;
 
 const callSocket = (q, row_table) => {
-	const socket = io.connect(`${SocketSource}`);
 		socket.on(`${q.name}_processed`, data => {
-			console.log(data);
 			if (q.name === data.ID) {
 				const value = indexValue(data);
 				let row_data = dashboardRowActive(data,q,value);
@@ -104,16 +102,17 @@ const createRow = (element, qhawax_asigned) => {
 }
 const request = async () => {
 	const qhawax_asigned = [];
-	const qhawax_list = await requestAllQhawax();
-	qhawax_list.forEach(q => qhawax_asigned.push(q));
+	await requestAllQhawax()
+	.then(r=>r.forEach(q => qhawax_asigned.push(q)))
+	.catch(e=>null)
 	return qhawax_asigned;
 }
 
 const viewDashboard = () => {
   const dashboardElem = document.createElement('div');
     dashboardElem.classList.add('dashboard');
-	navBarClient(dashboardElem, viewBoard);
-	request().then(list =>createRow(dashboardElem, list ));
+	navBarQhawax(dashboardElem, viewBoard);
+	request().then(list =>createRow(dashboardElem, list ).catch(e=>null));
     return dashboardElem;
 };
 

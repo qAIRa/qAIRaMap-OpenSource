@@ -1,9 +1,8 @@
 import { configuration} from '../lib/graphAssets.js';
-import {APISource, SocketSource} from '../index.js';
+import {APISource, socket} from '../index.js';
 import { requestAverageMeasurement} from '../requests/get.js';
 import { 
 	addZero,
-	formatDateDB,
     elementMeteo,
     elementRT,
     incaResult,
@@ -11,9 +10,22 @@ import {
     noiseLimits,
 	qualityColor,
 	sensors,
-	limits
+	limits,
+	toast
  } from '../lib/helpers.js';
+ import { format } from 'date-fns';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../lib/HtmlComponents.js';
+
+const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
+	mapTypeId: google.maps.MapTypeId.ROADMAP,
+	center: { lat: -12.1215361, lng: -77.0463574},
+	zoom: 8,
+	markers:[],
+	latitude:[],
+	longitude:[],
+	infowindows:[]
+  });
+
 
 const ECAlimits = sensor => {
 	switch (sensor) {
@@ -35,6 +47,7 @@ const ECAlimits = sensor => {
 			break;
 	}
 };
+
 const drawChart = async (sensor, qhawax_id) => {
 	const chart = document.querySelector('#graphicValues');
 	const layout = {
@@ -80,7 +93,7 @@ const drawChart = async (sensor, qhawax_id) => {
 	let yECA = [];
 	Object.entries(json).forEach(d => {
 		yValues.push(d[1].sensor);
-		xValues.push(formatDateDB(d[1].timestamp_zone));
+		xValues.push(format(new Date(d[1].timestamp_zone), 'HH')+'H');
 		yECA.push(ECAlimits(sensor));
 		let trace1 = {};
 		let trace2 = {};
@@ -193,7 +206,7 @@ const incaValues=(inca)=>{
 		incaResult[o[0]]===undefined?'__':incaResult[o[0]]=o[1];
 		});
 	return incaResult;
-}
+};
 
 const setPannelData = (qhawax, map) => {
 	const pannelAll= document.getElementById('over_map_infowindow')
@@ -203,6 +216,7 @@ const setPannelData = (qhawax, map) => {
 	overMap.classList.add('none')
 	fetch(`${APISource}last_gas_inca_data/`)
 		.then(res => res.json())
+		.catch(e=>null)
 		.then(qhawax_inca_list => {
 			qhawax_inca_list.forEach(qhawax_inca => {
 				if (qhawax.name===qhawax_inca.qhawax_name) {
@@ -227,7 +241,6 @@ const setPannelData = (qhawax, map) => {
 						})
 						REALT.innerHTML = pannelRealTime(elementRT)
 						METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},elementMeteo,{color:'#fff',label:''})
-						const socket = io.connect(`${SocketSource}`);
 						socket.on(qhawax.name, data =>{
 						REALT.innerHTML = pannelRealTime(data);
 						METEO.innerHTML = pannelMeteo(zoneColorNoise(data),data,uvColor(data.UV))
@@ -235,27 +248,27 @@ const setPannelData = (qhawax, map) => {
 				}
 			})
 		})
+		.catch(e=>null)
 		google.maps.event.addListener(map, 'click', () => {
 			pannelAll.setAttribute('class','none')
 			overMap.classList.remove('none')
 			overMapQ.classList.add('none')
 		});
-}
+};
+
 const setInfowindow = (qhawax, map)=>{
-	let options = {
-		html: `${qhawax.comercial_name}: Module ${qhawax.name}`,
-		classes: 'grey darken-1 rounded',
-		displayLength: 6000,
-	}
+	const html = `${qhawax.comercial_name}: Module ${qhawax.name}`;
+	const classes ='grey darken-1 rounded';
 	switch (qhawax.main_inca) {
-		case -1:options.html+= ` Off.`; return M.toast(options);
-		case  0:options.html+= ` waiting for valid data.`; return M.toast(options);
-		case  1:options.html+= ` waiting for average data.`; return M.toast(options);
-		case -2:options.html+= ` in maintenance.`; return M.toast(options);
+		case -1:html+= ` Off.`; 
+		case  0:html+= ` waiting for valid data.`; 
+		case  1:html+= ` waiting for average data.`; 
+		case -2:html+= ` in maintenance.`;
 		case 50: case 100: case 500: case 600:setPannelData(qhawax,map);break;
-		default: options.html= ` Failed to get data.`; return M.toast(options);
+		default:html= ` Failed to get data.`; 
+		return toast(html, classes);
 	}
-}
+};
 
 const markerZoom = (zoom) =>{
 		switch(true){
@@ -264,7 +277,8 @@ const markerZoom = (zoom) =>{
 			case zoom >= 14:return 70;
 			default: break;
 		}
-}
+};
+
 const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
 		marker => marker.id === qhawax.name
@@ -301,21 +315,14 @@ const drawQhawaxMap = (map, qhawax) => {
 	});
 	qhawax_marker.addListener('mouseover', () => {
 		M.Toast.dismissAll();
-		M.toast({
-			html: `${qhawax_marker.id}: "${qhawax.comercial_name}"`,
-			classes: 'green darken-1 rounded',
-			displayLength: 4000,
-		});
-		
+		toast(`${qhawax_marker.id}: "${qhawax.comercial_name}"`,'green darken-1 rounded')
 	});
 
 	
 	map.markers.push(qhawax_marker);
 
 	const bounds = new google.maps.LatLngBounds();
-	for (let i = 0; i < map.markers.length; i++) {
-		bounds.extend(map.markers[i].getPosition());
-	}
+	map.markers.forEach(m=> bounds.extend(m.getPosition()))
 	map.fitBounds(bounds);
 	const zoom = map.getZoom();
 	map.setZoom(zoom > 13 ? 13 : zoom);
@@ -333,6 +340,7 @@ export {
 	qairito,
 	incaValues,
 	setPannelData,
-	setInfowindow
+	setInfowindow,
+	firstMap
 };
 

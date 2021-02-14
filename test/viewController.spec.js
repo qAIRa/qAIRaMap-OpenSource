@@ -3,9 +3,9 @@ import { initialize} from "@googlemaps/jest-mocks";
 import { downloadView } from '../src/views/downloadView.js';
 import { viewDashboard } from '../src/views/dashboardView.js';
 import { viewGraphics } from '../src/views/graphicsView.js';
-const mockFn = jest.fn().mockImplementation(google=> google.maps.MapTypeId.ROADMAP);
-MapTypeId: google => jest.fn().mockImplementation(google=> google.maps.MapTypeId.ROADMAP)
-jest.fn().mockImplementation((mapTypeId= google.maps.MapTypeId | 'ROADMAP') => {})
+// const mockFn = jest.fn().mockImplementation(google=> google.maps.MapTypeId.ROADMAP);
+// MapTypeId: google => jest.fn().mockImplementation(google=> google.maps.MapTypeId.ROADMAP)
+// jest.fn().mockImplementation((mapTypeId= google.maps.MapTypeId | 'ROADMAP') => {})
 beforeEach(() => {
   
     initialize();
@@ -26,7 +26,7 @@ test('Add view', () => {
     <header></header>
       <div id="content-page"></div>
     `;
-    require('../build/js/materialize.min.js');
+    global.M = require('../build/js/materialize.min.js');
     const container = document.getElementById('content-page')
     
     // expect(changeView('#/')).toStrictEqual(container.appendChild(viewFreeMap()))

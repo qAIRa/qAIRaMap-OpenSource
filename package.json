@@ -6,6 +6,7 @@
 	"scripts": {
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
+		"test:silent":"jest --reporters jest-silent-reporter",
 		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
@@ -38,7 +39,10 @@
 			"/node_modules/",
 			"/coverage/"
 		],
-		"globalSetup": "./global-setup.js"
+		"globalSetup": "./global-setup.js",
+		"globals":{
+			"io":"globals"
+		}
 	},
 	"repository": {
 		"type": "git",
@@ -55,6 +59,8 @@
 		"@googlemaps/jest-mocks": "0.0.3",
 		"babel-jest": "^26.0.1",
 		"core-util-is": "^1.0.2",
+		"date-fns": "^2.17.0",
+		"jest-silent-reporter": "^0.4.0",
 		"streamsaver": "^2.0.5",
 		"webpack": "^4.41.6",
 		"webpack-cli": "^3.3.11",

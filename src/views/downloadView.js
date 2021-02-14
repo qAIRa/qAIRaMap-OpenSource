@@ -3,10 +3,10 @@ import {
   openModalEmptyAlert,
 } from '../lib/pickerErrors.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
-import { navBarClient } from '../lib/navBarClient.js';
+import { navBarQhawax } from '../lib/navBarQhawax.js';
 import { viewDownload } from '../lib/HtmlComponents.js';
 import { requestAllQhawax, downloadData, requestInstallationDate } from '../requests/get.js';
-import { optionsDatePicker, optionsTimePicker } from '../lib/helpers.js';
+import { optionsDatePicker, optionsTimePicker, toast } from '../lib/helpers.js';
 
 const reorderDate = (str) => str.split('-').reverse().join('-');
 
@@ -42,21 +42,21 @@ const array_qhawax = [];
 const selectedParameters = {};
 
 const requestQhawaxs = async(element) => {
-  const qhawax_list = await requestAllQhawax();
   const addOptions = element.querySelector('#selectQhawax');
-  qhawax_list.forEach((qhawax) => {
+  await requestAllQhawax()
+  .then(q=>q.forEach((qhawax) => {
     const option = document.createElement('option');
     option.setAttribute('value', qhawax.qhawax_id);
     option.innerText =	qhawax.name + ': ' + qhawax.comercial_name;;
     array_qhawax.push(qhawax);
     addOptions.appendChild(option);
-  });
+  }))
+  .catch(e=>null)
 };
 
 const requestDownload = async(init, end) => {
   let filename = '';
   const json = await downloadData( selectedParameters.id, init, end);
-  console.log(json);
   array_qhawax.forEach((qhawax) => {
     filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
       ? `${qhawax.name}`
@@ -66,8 +66,7 @@ const requestDownload = async(init, end) => {
   });
 
   const csvContent = json2csv(json, csvFields);
-  csvContent!=='' ? download(csvContent, filename):M.Toast.dismissAll()||M.toast({ html: 'No hay data válida para el periodo.',
-	displayLength: 3000, });
+  csvContent!=='' ? download(csvContent, filename):M.Toast.dismissAll()||toast('There is no valid data for this period.','grey darken-1 rounded')
 	 setTimeout(()=>window.location.reload(), 2000)
 };
 
@@ -93,30 +92,13 @@ const installationDateReq = async(selection, element) => {
   M.Timepicker.init(timePicker, optionsTimePicker);
 };
 
-const initialToast = () => {
-  M.toast({ html: 'First select a module!' });
-  M.toast({ html: 'Please complete all fields.' });
-  return 'init';
-};
-
-const finalToast = () => {
-  M.toast({
-    html: 'The date may take 5 minutes...',
-    displayLength: 10000,
-  });
-  M.toast({
-    html: 'We are preparing your data!',
-    displayLength: 6000,
-  });
-  return 'final'
-};
 
 const downloadView = () => {
-  initialToast();
+  toast('First select a module and complete all the fields please','green darken-1 rounded')
 
   const downloadElem = document.createElement('div');
 
- navBarClient(downloadElem, viewDownload)
+ navBarQhawax(downloadElem, viewDownload)
 
   requestQhawaxs(downloadElem);
 
@@ -141,10 +123,9 @@ const downloadView = () => {
     } else if (Date.parse(initial_value) >= Date.parse(final_value)) {
       openModalDateAlert();
     } else {
-      console.log(initial_timestamp, final_timestamp);
          requestDownload(initial_timestamp, final_timestamp)
          
-      finalToast();
+      toast('We are preparing your data, this may take a minute...','green darken-1 rounded')
       const pannel = document.querySelector('.card-pannel');
       pannel.innerHTML = waitingLoader;
     }
@@ -159,7 +140,5 @@ export {
   withLocalTime, 
   requestQhawaxs, 
   requestDownload, 
-  installationDateReq,
-  initialToast,
-  finalToast
+  installationDateReq
 };

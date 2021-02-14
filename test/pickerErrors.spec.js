@@ -5,9 +5,7 @@ test('Modal Date Alert', () =>{
     <header></header>
       <div id="content-page"></div>
     `;
-    require('../build/js/materialize.min.js');
-    require('../build/css/materialize.min.css');
-    const container = document.getElementById('content-page')
+    global.M = require('../build/js/materialize.min.js');
     expect(openModalDateAlert()).toBe();
     expect(openModalEmptyAlert()).toBe();
 });
