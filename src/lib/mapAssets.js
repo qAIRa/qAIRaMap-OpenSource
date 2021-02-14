@@ -195,7 +195,7 @@ const uvColor = (uvValue) =>{
 	if(uvValue >= 2 && uvValue < 6) return uvColors.Low;
 	if(uvValue >= 6 && uvValue < 8) return uvColors.Moderate;
 	if(uvValue >= 8 && uvValue < 11) return uvColors.High
-	else return uvColors.Extreme;
+	return uvColors.Extreme;
 }
 
 const incaValues=(inca)=>{
