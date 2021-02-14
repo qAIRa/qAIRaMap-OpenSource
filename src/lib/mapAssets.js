@@ -190,12 +190,15 @@ const zoneColorNoise = data =>{
 };
 
 const uvColor = (uvValue) =>{
-	if(uvValue===null || uvValue<0) return uvColors.Null;
-	if(uvValue >= 0 && uvValue < 2) return uvColors.Minimum;
-	if(uvValue >= 2 && uvValue < 6) return uvColors.Low;
-	if(uvValue >= 6 && uvValue < 8) return uvColors.Moderate;
-	if(uvValue >= 8 && uvValue < 11) return uvColors.High
-	return uvColors.Extreme;
+	switch (true) {
+		case (uvValue===null): case (uvValue<0): return uvColors.Null;
+		case (uvValue >= 0 && uvValue < 2): return 	uvColors.Minimum;
+		case (uvValue >= 2 && uvValue < 6): return uvColors.Low;
+		case (uvValue >= 6 && uvValue < 8): return uvColors.Moderate;
+		case (uvValue >= 8 && uvValue < 11): return uvColors.High;
+		default: return uvColors.Extreme;
+			
+	}
 }
 
 const incaValues=(inca)=>{
