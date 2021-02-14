@@ -208,6 +208,16 @@ export const incaValues=(inca)=>{
 	return incaResult;
 };
 
+const forEachInfograph = (infoGraph)=>{
+	infoGraph.forEach(ig=>{
+		ig.addEventListener('click', e=>{
+		const qhawax_id = e.target.dataset.infograph;
+		const qhawax_sensor = e.target.dataset.label;
+		drawChart(qhawax_sensor, qhawax_id);
+		})
+	})
+}
+
 const forEachPannel = (qhawax_inca_list,qhawax) => {
 	qhawax_inca_list.forEach(qhawax_inca => {
 		if (qhawax.name===qhawax_inca.qhawax_name) {
@@ -223,13 +233,7 @@ const forEachPannel = (qhawax_inca_list,qhawax) => {
 				INCA.innerHTML = pannelInca(incaValues(qhawax_inca),airQuality(qhawax_inca))
 				GRAPHS.innerHTML = pannelGraphics(qhawax)
 				const infoGraph = document.querySelectorAll('.infowindow-graph');
-				infoGraph.forEach(ig=>{
-					ig.addEventListener('click', e=>{
-					const qhawax_id = e.target.dataset.infograph;
-					const qhawax_sensor = e.target.dataset.label;
-					drawChart(qhawax_sensor, qhawax_id);
-					})
-				})
+				forEachInfograph(infoGraph)
 				REALT.innerHTML = pannelRealTime(elementRT)
 				METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},elementMeteo,{color:'#fff',label:''})
 				socket.on(qhawax.name, data =>{
