@@ -1,6 +1,6 @@
 import { configuration} from '../lib/graphAssets.js';
 import {APISource, socket} from '../index.js';
-import { requestAverageMeasurement} from '../requests/get.js';
+import { noParametersRequest, oneParameterRequest, requestAverageMeasurement} from '../requests/get.js';
 import { 
 	addZero,
     elementMeteo,
@@ -208,46 +208,46 @@ export const incaValues=(inca)=>{
 	return incaResult;
 };
 
-export const setPannelData = (qhawax, map) => {
+const forEachPannel = (qhawax_inca_list,qhawax) => {
+	qhawax_inca_list.forEach(qhawax_inca => {
+		if (qhawax.name===qhawax_inca.qhawax_name) {
+			pannelAll.classList.remove('none')
+			pannelAll.innerHTML=`<p>${qhawax.name}: ${qhawax.comercial_name}</p>`+infowindow;
+			overMapQ.innerHTML=`<div id="qairito-back" style="background-image: url(${qairito(qhawax.main_inca).b});"><img id="qairito-back-img" src="${qairito(qhawax.main_inca).q}" alt=""></img></div>`
+			const tabs = document.querySelector('.tabs')
+			M.Tabs.init(tabs);
+				const INCA = document.getElementById('test1')
+				const REALT = document.getElementById('test2')
+				const METEO = document.getElementById('test3')
+				const GRAPHS = document.getElementById('test4')
+				INCA.innerHTML = pannelInca(incaValues(qhawax_inca),airQuality(qhawax_inca))
+				GRAPHS.innerHTML = pannelGraphics(qhawax)
+				const infoGraph = document.querySelectorAll('.infowindow-graph');
+				infoGraph.forEach(ig=>{
+					ig.addEventListener('click', e=>{
+					const qhawax_id = e.target.dataset.infograph;
+					const qhawax_sensor = e.target.dataset.label;
+					drawChart(qhawax_sensor, qhawax_id);
+					})
+				})
+				REALT.innerHTML = pannelRealTime(elementRT)
+				METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},elementMeteo,{color:'#fff',label:''})
+				socket.on(qhawax.name, data =>{
+				REALT.innerHTML = pannelRealTime(data);
+				METEO.innerHTML = pannelMeteo(zoneColorNoise(data),data,uvColor(data.UV))
+			})
+		}
+	})
+};
+
+export const setPannelData = async(qhawax, map) => {
 	const pannelAll= document.getElementById('over_map_infowindow')
 	const overMap = document.getElementById('over_map');
 	const overMapQ = document.getElementById('over_map_qairito');
 	overMapQ.classList.remove('none')
 	overMap.classList.add('none')
-	fetch(`${APISource}last_gas_inca_data/`)
-		.then(res => res.json())
-		.catch(e=>null)
-		.then(qhawax_inca_list => {
-			qhawax_inca_list.forEach(qhawax_inca => {
-				if (qhawax.name===qhawax_inca.qhawax_name) {
-					pannelAll.classList.remove('none')
-					pannelAll.innerHTML=`<p>${qhawax.name}: ${qhawax.comercial_name}</p>`+infowindow;
-					overMapQ.innerHTML=`<div id="qairito-back" style="background-image: url(${qairito(qhawax.main_inca).b});"><img id="qairito-back-img" src="${qairito(qhawax.main_inca).q}" alt=""></img></div>`
-					const tabs = document.querySelector('.tabs')
-					M.Tabs.init(tabs);
-						const INCA = document.getElementById('test1')
-						const REALT = document.getElementById('test2')
-						const METEO = document.getElementById('test3')
-						const GRAPHS = document.getElementById('test4')
-						INCA.innerHTML = pannelInca(incaValues(qhawax_inca),airQuality(qhawax_inca))
-						GRAPHS.innerHTML = pannelGraphics(qhawax)
-						const infoGraph = document.querySelectorAll('.infowindow-graph');
-						infoGraph.forEach(ig=>{
-							ig.addEventListener('click', e=>{
-							const qhawax_id = e.target.dataset.infograph;
-							const qhawax_sensor = e.target.dataset.label;
-							drawChart(qhawax_sensor, qhawax_id);
-							})
-						})
-						REALT.innerHTML = pannelRealTime(elementRT)
-						METEO.innerHTML = pannelMeteo({color:'#fff',zone:''},elementMeteo,{color:'#fff',label:''})
-						socket.on(qhawax.name, data =>{
-						REALT.innerHTML = pannelRealTime(data);
-						METEO.innerHTML = pannelMeteo(zoneColorNoise(data),data,uvColor(data.UV))
-					})
-				}
-			})
-		})
+	await noParametersRequest('last_gas_inca_data/')
+		.then(qhawax_inca_list => forEachPannel(qhawax_inca_list,qhawax) )
 		.catch(e=>null)
 		google.maps.event.addListener(map, 'click', () => {
 			pannelAll.setAttribute('class','none')
@@ -257,16 +257,15 @@ export const setPannelData = (qhawax, map) => {
 };
 
 export const setInfowindow = (qhawax, map)=>{
-	const html = `${qhawax.comercial_name}: Module ${qhawax.name}`;
+	let html = `${qhawax.comercial_name}: Module ${qhawax.name}`;
 	const classes ='grey darken-1 rounded';
 	switch (qhawax.main_inca) {
-		case -1:html+= ` Off.`; 
-		case  0:html+= ` waiting for valid data.`; 
-		case  1:html+= ` waiting for average data.`; 
-		case -2:html+= ` in maintenance.`;
+		case -1:html+= ` Off.`; return toast(html, classes);
+		case  0:html+= ` waiting for valid data.`; return toast(html, classes);
+		case  1:html+= ` waiting for average data.`; return toast(html, classes);
+		case -2:html+= ` in maintenance.`;return toast(html, classes);
 		case 50: case 100: case 500: case 600:setPannelData(qhawax,map);break;
-		default:html= ` Failed to get data.`; 
-		return toast(html, classes);
+		default:html= ` Failed to get data.`; return toast(html, classes);
 	}
 };
 

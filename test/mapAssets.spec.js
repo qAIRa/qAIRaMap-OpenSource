@@ -207,6 +207,6 @@ test('drawQhawaxMap', () => {
 
   test('setPannelData', () => {
 	document.body.innerHTML = viewMap;
-  expect(setPannelData(qhawax,map)).toBe(undefined);
+  expect(setPannelData(qhawax,map)).toStrictEqual(Promise.resolve({}));
   })
   
