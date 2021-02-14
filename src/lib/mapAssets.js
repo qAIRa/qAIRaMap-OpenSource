@@ -16,7 +16,7 @@ import {
  import { format } from 'date-fns';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../html/infowindow.js';
 
-const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
+export const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	center: { lat: -12.1215361, lng: -77.0463574},
 	zoom: 8,
@@ -27,7 +27,7 @@ const firstMap =(element, containerID) => new google.maps.Map(element.querySelec
   });
 
 
-const ECAlimits = sensor => {
+export const ECAlimits = sensor => {
 	switch (sensor) {
 		case 'CO':
 			return 10000;
@@ -48,7 +48,7 @@ const ECAlimits = sensor => {
 	}
 };
 
-const drawChart = async (sensor, qhawax_id) => {
+export const drawChart = async (sensor, qhawax_id) => {
 	const chart = document.querySelector('#graphicValues');
 	const layout = {
 
@@ -116,7 +116,7 @@ const drawChart = async (sensor, qhawax_id) => {
 	Plotly.newPlot(chart, data, layout, configuration);
 };
 
-const airQuality = data => {	
+export const airQuality = data => {	
 	Object.entries(sensors).forEach(([key, value]) => sensors[key]=data[key]);
 	const time =addZero(new Date(data.timestamp_zone).getHours()) + ':' + addZero(new Date(data.timestamp_zone).getMinutes());
 	let result={}
@@ -136,7 +136,7 @@ const airQuality = data => {
 	return {time,result};
 };
 
-const qhawaxLeaf = inca => {
+export const qhawaxLeaf = inca => {
 	let leaf = '';
 	switch (inca) {
 		case -1: case null: leaf = '/img/leafs/leaf_out_of_service.png';
@@ -157,7 +157,7 @@ const qhawaxLeaf = inca => {
 	return leaf;
 };
 
-const qairito = inca => {
+export const qairito = inca => {
 	let gif = '';
 	switch (inca) {
 		case 50: gif = {q:'/img/qairito/qairito_buena.gif',b:'/img/backgrounds/qairito_green.png'};
@@ -172,7 +172,7 @@ const qairito = inca => {
 	return gif;
 };
 
-const zoneColorNoise = data =>{
+export const zoneColorNoise = data =>{
 	const newDate = new Date(data.timestamp);
 	let colorData = {color:'transparent', zone:data.zone}
 	const day = newDate.getHours() <= 22 &&  newDate.getHours() >= 7;
@@ -189,7 +189,7 @@ const zoneColorNoise = data =>{
 	return colorData;
 };
 
-const uvColor = (uvValue) =>{
+export const uvColor = (uvValue) =>{
 	switch (true) {
 		case (uvValue===null): case (uvValue<0): return uvColors.Null;
 		case (uvValue >= 0 && uvValue < 2): return 	uvColors.Minimum;
@@ -201,14 +201,14 @@ const uvColor = (uvValue) =>{
 	}
 }
 
-const incaValues=(inca)=>{
+export const incaValues=(inca)=>{
 	Object.entries(inca).forEach(o=>{
 		incaResult[o[0]]===undefined?'__':incaResult[o[0]]=o[1];
 		});
 	return incaResult;
 };
 
-const setPannelData = (qhawax, map) => {
+export const setPannelData = (qhawax, map) => {
 	const pannelAll= document.getElementById('over_map_infowindow')
 	const overMap = document.getElementById('over_map');
 	const overMapQ = document.getElementById('over_map_qairito');
@@ -256,7 +256,7 @@ const setPannelData = (qhawax, map) => {
 		});
 };
 
-const setInfowindow = (qhawax, map)=>{
+export const setInfowindow = (qhawax, map)=>{
 	const html = `${qhawax.comercial_name}: Module ${qhawax.name}`;
 	const classes ='grey darken-1 rounded';
 	switch (qhawax.main_inca) {
@@ -270,7 +270,7 @@ const setInfowindow = (qhawax, map)=>{
 	}
 };
 
-const markerZoom = (zoom) =>{
+export const markerZoom = (zoom) =>{
 		switch(true){
 			case zoom < 11: return 45;
 			case zoom >= 11 && zoom < 14: return 50;
@@ -279,7 +279,7 @@ const markerZoom = (zoom) =>{
 		}
 };
 
-const drawQhawaxMap = (map, qhawax) => {
+export const drawQhawaxMap = (map, qhawax) => {
 	const previous_marker_index = map.markers.findIndex(
 		marker => marker.id === qhawax.name
 	);
@@ -326,21 +326,5 @@ const drawQhawaxMap = (map, qhawax) => {
 	map.fitBounds(bounds);
 	const zoom = map.getZoom();
 	map.setZoom(zoom > 13 ? 13 : zoom);
-};
-
-
-export {
-	drawQhawaxMap,
-	drawChart,
-	airQuality,
-	qhawaxLeaf,
-	zoneColorNoise,
-	uvColor,
-	ECAlimits,
-	qairito,
-	incaValues,
-	setPannelData,
-	setInfowindow,
-	firstMap
 };
 
