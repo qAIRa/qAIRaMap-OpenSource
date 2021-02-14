@@ -1,8 +1,6 @@
 import { intervalToDuration} from 'date-fns';
 const addZero = i => {
-	if (i < 10) {
-		i = '0' + i;
-	}
+	if (i < 10) return i = '0' + i;
 	return i;
 };
 
@@ -83,15 +81,15 @@ const limits = {
 	NO2:[0,50,100,150]
 }
 
-const msToMin = (ms) => {
-    var minutes = Math.floor(ms / 60000);
-    var seconds = ((ms % 60000) / 1000).toFixed(0);
-    return `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`;
-}
+// const msToMin = (ms) => {
+//     var minutes = Math.floor(ms / 60000);
+//     var seconds = ((ms % 60000) / 1000).toFixed(0);
+//     return `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`;
+// }
 const notNull = (value) => value===null ||value < 0 ? '__': value;
-const formatDate = str=>str.slice(0,10).split('-').reverse().join(',')+','+str.slice(11,19).split(':').join(',');
-const arrD = date =>formatDate(date).split(',').map(Number)
-const newDate =date => new Date(arrD(date)[0],arrD(date)[1],arrD(date)[2], arrD(date)[3], arrD(date)[4],arrD(date)[5])
+// const formatDate = str=>str.slice(0,10).split('-').reverse().join(',')+','+str.slice(11,19).split(':').join(',');
+// const arrD = date =>formatDate(date).split(',').map(Number)
+// const newDate =date => new Date(arrD(date)[0],arrD(date)[1],arrD(date)[2], arrD(date)[3], arrD(date)[4],arrD(date)[5])
 
 const toast = (html, classes)=> M.toast({html: html, classes: classes, displayLength: 5000})
 const duration = (flight)=>{
