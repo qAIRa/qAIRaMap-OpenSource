@@ -3,7 +3,7 @@ import {
     pannelInca,
     pannelMeteo,
     pannelRealTime,
-  } from '../src/lib/HtmlComponents.js';
+  } from '../src/html/infowindow.js';
 
   const htmlGraph = `
 <p>Graphics from the last 24 hours. Click en <i class=\"tiny material-icons\">remove_red_eye</i></p>

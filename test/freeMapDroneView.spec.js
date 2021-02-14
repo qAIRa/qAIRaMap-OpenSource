@@ -1,5 +1,5 @@
 import { viewFreeDrone } from '../src/views/freeMapDroneView.js';
-import { viewMap } from '../src/lib/HtmlComponents.js';
+import { viewMap } from '../src/html/freeMap.js';
 import { initialize } from "@googlemaps/jest-mocks";
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()

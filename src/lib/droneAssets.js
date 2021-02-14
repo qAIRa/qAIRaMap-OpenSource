@@ -1,8 +1,5 @@
 import { infoWindowT} from './infowindow.js';
-import { navBarQhawax } from './navBarQhawax.js';
-import { viewDrones, droneSelection, droneChartRow } from './HtmlComponents.js';
 import { lastStartFlight, getInFlightSensor, noParametersRequest } from '../requests/get.js';
-import { sensors } from './helpers.js';
 import { toast } from '../lib/helpers.js';
 import { intervalToDuration } from 'date-fns';
 import {socket} from '../index.js'

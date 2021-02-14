@@ -14,7 +14,7 @@ import {
 	toast
  } from '../lib/helpers.js';
  import { format } from 'date-fns';
-import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../lib/HtmlComponents.js';
+import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../html/infowindow.js';
 
 const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,

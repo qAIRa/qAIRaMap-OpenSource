@@ -1,5 +1,5 @@
 import { navBarQhawax } from '../src/lib/navBarQhawax.js';
-import { viewBoard } from '../src/lib/HtmlComponents.js';
+import { viewBoard } from '../src/html/navBar.js';
 // import io from '../build/js/socket.io.min.js';
 test('menu nav bar', () => {
     document.body.innerHTML = `
