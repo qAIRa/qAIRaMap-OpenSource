@@ -5,7 +5,7 @@ import {
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { navBarQhawax } from '../lib/navBarQhawax.js';
 import { viewDownload } from '../lib/HtmlComponents.js';
-import { requestAllQhawax, downloadData, requestInstallationDate } from '../requests/get.js';
+import { downloadData, noParametersRequest, oneParameterRequest } from '../requests/get.js';
 import { optionsDatePicker, optionsTimePicker, toast } from '../lib/helpers.js';
 
 const reorderDate = (str) => str.split('-').reverse().join('-');
@@ -43,7 +43,7 @@ const selectedParameters = {};
 
 const requestQhawaxs = async(element) => {
   const addOptions = element.querySelector('#selectQhawax');
-  await requestAllQhawax()
+  await noParametersRequest('AllQhawaxInMap/')
   .then(q=>q.forEach((qhawax) => {
     const option = document.createElement('option');
     option.setAttribute('value', qhawax.qhawax_id);
@@ -71,7 +71,7 @@ const requestDownload = async(init, end) => {
 };
 
 const installationDateReq = async(selection, element) => {
-  const installationDate = await requestInstallationDate(selection[0].value);
+  const installationDate = await oneParameterRequest('GetInstallationDate/?qhawax_id=',selection[0].value);
 
   selectedParameters.id = selection[0].value;
   optionsDatePicker.minDate = new Date(installationDate);

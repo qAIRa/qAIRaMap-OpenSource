@@ -1,6 +1,6 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
 import { chartView } from '../lib/HtmlComponents.js';
-import { requestAllQhawax, requestStatus, requestGraphicsData } from '../requests/get.js';
+import { oneParameterRequest, requestGraphicsData, noParametersRequest } from '../requests/get.js';
 import { socket } from '../index.js';
 import { addZero } from '../lib/helpers.js';
 import { configuration } from '../lib/graphAssets.js';
@@ -23,13 +23,13 @@ const dateFormat = (timestamp)=>{
 
 
 const requestOptions = async(element) => {
-	await requestAllQhawax()
+	await noParametersRequest('AllQhawaxInMap/')
 	.then(q=>q.forEach(async(qhawax) => {
 		const addOptions = element.querySelector('#selectQhawax');
 		const option = document.createElement('option');
 		option.setAttribute('value', qhawax.name);
 		option.innerText =qhawax.name + ': ' + qhawax.comercial_name;
-		await requestStatus(qhawax.name)
+		await oneParameterRequest('qhawax_status/?name=',qhawax.name)
 		.then(s=>s=== 'ON' ? addOptions.appendChild(option) : false).catch(e=>null)
 	  }))
 	  .catch(e=>null)

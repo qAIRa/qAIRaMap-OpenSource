@@ -1,6 +1,6 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
 import {viewBoard } from '../lib/HtmlComponents.js'
-import { requestAllQhawax } from '../requests/get.js';
+import { noParametersRequest} from '../requests/get.js';
 import { socket } from '../index.js';
 
 const ECAlimits = {
@@ -102,7 +102,7 @@ const createRow = (element, qhawax_asigned) => {
 }
 const request = async () => {
 	const qhawax_asigned = [];
-	await requestAllQhawax()
+	await noParametersRequest('AllQhawaxInMap/')
 	.then(r=>r.forEach(q => qhawax_asigned.push(q)))
 	.catch(e=>null)
 	return qhawax_asigned;

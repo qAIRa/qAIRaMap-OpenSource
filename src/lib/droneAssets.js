@@ -1,7 +1,7 @@
 import { infoWindowT} from './infowindow.js';
 import { navBarQhawax } from './navBarQhawax.js';
 import { viewDrones, droneSelection, droneChartRow } from './HtmlComponents.js';
-import { requestAllDrones, lastStartFlight, getFlyingDrones, getInFlightSensor } from '../requests/get.js';
+import { lastStartFlight, getInFlightSensor, noParametersRequest } from '../requests/get.js';
 import { sensors } from './helpers.js';
 import { toast } from '../lib/helpers.js';
 import { intervalToDuration } from 'date-fns';
@@ -21,13 +21,14 @@ let latlngMarker = {};
 
 const createOption = async (selection)=>{
   selection.innerHTML='<option value="" disabled selected>Andean Drone</option>'
-  const drones_flying = await getFlyingDrones();
-  drones_flying.forEach(drone=>{
+  await noParametersRequest('flight_log_info_during_flight')
+  .then(e=>e.forEach(drone=>{
     const option = document.createElement('option');
     option.setAttribute('value', drone.name);
     option.innerText =	drone.name+' :'+drone.comercial_name ;
     selection.appendChild(option);
-  })
+  }))
+  .catch(e=>null)
 }
 
 const circlesArray = [];
@@ -155,7 +156,7 @@ const takeoff = (drone, selection)=>{
 };
 
 const requestDrones = async (map, element) => {
-  const drone_list = await requestAllDrones();
+  const drone_list = await noParametersRequest('AllDronesInMap/');
   if (drone_list.length>=1){
     drone_list.forEach((a_drone) => {
       latlngMarker = {

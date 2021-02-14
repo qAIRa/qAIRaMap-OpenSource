@@ -1,11 +1,11 @@
 import { drawQhawaxMap , firstMap } from '../lib/mapAssets.js';
 import { navBarQhawax } from '../lib/navBarQhawax.js';
 import { viewMap } from '../lib/HtmlComponents.js';
-import { requestAllQhawax } from '../requests/get.js';
+import { noParametersRequest} from '../requests/get.js';
 import { toast } from '../lib/helpers.js';
 
 const request = async (map) => {
- await requestAllQhawax()
+ await noParametersRequest('AllQhawaxInMap/')
  .then(q=>q.forEach((qhawax) => {
   if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
     drawQhawaxMap(map, qhawax);

@@ -5,22 +5,21 @@ const handleError = (err) => {
   toast(`Please check your internet connection.`,'grey darken-1 rounded')
 return  new Response(JSON.stringify({
   code: 400,
-  message: 'Stupid network Error xD',
+  message: err,
 }))
 
 };
 
-const requestAllQhawax = async() => {
-    const response = await fetch(`${APISource}AllQhawaxInMap/`).catch(e=>handleError(e))
+const noParametersRequest= async(address)=>{
+  const response = await fetch(`${APISource+address}`).catch(e=>handleError(e))
     return await response.json();
-};
+}
 
-const requestAllDrones = async() => {
+const oneParameterRequest= async(address, ID)=>{
+  const response = await fetch(`${APISource+address+ID}`).catch(e=>handleError(e))
+    return await response.text();
+}
 
-    const response = await fetch(`${APISource}AllDronesInMap/`).catch(e=>handleError(e))
-    return await response.json();
-
-};
 
 const requestAverageMeasurement = async(qhawax, sensor) => {
 
@@ -36,24 +35,10 @@ const requestBinnacle = async(ID) => {
 
 };
 
-const requestStatus = async(ID) => {
-
-    const response = await fetch(`${APISource}qhawax_status/?name=${ID}`).catch(e=>handleError(e))
-    return await response.text();
-
-};
-
 const downloadData = async(id, init, end) => {
 
     const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-
-};
-
-const requestInstallationDate = async(ID) => {
-
-  const response = await fetch(`${APISource}GetInstallationDate/?qhawax_id=${ID}`).catch(e=>handleError(e))
-  return await response.text();
 
 };
 
@@ -93,13 +78,6 @@ const lastStartFlight = async(name)=>{
 }
 
 
-const getFlyingDrones = async()=>{
-
-    const response = await fetch(`${APISource}flight_log_info_during_flight`).catch(e=>handleError(e))
-    return await response.json();
-
-}
-
 const getInFlightSensor = async(data)=>{
 
     const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`).catch(e=>handleError(e))
@@ -110,18 +88,15 @@ const getInFlightSensor = async(data)=>{
 
 export {
   requestAverageMeasurement,
-  requestAllQhawax,
   requestBinnacle,
-  requestStatus,
   downloadData,
-  requestInstallationDate,
   handleError,
   requestGraphicsData,
-  requestAllDrones ,
   requestFlightList,
   requestQhawaxFlight,
   requestTelemetryFlight,
   lastStartFlight,
-  getFlyingDrones,
-  getInFlightSensor
+  getInFlightSensor,
+  noParametersRequest,
+  oneParameterRequest
 };

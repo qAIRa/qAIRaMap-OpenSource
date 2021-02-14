@@ -1,9 +1,4 @@
 import {viewDashboard, indexValue, request, dashboardRow, dashboardRowActive } from '../src/views/dashboardView.js';
-import { 
-
-  requestAllQhawax,
-
-} from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
 beforeEach(() => {

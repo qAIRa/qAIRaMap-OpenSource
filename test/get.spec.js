@@ -1,10 +1,7 @@
 import { 
     requestAverageMeasurement,
-    requestAllQhawax,
     requestBinnacle,
-    requestStatus,
     downloadData,
-    requestInstallationDate,
     handleError,
     requestGraphicsData
 } from '../src/requests/get.js';
@@ -18,32 +15,7 @@ beforeEach(() => {
 
   describe('testing fetch calls', () => {
     
-    
-    it('calls installation date', () => {
-      fetch.mockResponseOnce('calls installation date')
-     
-      //assert on the response
-      requestInstallationDate('qH004').then(res => {
-        expect(res).toEqual('calls installation date')
-      })
-   
-      //assert on the times called and arguments given to fetch
-      expect(fetch.mock.calls.length).toEqual(1)
-      expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=qH004')
-    })
 
-    it('calls all qHAWAXs', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls all qHAWAXs' }))
-        
-        //assert on the response
-        requestAllQhawax().then(res => {
-          expect(res.data).toEqual('calls all qHAWAXs')
-        })
-     
-        //assert on the times called and arguments given to fetch
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/')
-      });
 
       it('calls binnacle', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls binnacle'}))
@@ -57,17 +29,7 @@ beforeEach(() => {
         expect(fetch.mock.calls.length).toEqual(1)
         expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/get_all_observations_by_qhawax/?qhawax_id=4')
       });
-      it('calls status', () => {
-        fetch.mockResponseOnce('calls status');
-     
-        //assert on the response
-        requestStatus(4).then(res => {
-          expect(res).toEqual('calls status')
-        })
-        //assert on the times called and arguments given to fetch
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/qhawax_status/?name=4')
-      })
+
       it('calls download data', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
         fetch.mockReject(new Error('fake error message'))
