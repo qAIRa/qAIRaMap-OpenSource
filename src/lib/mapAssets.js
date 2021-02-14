@@ -293,21 +293,13 @@ const newMarker = (qhawax,map) =>new google.maps.Marker({
 });
 
 export const drawQhawaxMap = (map, qhawax) => {
-	const previous_marker_index = map.markers.findIndex(
-		marker => marker.id === qhawax.name
-	);
+	const previous_marker_index = map.markers.findIndex(marker => marker.id === qhawax.name);
 	map.addListener('zoom_changed', () => {
 		const zoom = map.getZoom();
-		map.markers.forEach(marker => {
-			marker.icon.scaledSize.width = markerZoom(zoom);
-			marker.icon.scaledSize.height = markerZoom(zoom);
-		});
+		map.markers.forEach(marker => {	marker.icon.scaledSize.width = markerZoom(zoom);marker.icon.scaledSize.height = markerZoom(zoom);});
 	});
 
-	if (previous_marker_index != -1) {
-		map.markers[previous_marker_index].setMap(null);
-		map.markers.splice(previous_marker_index, 1);
-	}
+	if (previous_marker_index != -1) {map.markers[previous_marker_index].setMap(null);map.markers.splice(previous_marker_index, 1);}
 	
 	const qhawax_marker = newMarker(qhawax,map)
 	qhawax_marker.addListener('click', () => {setInfowindow(qhawax, map)});
