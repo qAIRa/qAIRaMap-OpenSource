@@ -80,7 +80,7 @@
 		"eslint-plugin-import": "^2.22.0",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.5.4",
-		"jest-cli": "^26.4.2",
+		"jest-cli": "^26.6.3",
 		"jest-fetch-mock": "^3.0.3"
 	}
 }
