@@ -251,8 +251,7 @@ export const setPannelData = async(qhawax, map) => {
 	overMapQ.classList.remove('none')
 	overMap.classList.add('none')
 	await noParametersRequest('last_gas_inca_data/')
-		.then(qhawax_inca_list => forEachPannel(qhawax_inca_list,qhawax) )
-		.catch(e=>null)
+		.then(qhawax_inca_list => forEachPannel(qhawax_inca_list,qhawax))
 		google.maps.event.addListener(map, 'click', () => {
 			pannelAll.setAttribute('class','none')
 			overMap.classList.remove('none')

@@ -5,7 +5,7 @@ export const handleError = (err) => {
   toast(`Please check your internet connection.`,'grey darken-1 rounded')
 return  new Response(JSON.stringify({
   code: 400,
-  message: err,
+  message: 'Network error',
 }))
 
 };
@@ -28,12 +28,6 @@ export const requestAverageMeasurement = async(qhawax, sensor) => {
 
 };
 
-export const requestBinnacle = async(ID) => {
-
-    const response = await fetch(`${APISource}get_all_observations_by_qhawax/?qhawax_id=${ID}`).catch(e=>handleError(e))
-    return await response.json();
-
-};
 
 export const downloadData = async(id, init, end) => {
 
@@ -81,6 +75,7 @@ export const lastStartFlight = async(name)=>{
 export const getInFlightSensor = async(data)=>{
 
     const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`).catch(e=>handleError(e))
+    if(response.status===500)return [];
     return await response.json();
 
 }

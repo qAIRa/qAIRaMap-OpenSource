@@ -104,7 +104,6 @@ const request = async () => {
 	const qhawax_asigned = [];
 	await noParametersRequest('AllQhawaxInMap/')
 	.then(r=>r.forEach(q => qhawax_asigned.push(q)))
-	.catch(e=>null)
 	return qhawax_asigned;
 }
 
@@ -112,7 +111,7 @@ const viewDashboard = () => {
   const dashboardElem = document.createElement('div');
     dashboardElem.classList.add('dashboard');
 	navBarQhawax(dashboardElem, viewBoard);
-	request().then(list =>createRow(dashboardElem, list ).catch(e=>null));
+	request().then(list =>createRow(dashboardElem, list ));
     return dashboardElem;
 };
 

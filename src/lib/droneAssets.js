@@ -2,8 +2,39 @@ import { infoWindowT} from './infowindow.js';
 import { lastStartFlight, getInFlightSensor, noParametersRequest } from '../requests/get.js';
 import { toast } from '../lib/helpers.js';
 import { intervalToDuration } from 'date-fns';
-import {socket} from '../index.js'
-;
+import {socket} from '../index.js';
+
+let flag = false;
+
+const callOnce = (flag0, value) => {
+  if (flag0===false) {
+    flag=true;
+    toast(`The value ${value} is out of range`,'grey darken-1 rounded')
+  }
+}
+
+const limitColor = (value,low,moderate,high) => {
+  switch (true) {
+    case (value>=0&&value<=low): return '#009966';
+    case (value>low&&value<=moderate): return '#ffde33';
+    case (value>moderate&&value<=high): return '#ff9933';
+    case (value>high): return '#cc0033';
+    case (value<0): callOnce(flag,value)
+    default: 'black'
+  }
+}
+const circleColor = (params) => {
+  switch (params.sensor) {
+    case 'CO':return limitColor(params['CO'],50,100,150)
+    case 'O3':return limitColor(params['O3'],50,100,150)
+    case 'SO2':return limitColor(params['SO2'],50,100,150)
+    case 'H2S':return limitColor(params['H2S'],50,100,150)
+    case 'NO2':return limitColor(params['NO2'],50,100,150)
+    case 'PM10':return limitColor(params['PM10'],50,100,150)
+    case 'PM25':return limitColor(params['PM25'],50,100,150)
+    default:return 'black'
+  }
+}
 
 const addLine = (polyline,map) => {
   polyline.setMap(map);
@@ -31,36 +62,39 @@ const createOption = async (selection)=>{
 const circlesArray = [];
 const newCircle = (center,map)=> {
   const pollutantCircle = new google.maps.Circle({
-    strokeColor: "#00ff51",
+    strokeColor: circleColor(center),
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#00ff51",
+    fillColor: circleColor(center),
     fillOpacity: 0.35,
     map,
     center: center.center,
     radius: 10,
   });
 circlesArray.push(pollutantCircle)
-console.log(circlesArray);
 }
 
 const callSocketSensors = (params, map) =>  {
-  console.log('params',params);
+  
   socket.on(`${params.name}_${params.sensor}_processed`, data => {
-    newCircle(data,map)
+    if (params.sensor===data.sensor) return newCircle(data,map)
   })
   
 }
 
 const drawCirclesPollutant = async(params,map)=> {
  const data = await getInFlightSensor(params)
-
- const center = data.reduce((acc,el,i)=>({
-  ...acc,
-  [i]:{'center':{'lat':el.lat,'lng':el.lon},[params.sensor]:el.pollutant,'sensor':params.sensor}
- }),[])
- Object.values(center).forEach(c=>newCircle(c,map))
-callSocketSensors(params, map)
+if(data.length>0){
+  const center = data.reduce((acc,el,i)=>({
+    ...acc,
+    [i]:{'center':{'lat':el.lat,'lng':el.lon},[params.sensor]:el.pollutant,'sensor':params.sensor}
+   }),[])
+   Object.values(center).forEach(c=>newCircle(c,map))
+  callSocketSensors(params, map)
+}
+ else{
+  toast(`There are no measurements for ${params.name} on sensor ${params.sensor}`,'grey darken-1 rounded')
+ }
 
 }
 
@@ -87,13 +121,12 @@ const selectDroneFlight = async(element, map) =>{
   })
 
   drawBtn.addEventListener('click',e=>{
+    flag = false;
     drawCirclesPollutant(params,map)
     circlesArray.forEach(c=>removeLine(c)) 
   })
 
 }
-
-
 
 const landing = (drone, polylinesArray, infowindow, selection)=>{
 
@@ -105,10 +138,6 @@ const landing = (drone, polylinesArray, infowindow, selection)=>{
   })
   
 };
-
-
-
-
 
 const callSocketFlight = (drone, map, selection) => {
   const flightPlanCoordinates = [];

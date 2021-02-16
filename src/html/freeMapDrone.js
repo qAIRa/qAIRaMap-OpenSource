@@ -5,7 +5,7 @@ const viewDrones=`
 <div class="animate__animated animate__swingnone " id="over_map_qairito"></div>
 <div class="animate__animated animate__swing " id="over_map_drones_colors">
 <table class="centered">
-<thead><th class="inca-color1">Good</th><th class="inca-color1">Moderate</th><th class="inca-color1">Bad</th><th class="inca-color1">Hazardous</th></thead>
+<thead><th class="inca-color1">Low</th><th class="inca-color1">Moderate</th><th class="inca-color1">High</th><th class="inca-color1">Very High</th></thead>
 <tbody><tr>
 <td bgcolor="#009966" class="inca-color"></td>
 <td bgcolor="#ffde33" class="inca-color"></td>

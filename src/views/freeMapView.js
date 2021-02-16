@@ -10,7 +10,6 @@ const request = async (map) => {
   if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
     drawQhawaxMap(map, qhawax);
 }))
-.catch(e=>null)
 };
 
 const viewFreeMap = () => {

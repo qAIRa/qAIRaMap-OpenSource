@@ -30,9 +30,8 @@ const requestOptions = async(element) => {
 		option.setAttribute('value', qhawax.name);
 		option.innerText =qhawax.name + ': ' + qhawax.comercial_name;
 		await oneParameterRequest('qhawax_status/?name=',qhawax.name)
-		.then(s=>s=== 'ON' ? addOptions.appendChild(option) : false).catch(e=>null)
+		.then(s=>s=== 'ON' ? addOptions.appendChild(option) : false)
 	  }))
-	  .catch(e=>null)
 };
 
 
@@ -74,7 +73,7 @@ const requestOptions = async(element) => {
 			yAxis[key].value.push(d[key])
 		})
 		
-	})).catch(e=>null)
+	}))
 	 
 
 	Object.entries(yAxis).forEach(([key, value]) => {

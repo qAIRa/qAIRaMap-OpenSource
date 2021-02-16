@@ -51,7 +51,6 @@ const requestQhawaxs = async(element) => {
     array_qhawax.push(qhawax);
     addOptions.appendChild(option);
   }))
-  .catch(e=>null)
 };
 
 const requestDownload = async(init, end) => {

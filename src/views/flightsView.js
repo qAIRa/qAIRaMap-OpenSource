@@ -36,6 +36,7 @@ const flightRequest = async(init, end, element) => {
         </button>
         </div>
         `
+        console.log(flights);
       flights.forEach(f => element.innerHTML += card(f));
         
       const newSearchBtn =  element.querySelector('#new-search-btn')

@@ -1,9 +1,15 @@
 import { 
     requestAverageMeasurement,
-    requestBinnacle,
+    noParametersRequest,
+    oneParameterRequest,
+    // requestAllQhawax,
+    // requestBinnacle,
+    // requestStatus,
     downloadData,
+    // requestInstallationDate,
     handleError,
-    requestGraphicsData
+    requestGraphicsData,
+    requestFlightList
 } from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
@@ -15,21 +21,44 @@ beforeEach(() => {
 
   describe('testing fetch calls', () => {
     
+    
+    it('calls oneParameterRequest', () => {
+      fetch.mockResponseOnce('calls oneParameterRequest')
+     
+      //assert on the response
+      oneParameterRequest('GetInstallationDate/?qhawax_id=','qH004').then(res => {
+        expect(res).toEqual('calls oneParameters¿Request')
+      })
+   
+      //assert on the times called and arguments given to fetch
+      expect(fetch.mock.calls.length).toEqual(1)
+      expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=qH004')
+    })
 
-
-      it('calls binnacle', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls binnacle'}))
+    it('calls noParametersRequest', () => {
+        fetch.mockResponseOnce(JSON.stringify({ data: 'calls noParametersRequest' }))
         
         //assert on the response
-        requestBinnacle(4).then(res => {
-          expect(res.data).toEqual('calls binnacle')
+        noParametersRequest('AllQhawaxInMap/').then(res => {
+          expect(res.data).toEqual('calls noParametersRequest')
         })
      
         //assert on the times called and arguments given to fetch
         expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/get_all_observations_by_qhawax/?qhawax_id=4')
+        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/')
       });
 
+      // it('calls status', () => {
+      //   fetch.mockResponseOnce('calls status');
+     
+      //   //assert on the response
+      //   requestStatus(4).then(res => {
+      //     expect(res).toEqual('calls status')
+      //   })
+      //   //assert on the times called and arguments given to fetch
+      //   expect(fetch.mock.calls.length).toEqual(1)
+      //   expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/qhawax_status/?name=4')
+      // })
       it('calls download data', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
         fetch.mockReject(new Error('fake error message'))
@@ -47,6 +76,22 @@ beforeEach(() => {
         // expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
         expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/average_valid_processed_period/?qhawax_id=qH004&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
       });
+
+      it('calls requestFlightList', () => {
+        fetch.mockResponseOnce(JSON.stringify({ data: 'requestFlightList'}))
+        fetch.mockReject(new Error('fake error message'))
+       
+        //assert on the response
+        requestFlightList('04-01-2021 15:00:00', '04-01-2021 18:00:00').then(res => {
+          expect(res.data).toEqual('requestFlightList')
+
+        })
+        expect(fetch.mock.calls.length).toEqual(1)
+        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/get_drone_flights_period_time?initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
+      });
+
+
+
       it('calls average measurements', () => {
         fetch.mockResponseOnce(JSON.stringify({ data: 'calls average measurements'}))
         
@@ -75,6 +120,6 @@ beforeEach(() => {
   })
 
   test('handle error', () =>{
-    global.M = require('../build/js/materialize.min.js');
+     global.M = require('../build/js/materialize.min.js');
     expect(handleError('error').statusText).toStrictEqual('OK');
   });

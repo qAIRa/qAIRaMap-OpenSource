@@ -64,8 +64,6 @@ data-end="${flight.flight_end}"
 </div>
 </div>
 </div>
-</div>
-
-`;
+</div>`;
 
 export { flightViewElem, card}
