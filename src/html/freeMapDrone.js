@@ -1,8 +1,8 @@
-const viewDrones=`
+export const viewDrones=`
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
-<div class="animate__animated animate__swingnone " id="over_map_qairito"></div>
+<div class="animate__animated animate__swing none " id="over_map_qairito"></div>
 <div class="animate__animated animate__swing " id="over_map_drones_colors">
 <table class="centered">
 <thead><th class="inca-color1">Low</th><th class="inca-color1">Moderate</th><th class="inca-color1">High</th><th class="inca-color1">Very High</th></thead>
@@ -17,8 +17,8 @@ const viewDrones=`
 </div>
 `
 
-const droneSelection =`
-<div class="animate__animated animate__zoomIn z-depth-4 over_map_droneselection row">
+export const droneSelection =`
+<div class="animate__animated animate__zoomIn z-depth-5 over_map_droneselection row">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectDrone">
 <option value="" disabled selected>Andean Drone</option>
@@ -40,6 +40,6 @@ const droneSelection =`
 </button>
 </div>
 </div>
-
 `
-export {droneSelection, viewDrones}
+
+

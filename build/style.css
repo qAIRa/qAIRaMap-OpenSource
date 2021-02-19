@@ -40,6 +40,9 @@ body {
 main {
 	flex: 1 0 auto;
 }
+.btn{
+	border-radius: 20px;
+}
 #wrapper_map {
 	position: relative;
 }
@@ -411,6 +414,31 @@ main {
 	display: flex;
 }
 
+.over_map_simulation{
+	position: absolute;
+	z-index: 5;
+	text-align: center;
+	top: 4em;
+	left: 0.7em;
+    height: min-content;
+    background-color: transparent;
+    border: none;
+    width: 14em;
+    flex-direction: column;
+    flex-wrap: wrap;
+    place-content: flex-start;
+	display: flex;
+}
+
+#restart-btn{
+	width: 100%;
+	margin: 0.5em;
+}
+#dwn-btn{
+	width: 100%;
+	margin: 0.5em;
+}
+
 .btn-group button {
 	background-color:var(--blue); /* Blue background */
 	border: 1px solid white; /* white border */
@@ -749,7 +777,9 @@ i.icon-green {
 	 max-width: 40%;
  }
 
-
+#draw-btn{
+	margin-top: 1.5%;
+}
 
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -784,6 +814,10 @@ i.icon-green {
 }
 
 @media only screen and (max-width: 768px)  {
+	.over_map_simulation{
+		width: 15em;
+		top: 6em;
+	}
 	.inca-qairito {
 		width: 2em;
 	}

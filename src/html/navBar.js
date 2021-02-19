@@ -103,9 +103,9 @@ const navbarDrone = `
 <img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
 </a>
 <ul id="menu-list-bar" class="right hide-on-med-and-down">
-<li class="menu-btn" id="download-menu-drone"><a>Download</a></li>
-<li class="menu-btn" id="flight-menu"><a>Flights</a></li>
-<li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>
+<!--<li class="menu-btn" id="download-menu-drone"><a>Download</a></li>-->
+<li class="menu-btn" id="flight-menu"><a>All Flights</a></li>
+<!--<li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>-->
 </ul>
 <a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
 </div>
@@ -116,9 +116,9 @@ const navbarDrone = `
 <ul id="mobile-nav" class="sidenav">
 <li class="menu-btn" id="home-menu-mobile"><a>Home</a></li>
 <li class="menu-btn" id="return-menu-mobile-drone"><a>Map</a></li>
-<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>
-<li class="menu-btn" id="flight-menu-mob"><a>Flights</a></li>
-<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>
+<!--<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>-->
+<li class="menu-btn" id="flight-menu-mob"><a>All Flights</a></li>
+<!--<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>-->
 </ul>
 `;
 

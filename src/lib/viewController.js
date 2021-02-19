@@ -7,9 +7,8 @@ import { viewFreeDrone } from '../views/freeMapDroneView.js';
 import {flightsView} from '../views/flightsView.js';
 import { simulationView} from '../views/simulationDrone.js';
 
-const id = sessionStorage.getItem('qname');
-const start = sessionStorage.getItem('start')
-const end = sessionStorage.getItem('end')
+const flight = JSON.parse(sessionStorage.getItem('flight'));
+
 const changeView = (router) => {
   const container = document.getElementById('content-page');
   container.innerHTML = '';
@@ -29,7 +28,7 @@ const changeView = (router) => {
   case '#/flightsDrone':
     return container.appendChild(flightsView());
   case '#/simulationDrone':
-    return container.appendChild(simulationView(id, start, end));
+    return container.appendChild(simulationView(flight));
   default:
     return container.appendChild(landPage());
   }

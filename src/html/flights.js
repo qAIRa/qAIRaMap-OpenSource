@@ -1,4 +1,6 @@
-import {duration } from "../lib/helpers.js";
+import {duration, newDateLocal } from "../lib/helpers.js";
+import { format } from 'date-fns';
+// format(new Date(jsonData[i].timestamp_zone), 'dd/MM/yyyy HH:mm:ss');
 
 const flightViewElem = `
 <form class="form-flights container">
@@ -37,14 +39,14 @@ const card = (flight)=>`
 <div class="card-content">
 <table>
 <caption>${flight.flight_detail}</caption>
-<caption>${flight.flight_start.slice(0,10)}</caption>
+<caption>${format(newDateLocal(flight.flight_start),'dd/MM/yyyy')}</caption>
 <tr>
 <td>Start time</td>
-<td>${flight.flight_start.slice(11,19)}</td>
+<td>${format(newDateLocal(flight.flight_start),'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>End time</td>
-<td>${flight.flight_end.slice(11,19)}</td>
+<td>${format(newDateLocal(flight.flight_end),'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>Total (min)</td>
@@ -57,6 +59,9 @@ const card = (flight)=>`
 <button id="${flight.qhawax_name}" class="btn waves-effect waves-light simulation-btn"
 data-start="${flight.flight_start}"
 data-end="${flight.flight_end}"
+data-comercialname="${flight.comercial_name}"
+data-lat="${flight.last_latitude_position}"
+data-lng="${flight.last_longitude_position}"
 >SIMULATION
 <i class="material-icons right">send</i>
 </button>
@@ -66,4 +71,14 @@ data-end="${flight.flight_end}"
 </div>
 </div>`;
 
-export { flightViewElem, card}
+const newSearch_btn =`
+<div class="center-align">
+<button id="new-search-btn" class="btn waves-effect waves-light" style="
+margin-top: 1em;
+margin-bottom: 1em;">New Search
+<i class="material-icons right">send</i>
+</button>
+</div>
+`
+
+export { flightViewElem, card, newSearch_btn}

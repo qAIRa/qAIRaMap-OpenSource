@@ -6,9 +6,9 @@ import {socket} from '../index.js';
 
 let flag = false;
 
-const callOnce = (flag0, value) => {
-  if (flag0===false) {
-    flag=true;
+const CallOnceToast = (flag0, value) => {
+  if (!flag0) {
+    flag=!flag0;
     toast(`The value ${value} is out of range`,'grey darken-1 rounded')
   }
 }
@@ -19,8 +19,8 @@ const limitColor = (value,low,moderate,high) => {
     case (value>low&&value<=moderate): return '#ffde33';
     case (value>moderate&&value<=high): return '#ff9933';
     case (value>high): return '#cc0033';
-    case (value<0): callOnce(flag,value)
-    default: 'black'
+    case (value<0): CallOnceToast(flag,value)
+    default: return'#FFFFFF'
   }
 }
 const circleColor = (params) => {
@@ -32,20 +32,20 @@ const circleColor = (params) => {
     case 'NO2':return limitColor(params['NO2'],50,100,150)
     case 'PM10':return limitColor(params['PM10'],50,100,150)
     case 'PM25':return limitColor(params['PM25'],50,100,150)
-    default:return 'black'
+    default: return'#FFFFFF'
   }
 }
 
-const addLine = (polyline,map) => {
+export const addLine = (polyline,map) => {
   polyline.setMap(map);
 }
 
-const removeLine = (polyline) => {
+export const removeLine = (polyline) => {
   polyline.setMap(null);  
 }
 
+
 let latlngLine = {};
-let latlngMarker = {};
 
 const createOption = async (selection)=>{
   selection.innerHTML='<option value="" disabled selected>Andean Drone</option>'
@@ -59,8 +59,9 @@ const createOption = async (selection)=>{
   .catch(e=>null)
 }
 
-const circlesArray = [];
-const newCircle = (center,map)=> {
+export let circlesArray = [];
+
+export const newCircle = (center,map)=> {
   const pollutantCircle = new google.maps.Circle({
     strokeColor: circleColor(center),
     strokeOpacity: 0.8,
@@ -69,7 +70,7 @@ const newCircle = (center,map)=> {
     fillOpacity: 0.35,
     map,
     center: center.center,
-    radius: 10,
+    radius: 20,
   });
 circlesArray.push(pollutantCircle)
 }
@@ -139,12 +140,21 @@ const landing = (drone, polylinesArray, infowindow, selection)=>{
   
 };
 
+ export const newPolyline = (flightPlanCoordinates)=>new google.maps.Polyline({
+  path: flightPlanCoordinates,
+  strokeColor: "#000000",
+  strokeOpacity: 1.0,
+  strokeWeight: 2
+  });
+
 const callSocketFlight = (drone, map, selection) => {
   const flightPlanCoordinates = [];
   let polylinesArray = [];
 
   const marker=map.markers.find(el=>el.id===drone.name+'_marker')
   const infowindow = map.infowindows.find(el=>el.id===drone.name+'_infowindow')
+  const bounds = new google.maps.LatLngBounds();
+    
   
 		socket.on(`${drone.name}_telemetry`, async data => {
       const start = await lastStartFlight(drone.name)
@@ -154,18 +164,14 @@ const callSocketFlight = (drone, map, selection) => {
         lng: parseFloat(data.lon),
       };
        flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-       const polyline = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-        });
-
+       const polyline = newPolyline(flightPlanCoordinates)
         marker.setPosition(latlngLine)
         addLine(polyline,map)
         infowindow.setContent(infoWindowT(data,drone,timer))
         infowindow.open(map, marker);
         polylinesArray.push(polyline)
+        bounds.extend(new google.maps.LatLng(data.lat, data.lon))
+        map.fitBounds(bounds);
 
     })
 
@@ -181,24 +187,22 @@ const takeoff = (drone, selection)=>{
 
 };
 
+export const newMarkerDrone = (drone,map)=>new google.maps.Marker({
+  position: JSON.parse(drone.position),
+  map: map,
+  icon: {
+  url: 'img/andeanDrone.png',
+  scaledSize: new google.maps.Size(80, 80),
+  },
+  id: drone.name + '_marker',
+});
+
 const requestDrones = async (map, element) => {
   const drone_list = await noParametersRequest('AllDronesInMap/');
   if (drone_list.length>=1){
     drone_list.forEach((a_drone) => {
-      latlngMarker = {
-        lat: parseFloat(a_drone.lat),
-        lng: parseFloat(a_drone.lon),
-      };
-    const marker = new google.maps.Marker({
-          position: latlngMarker,
-          map: map,
-          icon: {
-          url: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Aerial_Photography_UAV_Icon.svg',
-          scaledSize: new google.maps.Size(45, 45),
-          },
-          id: a_drone.name + '_marker',
-    });
-
+    a_drone.position=JSON.stringify({'lat':parseFloat(a_drone.lat),'lng':parseFloat(a_drone.lon)});
+    const marker = newMarkerDrone(a_drone,map)
     const infowindow = new google.maps.InfoWindow({id:a_drone.name+'_infowindow'});
     map.infowindows.push(infowindow)
     map.markers.push(marker)

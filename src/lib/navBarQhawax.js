@@ -23,10 +23,10 @@ const navBarQhawax = (element, display) => {
     case 'return-menu': case 'return-menu-mobile': btn.addEventListener('click', () => goTo('mapQhawax')); break;
     case 'return-menu-drone': case 'return-menu-mobile-drone': btn.addEventListener('click', () => goTo('mapDrone')); break;
     case 'download-menu': case 'download-mob-menu': btn.addEventListener('click', () => goTo('download')); break;
-    case 'download-menu-drone': case 'download-mob-menu-drone': btn.addEventListener('click', () => goTo('downloadDrone')); break;
+    // case 'download-menu-drone': case 'download-mob-menu-drone': btn.addEventListener('click', () => goTo('downloadDrone')); break;
     case 'dashboard-menu': case 'dashboard-menu-mob': btn.addEventListener('click', () => goTo('dashboard')); break;
     case 'graphics-menu': case 'graphics-menu-mob': btn.addEventListener('click', () => goTo('graphics')); break;
-    case 'graphics-menu-drone': case 'graphics-menu-mob-drone': btn.addEventListener('click', () => goTo('graphicsDrone')); break;
+    // case 'graphics-menu-drone': case 'graphics-menu-mob-drone': btn.addEventListener('click', () => goTo('graphicsDrone')); break;
     case 'flight-menu': case 'flight-menu-mob': btn.addEventListener('click', () => goTo('flightsDrone')); break;
     default:
       break;

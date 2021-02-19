@@ -27,7 +27,7 @@ beforeEach(() => {
      
       //assert on the response
       oneParameterRequest('GetInstallationDate/?qhawax_id=','qH004').then(res => {
-        expect(res).toEqual('calls oneParameters¿Request')
+        expect(res).toEqual('calls oneParameterRequest')
       })
    
       //assert on the times called and arguments given to fetch

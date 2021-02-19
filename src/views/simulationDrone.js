@@ -1,27 +1,24 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { simulation} from '../html/simulation.js';
-import { requestQhawaxFlight, requestTelemetryFlight } from '../requests/get.js';
+import { viewDrones } from '../html/freeMapDrone.js';
+import {simulationSelection, simulationBtns} from '../html/simulation.js';
+import { firstMap} from '../lib/mapAssets.js';
+import { simulateFlight} from '../lib/simulationAssets.js';
 
-const telemetryFlight = async(id, start, end, map, element)=> {
-  const flightPlanCoordinates = [];
-  let polylinesArray = [];
-  // const telemetry = await requestTelemetryFlight(id, start, end);
-  // telemetry.forEach( t=> {
 
-  // })
-}
+const simulationView = (flight) => {
+  const mapElem = document.createElement('div');
+  navBarQhawax(mapElem, viewDrones);
 
-const simulationView = (id, start, end) => {
+  const wrapper = mapElem.querySelector('#wrapper_map')
+  wrapper.insertAdjacentHTML('afterbegin',simulationBtns)
+  wrapper.insertAdjacentHTML('afterbegin',simulationSelection)
 
-    const simulationElem = document.createElement('div');
-    navBarQhawax(simulationElem, simulation);
-    const map = new google.maps.Map(simulationElem.querySelector('#map'), {
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: { lat: -12.1215361, lng: -77.0463574},
-        zoom: 8,
-      });
-    telemetryFlight(id, start, end, map, simulationElem)
-    return simulationElem;
+  const map = firstMap(mapElem,'map')
+  simulateFlight(flight,map, mapElem)
+
+
+  
+  return mapElem;
   };
   
   export { simulationView }

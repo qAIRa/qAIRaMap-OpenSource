@@ -53,11 +53,11 @@ const requestQhawaxs = async(element) => {
   }))
 };
 
-const requestDownload = async(init, end) => {
+const requestDownload = async(id,init, end) => {
   let filename = '';
-  const json = await downloadData( selectedParameters.id, init, end);
+  const json = await downloadData( id, init, end);
   array_qhawax.forEach((qhawax) => {
-    filename +=	Number(selectedParameters.id) === Number(qhawax.qhawax_id)
+    filename +=	Number(id) === Number(qhawax.qhawax_id)
       ? `${qhawax.name}`
 				  + '-'
 				  + `${qhawax.comercial_name}`
@@ -122,7 +122,7 @@ const downloadView = () => {
     } else if (Date.parse(initial_value) >= Date.parse(final_value)) {
       openModalDateAlert();
     } else {
-         requestDownload(initial_timestamp, final_timestamp)
+         requestDownload(selectedParameters.id,initial_timestamp, final_timestamp)
          
       toast('We are preparing your data, this may take a minute...','green darken-1 rounded')
       const pannel = document.querySelector('.card-pannel');

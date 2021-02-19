@@ -44,17 +44,14 @@ export const requestGraphicsData = async(qhawax, time) => {
 };
 
 export const requestFlightList = async(init, end) => {
-
     const response = await fetch(`${APISource}get_drone_flights_period_time?initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
 
 }
 
 export const requestQhawaxFlight = async(name, init, end) => {
-
     const response = await fetch(`${APISource}processed_measurements_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
     return await response.json();
-
 }
 
 export const requestTelemetryFlight = async(name, init, end) => {

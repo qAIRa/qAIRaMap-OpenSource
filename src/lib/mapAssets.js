@@ -15,15 +15,36 @@ import {
  } from '../lib/helpers.js';
  import { format } from 'date-fns';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../html/infowindow.js';
-
+const myStyles =[
+	{
+	  "featureType": "road.arterial",
+	  "elementType": "geometry",
+	  "stylers": [
+		{ "color": "#3ca5cb" }
+	  ]
+	},{
+	  "featureType": "landscape",
+	  "elementType": "labels",
+	  "stylers": [
+		{ "visibility": "off" }
+	  ]
+	},{
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+              { visibility: "off" }
+        ]
+    }
+  ];
 export const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	center: { lat: -12.1215361, lng: -77.0463574},
 	zoom: 8,
+	styles: myStyles,
 	markers:[],
 	latitude:[],
 	longitude:[],
-	infowindows:[]
+	infowindows:[],
   });
 
 
@@ -281,7 +302,7 @@ const markerZoom = (zoom) =>{
 		}
 };
 
-const newMarker = (qhawax,map) =>new google.maps.Marker({
+const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
 	position: {
 		lat: qhawax.lat,
 		lng: qhawax.lon,
@@ -303,7 +324,7 @@ export const drawQhawaxMap = (map, qhawax) => {
 
 	if (previous_marker_index != -1) {map.markers[previous_marker_index].setMap(null);map.markers.splice(previous_marker_index, 1);}
 	
-	const qhawax_marker = newMarker(qhawax,map)
+	const qhawax_marker = newMarkerLeaf(qhawax,map)
 	qhawax_marker.addListener('click', () => {setInfowindow(qhawax, map)});
 	qhawax_marker.addListener('mouseover', () => {
 		M.Toast.dismissAll();
