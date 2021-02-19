@@ -7,7 +7,7 @@ const flight = {
     last_latitude_position: -12.0700711793011,
     last_longitude_position: -77.0798769626038,
     qhawax_name: "qH006",
-    commercial_name: "Wakanda Awakening"
+    comercial_name: "Wakanda Awakening"
 }
 
 const cardHtml =`
@@ -41,7 +41,7 @@ const cardHtml =`
 <button id=\"qH006\" class=\"btn waves-effect waves-light simulation-btn\"
 data-start=\"11-02-2021 14:42:15\"
 data-end=\"11-02-2021 14:42:15\"
-data-comercialname="WakandaAwakening"
+data-comercialname="Wakanda Awakening"
 data-lat="-12.0700711793011"
 data-lng="-77.0798769626038"
 >SIMULATION
