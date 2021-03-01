@@ -56,21 +56,21 @@
 	"homepage": "https://github.com/qAIRa/qAIRaMap-OpenSource#readme",
 	"dependencies": {
 		"@babel/runtime": "^7.11.2",
-		"@googlemaps/jest-mocks": "0.0.3",
+		"@googlemaps/jest-mocks": "0.1.0",
 		"babel-jest": "^26.0.1",
 		"core-util-is": "^1.0.2",
 		"date-fns": "^2.17.0",
 		"jest-silent-reporter": "^0.4.0",
 		"streamsaver": "^2.0.5",
-		"webpack": "^4.41.6",
+		"webpack": "^4.46.0",
 		"webpack-cli": "^3.3.11",
 		"webpack-dev-server": "^3.11.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.11.5",
 		"@babel/core": "^7.9.0",
-		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
-		"@babel/plugin-transform-runtime": "^7.11.0",
+		"@babel/plugin-transform-modules-commonjs": "^7.13.8",
+		"@babel/plugin-transform-runtime": "^7.13.8",
 		"@babel/preset-env": "^7.11.5",
 		"@babel/register": "^7.11.5",
 		"babel-core": "^6.26.3",
@@ -80,7 +80,7 @@
 		"eslint-plugin-import": "^2.22.0",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^25.5.4",
-		"jest-cli": "^26.4.2",
+		"jest-cli": "^26.6.3",
 		"jest-fetch-mock": "^3.0.3"
 	}
 }
