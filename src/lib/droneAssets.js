@@ -184,7 +184,6 @@ const callSocketFlight = (drone, map, selection) => {
         infowindow.open(map, marker);
         // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
         // map.fitBounds(bounds);
-        
 
     })
    landing(drone, polylinesArray, infowindow, selection)
