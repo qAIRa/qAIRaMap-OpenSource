@@ -77,8 +77,14 @@ circlesArray.push(pollutantCircle)
 
 const callSocketSensors = (params, map) =>  {
   
-  socket.on(`${params.name}_${params.sensor}_processed`, data => {
-    if (params.sensor===data.sensor) return newCircle(data,map)
+  socket.on(`${params.name}_${params.sensor}_processed`, async data => {
+    await noParametersRequest('flight_log_info_during_flight')
+      .then(e=>e.forEach(drone=>{
+        if (params.sensor===data.sensor && drone.name===params.name) return newCircle(data,map)
+        
+      }))
+      .catch(e=>null)
+    
   })
   
 }
@@ -153,9 +159,8 @@ const callSocketFlight = (drone, map, selection) => {
 
   const marker=map.markers.find(el=>el.id===drone.name+'_marker')
   const infowindow = map.infowindows.find(el=>el.id===drone.name+'_infowindow')
-  const bounds = new google.maps.LatLngBounds();
+  // const bounds = new google.maps.LatLngBounds();
     
-  
 		socket.on(`${drone.name}_telemetry`, async data => {
       const start = await lastStartFlight(drone.name)
       const timer=intervalToDuration({start:new Date(typeof start==='string'?new Date():start.start_flight),end:new Date()})
@@ -163,18 +168,25 @@ const callSocketFlight = (drone, map, selection) => {
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lon),
       };
-       flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-       const polyline = newPolyline(flightPlanCoordinates)
+            await noParametersRequest('flight_log_info_during_flight')
+            .then(e=>e.forEach(drone=>{
+              if (data.ID===drone.name) {
+                flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
+                const polyline = newPolyline(flightPlanCoordinates)
+              
+                addLine(polyline,map)
+                polylinesArray.push(polyline)
+              }
+            }))
+            .catch(e=>null)
         marker.setPosition(latlngLine)
-        addLine(polyline,map)
         infowindow.setContent(infoWindowT(data,drone,timer))
         infowindow.open(map, marker);
-        polylinesArray.push(polyline)
-        bounds.extend(new google.maps.LatLng(data.lat, data.lon))
-        map.fitBounds(bounds);
+        // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
+        // map.fitBounds(bounds);
+        
 
     })
-
    landing(drone, polylinesArray, infowindow, selection)
 }
 
@@ -210,8 +222,7 @@ const requestDrones = async (map, element) => {
     const bounds = new google.maps.LatLngBounds();
     map.markers.forEach(m=> bounds.extend(m.getPosition()))
     map.fitBounds(bounds);
-    //  const zoom = map.getZoom();
-    //  map.setZoom(zoom > 8 ? 8 : zoom);
+
     takeoff(a_drone, element.querySelector('#selectDrone'))
     callSocketFlight(a_drone,map, element.querySelector('#selectDrone'))
     

@@ -39,7 +39,7 @@ const myStyles =[
 export const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	center: { lat: -12.1215361, lng: -77.0463574},
-	zoom: 8,
+	maxZoom: 18,
 	styles: myStyles,
 	markers:[],
 	latitude:[],
