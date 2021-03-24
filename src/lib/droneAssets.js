@@ -6,14 +6,14 @@ import {socket} from '../index.js';
 
 let flag = false;
 
-const CallOnceToast = (flag0, value) => {
+export const CallOnceToast = (flag0, value) => {
   if (!flag0) {
     flag=!flag0;
     toast(`The value ${value} is out of range`,'grey darken-1 rounded')
   }
 }
 
-const limitColor = (value,low,moderate,high) => {
+export const limitColor = (value,low,moderate,high) => {
   switch (true) {
     case (value>=0&&value<=low): return '#009966';
     case (value>low&&value<=moderate): return '#ffde33';
@@ -23,7 +23,7 @@ const limitColor = (value,low,moderate,high) => {
     default: return'#FFFFFF'
   }
 }
-const circleColor = (params) => {
+export const circleColor = (params) => {
   switch (params.sensor) {
     case 'CO':return limitColor(params['CO'],50,100,150)
     case 'O3':return limitColor(params['O3'],50,100,150)
@@ -47,7 +47,7 @@ export const removeLine = (polyline) => {
 
 let latlngLine = {};
 
-const createOption = async (selection)=>{
+export const createOption = async (selection)=>{
   selection.innerHTML='<option value="" disabled selected>Andean Drone</option>'
   await noParametersRequest('flight_log_info_during_flight')
   .then(e=>e.forEach(drone=>{
@@ -75,7 +75,7 @@ export const newCircle = (center,map)=> {
 circlesArray.push(pollutantCircle)
 }
 
-const callSocketSensors = (params, map) =>  {
+export const callSocketSensors = (params, map) =>  {
   
   socket.on(`${params.name}_${params.sensor}_processed`, async data => {
     await noParametersRequest('flight_log_info_during_flight')
@@ -89,7 +89,7 @@ const callSocketSensors = (params, map) =>  {
   
 }
 
-const drawCirclesPollutant = async(params,map)=> {
+export const drawCirclesPollutant = async(params,map)=> {
  const data = await getInFlightSensor(params)
 if(data.length>0){
   const center = data.reduce((acc,el,i)=>({
@@ -105,12 +105,12 @@ if(data.length>0){
 
 }
 
-const activateDrawBtn = (drawBtn, params)=>{
+export const activateDrawBtn = (drawBtn, params)=>{
   typeof params.name !== "string" || typeof params.sensor!== "string"?
   drawBtn.classList.add('disabled'):drawBtn.classList.remove('disabled')
 }
 
-const selectDroneFlight = async(element, map) =>{
+export const selectDroneFlight = async(element, map) =>{
   let params = {}
   const selectionName= element.querySelector('#selectDrone');
   const selectionSensor= element.querySelector('#selectSensor');
@@ -135,11 +135,10 @@ const selectDroneFlight = async(element, map) =>{
 
 }
 
-const landing = (drone, polylinesArray, infowindow, selection)=>{
+export const landing = (drone, selection)=>{
 
   socket.on(`${drone.name}_landing`, data => {
     toast(`${drone.name}: The Andean Drone ${drone.comercial_name} has landed now.`,'white-text blue darken-1 rounded');
-    setTimeout(polylinesArray.forEach(p=>{removeLine(p);infowindow.close()}) , 10000)
     circlesArray.forEach(c=>removeLine(c))
     createOption(selection)
   })
@@ -153,8 +152,8 @@ const landing = (drone, polylinesArray, infowindow, selection)=>{
   strokeWeight: 2
   });
 
-const callSocketFlight = (drone, map, selection) => {
-  const flightPlanCoordinates = [];
+export const callSocketFlight = (drone, map, selection) => {
+  let flightPlanCoordinates = [];
   let polylinesArray = [];
 
   const marker=map.markers.find(el=>el.id===drone.name+'_marker')
@@ -171,11 +170,13 @@ const callSocketFlight = (drone, map, selection) => {
             await noParametersRequest('flight_log_info_during_flight')
             .then(e=>e.forEach(drone=>{
               if (data.ID===drone.name) {
+                console.log(data.ID,data.lat, data.lon);
                 flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
                 const polyline = newPolyline(flightPlanCoordinates)
               
                 addLine(polyline,map)
                 polylinesArray.push(polyline)
+                console.log(polylinesArray);
               }
             }))
             .catch(e=>null)
@@ -184,12 +185,23 @@ const callSocketFlight = (drone, map, selection) => {
         infowindow.open(map, marker);
         // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
         // map.fitBounds(bounds);
+        socket.on(`${drone.name}_landing`, data => {
+          console.log(data);//condition with landing data by drone????
+          polylinesArray.forEach(p=>{
+            removeLine(p);
+            polylinesArray = polylinesArray.filter(item => item !== p);
+            console.log('polylinesArray',polylinesArray);
+            
+            
+          })
+        });
 
     })
-   landing(drone, polylinesArray, infowindow, selection)
+   landing(drone,selection)
+   infowindow.close()
 }
 
-const takeoff = (drone, selection)=>{
+export const takeoff = (drone, selection)=>{
 
   socket.on(`${drone.name}_takeoff`, data => {
     toast(`${drone.name}: The Andean Drone ${drone.comercial_name} has taken off now.`,'orange darken-1 rounded');
@@ -208,7 +220,7 @@ export const newMarkerDrone = (drone,map)=>new google.maps.Marker({
   id: drone.name + '_marker',
 });
 
-const requestDrones = async (map, element) => {
+export const requestDrones = async (map, element) => {
   const drone_list = await noParametersRequest('AllDronesInMap/');
   if (drone_list.length>=1){
     drone_list.forEach((a_drone) => {
@@ -235,5 +247,3 @@ const requestDrones = async (map, element) => {
  
 };
 
-
-export { requestDrones };

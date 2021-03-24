@@ -6,6 +6,7 @@ import {
   requestDownload, 
   installationDateReq,
 } from '../src/views/downloadView.js';
+import {viewDownload} from '../src/html/download.js';
 import {  downloadData} from '../src/requests/get.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 
@@ -58,6 +59,11 @@ const resp = {
   temperature: 24.367,
   timestamp_zone: "Mon, 04 Jan 2021 15:00:00 GMT"
 }
+
+test('requestQhawaxs', () =>{
+  document.body.innerHTML = viewDownload;
+	expect(requestQhawaxs(document).toString()).toBe('[object Promise]');
+});
 // fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
 // fetch.mockResponseOnce('downloadData', ('qH004','04-01-2021 15:00:00', '04-01-2021 18:00:00') => {
 //   return {

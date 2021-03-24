@@ -9,14 +9,15 @@ let flagToast = false
 let polylinesArray = [];
 
 
-const CallOnceToast = (flag0, value) => {
+export const CallOnceToast = (flag0, value) => {
   if (!flag0) {
     flagToast=!flag0;
     toast(`The value ${value} is out of range`,'grey darken-1 rounded')
   }
+  return flag0;
 }
 
-const callOnceMarker = (flag0, flight, map) => {
+export const callOnceMarker = (flag0, flight, map) => {
   if (!flag0) {
     flagMarker=!flag0;
     const marker = newMarkerDrone(flight,map)
@@ -27,14 +28,15 @@ const callOnceMarker = (flag0, flight, map) => {
     map.markers.forEach(m=> bounds.extend(m.getPosition()))
     map.fitBounds(bounds);
   }
+  return flag0;
 }
 
-const indexed = (data, flight)=>data.reduce((acc,el,i)=>({
+export const indexed = (data, flight)=>data.reduce((acc,el,i)=>({
   ...acc,
   [i]:{'center':{'lat':el.lat,'lng':el.lon},[flight.sensor]:el[flight.sensor],'sensor':flight.sensor}
  }),[])
 
-const drawSensorValues = async (flight,map) => {
+export const drawSensorValues = async (flight,map) => {
   const data = await requestQhawaxFlight(flight.name, flight.start, flight.end); 
   if(data.length>0){
     const center = indexed(data, flight)
@@ -45,7 +47,7 @@ const drawSensorValues = async (flight,map) => {
    }
 }
 
-const stopFlight = (flight, map, element) => {
+export const stopFlight = (flight, map, element) => {
   const selection= element.querySelector('.over_map_droneselection');
   const selectionSensor= element.querySelector('#selectSensor');
   const drawBtn = element.querySelector('#draw-btn');
@@ -63,10 +65,11 @@ const stopFlight = (flight, map, element) => {
     drawSensorValues(flight,map)
     circlesArray.forEach(c=>removeLine(c)) 
   })
+  return true;
   // setTimeout(polylinesArray.forEach(p=>{removeLine(p);infowindow.close()}) , 10000)
 };
 
-const drawTelemetry = async(flight, map, element)=> {
+export const drawTelemetry = async(flight, map, element)=> {
   const flightPlanCoordinates = [];
   const start = new Date(newDateLocal(flight.start));
   const end = new Date(newDateLocal(flight.end));
@@ -125,7 +128,7 @@ const csvFields = [
 ];
 
 
-const downloadDrone = async(flight) => {
+export const downloadDrone = async(flight) => {
   let filename =  `${flight.name+ '-'+ flight.comercial_name}`
   const data = await requestQhawaxFlight(flight.name, flight.start, flight.end); 
   if(data.length>0){

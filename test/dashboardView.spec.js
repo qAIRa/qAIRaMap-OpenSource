@@ -1,4 +1,4 @@
-import {viewDashboard, indexValue, request, dashboardRow, dashboardRowActive } from '../src/views/dashboardView.js';
+import {viewDashboard, indexValue, request, dashboardRow, dashboardRowActive, createRow } from '../src/views/dashboardView.js';
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks()
 beforeEach(() => {
@@ -132,3 +132,11 @@ test('request: dashboard page', () => {
   require('../build/js/materialize.min.js')
   expect(request(HTMLDivElement).toString()).toBe('[object Promise]');
 })
+
+
+//Need to mock socket
+// test('create row in dashboard', () => {
+//   document.body.innerHTML = element;
+
+//   expect(createRow(document, ['qH004','qH006'])).toBe('');
+// })

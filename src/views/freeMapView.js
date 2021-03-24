@@ -21,14 +21,6 @@ const viewFreeMap = () => {
 
   const map = firstMap(mapElem, 'map')
 
-  // socket.on('update_inca', (res) => {
-  //   if (qhawax.name === res.name) {
-  //       qhawax.main_inca = res.main_inca;
-  //       if(qhawax.lat!==null)
-  //         drawQhawaxMap(map, qhawax);
-  //   }
-  // });
-
   request(map);
 
   mapElem.querySelector('#over_map').addEventListener('mouseenter',(e)=>{

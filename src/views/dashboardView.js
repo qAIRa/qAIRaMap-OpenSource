@@ -45,7 +45,7 @@ const ECAlimits = {
   }
   
   
-  const indexValue = (data) => {
+export  const indexValue = (data) => {
 	Object.entries(valuesForDashboard).forEach(([key]) => { 
 	  valuesForDashboard[key]=data[key]
 	  valuesForDashboard[key] >= ECAlimits[key] ||
@@ -56,12 +56,12 @@ const ECAlimits = {
   return valuesForDashboard;
   };
 
-const dashboardRow = (q) =>`
+ export const dashboardRow = (q) =>`
 <td><strong>${q.name}</strong></td>
 <td>${q.comercial_name}</td>
 <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
 <td><i class="material-icons" style="color:gray">signal_wifi_off</i></td>`;
-const dashboardRowActive =(data,q,value)=>`
+ export const dashboardRowActive =(data,q,value)=>`
 <td><strong>${data.ID}</strong></td>
 <td>${q.comercial_name}</td>
 <td>${new Date(Date.parse(value.timestamp)).toLocaleString('en-EN')}</td>
@@ -90,7 +90,7 @@ const callSocket = (q, row_table) => {
 }
 
 
-const createRow = (element, qhawax_asigned) => {
+ export const createRow = (element, qhawax_asigned) => {
 	const table_body = element.querySelector('tbody');
 	qhawax_asigned.forEach(q => {
 		const row_table = document.createElement('tr');
@@ -100,14 +100,14 @@ const createRow = (element, qhawax_asigned) => {
 		callSocket(q, row_table)
 	});
 }
-const request = async () => {
+ export const request = async () => {
 	const qhawax_asigned = [];
 	await noParametersRequest('AllQhawaxInMap/')
 	.then(r=>r.forEach(q => qhawax_asigned.push(q)))
 	return qhawax_asigned;
 }
 
-const viewDashboard = () => {
+ export const viewDashboard = () => {
   const dashboardElem = document.createElement('div');
     dashboardElem.classList.add('dashboard');
 	navBarQhawax(dashboardElem, viewBoard);
@@ -116,5 +116,5 @@ const viewDashboard = () => {
 };
 
 
-export { viewDashboard, dashboardRow, indexValue, request, dashboardRowActive };
+
 
