@@ -10,26 +10,43 @@ return  new Response(JSON.stringify({
 
 };
 
-async function noParametersRequest(address){
+
+// async function noParametersRequest(address){
+//   try{
+//     const response = await fetch(`${APISource+address}`)
+//     return await response.json();
+//   }catch(e){
+//     handleError(e)
+//   }
+  
+// }
+export const noParametersRequest = async(address)=>{
   try{
     const response = await fetch(`${APISource+address}`)
-    return await response.text();
+    return await response.json();
   }catch(e){
     handleError(e)
   }
-  //const response = await fetch(`${APISource+address}`).catch(e=> {return null})
-  //  return await response.json();
 }
 
-async function oneParameterRequest(address, ID){
+// async function oneParameterRequest(address, ID){
+//   try{
+//     const response = await fetch(`${APISource+address+ID}`)
+//     return await response.json();
+//   }catch(e){
+//     handleError(e)
+//   }
+//   //const response = await fetch(`${APISource+address+ID}`).catch(e=>{return null})
+//   //  return await response.text();
+// }
+
+export const oneParameterRequest = async (address, ID)=>{
   try{
     const response = await fetch(`${APISource+address+ID}`)
-    return await response.text();
+    return await response.json();
   }catch(e){
     handleError(e)
   }
-  //const response = await fetch(`${APISource+address+ID}`).catch(e=>{return null})
-  //  return await response.text();
 }
 
 
@@ -89,7 +106,5 @@ export const getInFlightSensor = async(data)=>{
 
 }
 
-export{
-  noParametersRequest, oneParameterRequest
-}
+
 
