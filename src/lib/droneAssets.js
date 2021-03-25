@@ -11,6 +11,7 @@ export const CallOnceToast = (flag0, value) => {
     flag=!flag0;
     toast(`The value ${value} is out of range`,'grey darken-1 rounded')
   }
+  return flag0;
 }
 
 export const limitColor = (value,low,moderate,high) => {
