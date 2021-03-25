@@ -10,16 +10,6 @@ return  new Response(JSON.stringify({
 
 };
 
-
-// async function noParametersRequest(address){
-//   try{
-//     const response = await fetch(`${APISource+address}`)
-//     return await response.json();
-//   }catch(e){
-//     handleError(e)
-//   }
-  
-// }
 export const noParametersRequest = async(address)=>{
   try{
     const response = await fetch(`${APISource+address}`)
@@ -28,17 +18,6 @@ export const noParametersRequest = async(address)=>{
     handleError(e)
   }
 }
-
-// async function oneParameterRequest(address, ID){
-//   try{
-//     const response = await fetch(`${APISource+address+ID}`)
-//     return await response.json();
-//   }catch(e){
-//     handleError(e)
-//   }
-//   //const response = await fetch(`${APISource+address+ID}`).catch(e=>{return null})
-//   //  return await response.text();
-// }
 
 export const oneParameterRequest = async (address, ID)=>{
   try{
@@ -49,62 +28,79 @@ export const oneParameterRequest = async (address, ID)=>{
   }
 }
 
-
-export const requestAverageMeasurement = async(qhawax, sensor) => {
-
-    const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`).catch(e=>handleError(e))
+export const requestAverageMeasurement = async (qhawax, sensor)=>{
+  try{
+    const response = await fetch(`${APISource}gas_average_measurement/?qhawax=${qhawax}&gas=${sensor}`)
     return await response.json();
-
-};
-
-
-export const downloadData = async(id, init, end) => {
-
-    const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
-    return await response.json();
-
-};
-
-export const requestGraphicsData = async(qhawax, time) => {
-
-    const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`).catch(e=>handleError(e))
-    return await response.json();
-
-};
-
-export const requestFlightList = async(init, end) => {
-    const response = await fetch(`${APISource}get_drone_flights_period_time?initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
-    return await response.json();
-
+  }catch(e){
+    handleError(e)
+  }
 }
 
-export const requestQhawaxFlight = async(name, init, end) => {
-    const response = await fetch(`${APISource}processed_measurements_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
+export const downloadData = async(id, init, end)=>{
+  try{
+    const response = await fetch(`${APISource}average_valid_processed_period/?qhawax_id=${id}&initial_timestamp=${init}&final_timestamp=${end}`)
     return await response.json();
+  }catch(e){
+    handleError(e)
+  }
 }
 
-export const requestTelemetryFlight = async(name, init, end) => {
 
-    const response = await fetch(`${APISource}telemetry_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`).catch(e=>handleError(e))
+export const requestGraphicsData = async(qhawax, time)=>{
+  try{
+    const response = await fetch(`${APISource}processed_measurements/?name=${qhawax}&interval_minutes=${time}`)
     return await response.json();
+  }catch(e){
+    handleError(e)
+  }
+}
 
+export const requestFlightList = async(init, end)=>{
+  try{
+    const response = await fetch(`${APISource}get_drone_flights_period_time?initial_timestamp=${init}&final_timestamp=${end}`)
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
+}
+
+
+export const requestQhawaxFlight = async(name, init, end)=>{
+  try{
+    const response = await fetch(`${APISource}processed_measurements_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
+}
+
+export const requestTelemetryFlight = async(name, init, end)=>{
+  try{
+    const response = await fetch(`${APISource}telemetry_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
 }
 
 export const lastStartFlight = async(name)=>{
-
-  const response = await fetch(`${APISource}flight_log_info_by_qhawax_name/?name=${name}`).catch(e=>handleError(e))
-  return await response.json();
-
+  try{
+    const response = await fetch(`${APISource}flight_log_info_by_qhawax_name/?name=${name}`)
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
 }
-
 
 export const getInFlightSensor = async(data)=>{
-
-    const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`).catch(e=>handleError(e))
+  try{
+    const response = await fetch(`${APISource}measurements_by_pollutant_during_flight/?name=${data.name}&pollutant=${data.sensor}`)
     if(response.status===500)return [];
     return await response.json();
-
+  }catch(e){
+    handleError(e)
+  }
 }
-
 
 
