@@ -10,17 +10,20 @@ import {
 	incaValues,//ok
 	setPannelData,
 	setInfowindow,
+	json
 } from '../src/lib/mapAssets';
 import { viewMap } from '../src/html/freeMap.js';
 import { initialize } from "@googlemaps/jest-mocks";
 import { enableFetchMocks } from 'jest-fetch-mock';
+
 enableFetchMocks()
+
+
 
 beforeEach(() => {
 	initialize();
-	fetch.resetMocks()
-  })
-
+  fetch.resetMocks()
+})
 
 const dataAirQuality = {
 	CO: 3,
@@ -209,4 +212,23 @@ test('drawQhawaxMap', () => {
 	document.body.innerHTML = viewMap;
   expect(setPannelData(qhawax,map)).toStrictEqual(Promise.resolve({}));
   })
+
+  test('draw charts', async() => {
+	document.body.innerHTML = viewMap;
+	const qhawax_id = 'qH004';
+	const sensor = 'CO';
+	fetch.mockResponses([
+		JSON.stringify({"sensor":1194.934,"timestamp_zone":"Wed, 24 Mar 2021 19:00:00 GMT"},{"sensor":1194.934,"timestamp_zone":"Wed, 24 Mar 2021 19:00:00 GMT"}),
+		{status:200}
+	])
+	document.body.innerHTML=viewMap;	
+  expect(drawChart(sensor, qhawax_id)).toStrictEqual(Promise.resolve({}));
+  })
   
+  test('qairito', () => {
+	document.body.innerHTML = viewMap;
+  expect(qairito(50)).toStrictEqual({q:'/img/qairito/qairito_buena.gif',b:'/img/backgrounds/qairito_green.png'});
+  expect(qairito(100)).toStrictEqual({q:'/img/qairito/qairito_moderada.gif',b:'/img/backgrounds/qairito_yellow.png'});
+  expect(qairito(500)).toStrictEqual({q:'/img/qairito/qairito_mala.gif',b:'/img/backgrounds/qairito_orange.png'});
+  expect(qairito(600)).toStrictEqual({q:'/img/qairito/qairito_cuidado.gif',b:'/img/backgrounds/qairito_red.png'});
+  })
