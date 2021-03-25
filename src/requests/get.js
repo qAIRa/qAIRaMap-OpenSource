@@ -10,14 +10,26 @@ return  new Response(JSON.stringify({
 
 };
 
-export const noParametersRequest= async(address)=>{
-  const response = await fetch(`${APISource+address}`).catch(e=>handleError(e))
-    return await response.json();
+async function noParametersRequest(address){
+  try{
+    const response = await fetch(`${APISource+address}`)
+    return await response.text();
+  }catch(e){
+    handleError(e)
+  }
+  //const response = await fetch(`${APISource+address}`).catch(e=> {return null})
+  //  return await response.json();
 }
 
-export const oneParameterRequest= async(address, ID)=>{
-  const response = await fetch(`${APISource+address+ID}`).catch(e=>handleError(e))
+async function oneParameterRequest(address, ID){
+  try{
+    const response = await fetch(`${APISource+address+ID}`)
     return await response.text();
+  }catch(e){
+    handleError(e)
+  }
+  //const response = await fetch(`${APISource+address+ID}`).catch(e=>{return null})
+  //  return await response.text();
 }
 
 
@@ -75,5 +87,9 @@ export const getInFlightSensor = async(data)=>{
     if(response.status===500)return [];
     return await response.json();
 
+}
+
+export{
+  noParametersRequest, oneParameterRequest
 }
 

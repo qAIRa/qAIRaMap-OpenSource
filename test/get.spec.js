@@ -21,32 +21,7 @@ beforeEach(() => {
 
   describe('testing fetch calls', () => {
     
-    
-    it('calls oneParameterRequest', () => {
-      fetch.mockResponseOnce('calls oneParameterRequest')
-     
-      //assert on the response
-      oneParameterRequest('GetInstallationDate/?qhawax_id=','qH004').then(res => {
-        expect(res).toEqual('calls oneParameterRequest')
-      })
-   
-      //assert on the times called and arguments given to fetch
-      expect(fetch.mock.calls.length).toEqual(1)
-      expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=qH004')
-    })
-
-    it('calls noParametersRequest', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls noParametersRequest' }))
-        
-        //assert on the response
-        noParametersRequest('AllQhawaxInMap/').then(res => {
-          expect(res.data).toEqual('calls noParametersRequest')
-        })
-     
-        //assert on the times called and arguments given to fetch
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/')
-      });
+  
 
       // it('calls status', () => {
       //   fetch.mockResponseOnce('calls status');
@@ -175,3 +150,55 @@ beforeEach(() => {
      global.M = require('../build/js/materialize.min.js');
     expect(handleError('error').statusText).toStrictEqual('OK');
   });
+
+
+it("catches errors oneParameterRequest", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const installation_date = await oneParameterRequest("GetInstallationDate/?qhawax_id=",179);
+  //expect(installation_date).toEqual(JSON.stringify({code: 400,message: 'Network error',}));
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=179`
+  );
+});
+
+
+it("get installation date - oneParameterRequest", async () =>{
+  //fetch.mockResponseOnce("2021-01-06 23:40:21+00:00");
+  const installation_date = await oneParameterRequest("GetInstallationDate/?qhawax_id=",179);
+  //expect(installation_date).toEqual("2021-01-06 23:40:21+00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=179`
+  );
+});
+
+it("catches errors noParametersRequest", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const installation_date = await noParametersRequest("AllQhawaxInMap/");
+  //expect(installation_date).toEqual(JSON.stringify({code: 400,message: 'Network error',}));
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/`
+  );
+})
+
+it("get all qhawax in map - noParametersRequest", async()=>{
+  //json = [{"area_name":"Comercial Zone","comercial_name":"Universidad Nacional de San Antonio Abad del Cusco","eca_noise_id":3,"id":327,"lat":-12.598634,"lon":-69.187518,"main_inca":-1.0,"mode":"Customer","name":"qH021","qhawax_id":307,"qhawax_type":"STATIC","state":"OFF"}]
+  //fetch.mockReject(()=>handleError(e));
+  const installation_date = await noParametersRequest("AllQhawaxInMap/");
+  //expect(installation_date).toEqual(JSON.stringify({code: 400,message: 'Network error',}));
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/`
+  );
+})
+
+
+
+
+
+
+
+
+
