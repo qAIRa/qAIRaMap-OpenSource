@@ -19,159 +19,205 @@ beforeEach(() => {
   })
 
 
-  describe('testing fetch calls', () => {
-    
-    
-    it('calls oneParameterRequest', () => {
-      fetch.mockResponseOnce('calls oneParameterRequest')
-     
-      //assert on the response
-      oneParameterRequest('GetInstallationDate/?qhawax_id=','qH004').then(res => {
-        expect(res).toEqual('calls oneParameterRequest')
-      })
-   
-      //assert on the times called and arguments given to fetch
-      expect(fetch.mock.calls.length).toEqual(1)
-      expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=qH004')
-    })
+test('handle error', () =>{
+   global.M = require('../build/js/materialize.min.js');
+  expect(handleError('error').statusText).toStrictEqual('OK');
+});
 
-    it('calls noParametersRequest', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls noParametersRequest' }))
-        
-        //assert on the response
-        noParametersRequest('AllQhawaxInMap/').then(res => {
-          expect(res.data).toEqual('calls noParametersRequest')
-        })
-     
-        //assert on the times called and arguments given to fetch
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/')
-      });
+//oneParameterRequest
 
-      // it('calls status', () => {
-      //   fetch.mockResponseOnce('calls status');
-     
-      //   //assert on the response
-      //   requestStatus(4).then(res => {
-      //     expect(res).toEqual('calls status')
-      //   })
-      //   //assert on the times called and arguments given to fetch
-      //   expect(fetch.mock.calls.length).toEqual(1)
-      //   expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/qhawax_status/?name=4')
-      // })
-      it('calls download data', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
-        fetch.mockReject(new Error('fake error message'))
-       
-        //assert on the response
-        downloadData('qH004','04-01-2021 15:00:00', '04-01-2021 18:00:00').then(res => {
-          expect(res.data).toEqual('calls download data')
-
-        })
-        // downloadData(false, 4,'01-09-2020 05:00:00', '01-09-2020 18:00:00').then(res => {
-            
-        //   })
-        //assert on the times called and arguments given to fetch
-        expect(fetch.mock.calls.length).toEqual(1)
-        // expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/valid_processed_measurements_period/?qhawax_id=4&initial_timestamp=01-09-2020 05:00:00&final_timestamp=01-09-2020 18:00:00')
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/average_valid_processed_period/?qhawax_id=qH004&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
-      });
-
-      it('calls requestFlightList', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'requestFlightList'}))
-        fetch.mockReject(new Error('fake error message'))
-       
-        //assert on the response
-        requestFlightList('04-01-2021 15:00:00', '04-01-2021 18:00:00').then(res => {
-          expect(res.data).toEqual('requestFlightList')
-
-        })
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/get_drone_flights_period_time?initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
-      });
+it("catches errors oneParameterRequest", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const installation_date = await oneParameterRequest("GetInstallationDate/?qhawax_id=",179);
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=179`
+  );
+});
 
 
+it("get installation date - oneParameterRequest", async () =>{
+  const installation_date = await oneParameterRequest("GetInstallationDate/?qhawax_id=",179);
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/GetInstallationDate/?qhawax_id=179`
+  );
+});
 
-      it('calls average measurements', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls average measurements'}))
-        
-        //assert on the response
-        requestAverageMeasurement(4,'CO').then(res => {
-          expect(res.data).toEqual('calls average measurements')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/gas_average_measurement/?qhawax=4&gas=CO')
-      })
-      it('calls graphics Data', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'calls graphics Data'}))
-        
-        //assert on the response
-        requestGraphicsData('qH004',5).then(res => {
-          expect(res.data).toEqual('calls graphics Data')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/processed_measurements/?name=qH004&interval_minutes=5')
-      })
+//noParametersRequest
 
-      it('calls data of andean drone', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'data of andean drone'}))
-        
-        //assert on the response
-        requestQhawaxFlight('qH006','04-01-2021 15:00:00', '04-01-2021 18:00:00').then(res => {
-          expect(res.data).toEqual('data of andean drone')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/processed_measurements_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
-      })
+it("catches errors noParametersRequest", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const installation_date = await noParametersRequest("AllQhawaxInMap/");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/`
+  );
+})
 
-      it('calls telemetry of andean drone', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'telemetry of andean drone'}))
-        
-        //assert on the response
-        requestTelemetryFlight('qH006','04-01-2021 15:00:00', '04-01-2021 18:00:00').then(res => {
-          expect(res.data).toEqual('telemetry of andean drone')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/telemetry_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00')
-      })
+it("get all qhawax in map - noParametersRequest", async()=>{
+  const installation_date = await noParametersRequest("AllQhawaxInMap/");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/AllQhawaxInMap/`
+  );
+})
 
-      it('calls last time of the start flight', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'time of the start flight'}))
-        
-        //assert on the response
-        lastStartFlight('qH006').then(res => {
-          expect(res.data).toEqual('time of the start flight')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/flight_log_info_by_qhawax_name/?name=qH006')
-      })
+//requestAverageMeasurement
 
-      it('calls measurements by pollutant during flight', () => {
-        fetch.mockResponseOnce(JSON.stringify({ data: 'measurements by pollutant during flight'}))
-        
-        //assert on the response
-        getInFlightSensor({'name':'qH006', 'sensor':'CO'}).then(res => {
-          expect(res.data).toEqual('measurements by pollutant during flight')
-        })
-        //assert on the times called and arguments given to fetch
-        
-        expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('https://openqairamapnapi.qairadrones.com/api/measurements_by_pollutant_during_flight/?name=qH006&pollutant=CO')
-      })
-      
-  })
+it("catches errors requestAverageMeasurement", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const average_measurement = await requestAverageMeasurement("qH021","SO2");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/gas_average_measurement/?qhawax=qH021&gas=SO2`
+  );
+})
 
-  test('handle error', () =>{
-     global.M = require('../build/js/materialize.min.js');
-    expect(handleError('error').statusText).toStrictEqual('OK');
-  });
+it("calls request average measurement", async()=>{
+  const average_measurement = await requestAverageMeasurement("qH021","SO2");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/gas_average_measurement/?qhawax=qH021&gas=SO2`
+  );
+})
+
+//downloadData
+
+it("catches errors downloadData", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const download_data = await downloadData("qH004","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/average_valid_processed_period/?qhawax_id=qH004&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+it("calls download data", async()=>{
+  const download_data = await downloadData("qH004","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/average_valid_processed_period/?qhawax_id=qH004&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+//requestGraphicsData
+
+it("catches errors requestGraphicsData", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const request_graphics_data = await requestGraphicsData("qH004",5);
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/processed_measurements/?name=qH004&interval_minutes=5`
+  );
+})
+
+it("calls request graphics data", async()=>{
+  const request_graphics_data = await requestGraphicsData("qH004",5);
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/processed_measurements/?name=qH004&interval_minutes=5`
+  );
+})
+
+//requestFlightList
+
+it("catches errors requestFlightList", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const request_graphics_data = await requestFlightList("04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/get_drone_flights_period_time?initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+it("calls request flight list", async()=>{
+  const request_graphics_data = await requestFlightList("04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/get_drone_flights_period_time?initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+//requestQhawaxFlight
+
+it("catches errors requestQhawaxFlight", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const request_qhawax_flight = await requestQhawaxFlight("qH006","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/processed_measurements_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+it("calls request qhawax flight", async()=>{
+  const request_qhawax_flight = await requestQhawaxFlight("qH006","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/processed_measurements_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+
+//requestTelemetryFlight
+
+it("catches errors requestTelemetryFlight", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const request_telemetry_flight = await requestTelemetryFlight("qH006","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/telemetry_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+it("calls request telemetry flight", async()=>{
+  const request_telemetry_flight = await requestTelemetryFlight("qH006","04-01-2021 15:00:00", "04-01-2021 18:00:00");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/telemetry_andean_drone?qhawax_name=qH006&initial_timestamp=04-01-2021 15:00:00&final_timestamp=04-01-2021 18:00:00`
+  );
+})
+
+
+//lastStartFlight
+
+it("catches errors lastStartFlight", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const last_start_flight = await lastStartFlight("qH006");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/flight_log_info_by_qhawax_name/?name=qH006`
+  );
+})
+
+it("calls last start flight", async()=>{
+  const last_start_flight = await lastStartFlight("qH006");
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/flight_log_info_by_qhawax_name/?name=qH006`
+  );
+})
+
+
+//getInFlightSensor
+
+it("catches errors getInFlightSensor", async()=>{
+  fetch.mockReject(()=>handleError(e));
+  const last_start_flight = await getInFlightSensor({'name':'qH006', 'sensor':'CO'});
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/measurements_by_pollutant_during_flight/?name=qH006&pollutant=CO`
+  );
+})
+
+it("calls get in flight sensor", async()=>{
+  const last_start_flight = await getInFlightSensor({'name':'qH006', 'sensor':'CO'});
+  expect(fetch).toHaveBeenCalledTimes(1);
+  expect(fetch).toHaveBeenCalledWith(
+    `https://openqairamapnapi.qairadrones.com/api/measurements_by_pollutant_during_flight/?name=qH006&pollutant=CO`
+  );
+})
+
+
+
+
