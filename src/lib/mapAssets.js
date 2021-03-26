@@ -293,7 +293,7 @@ export const setInfowindow = (qhawax, map)=>{
 	}
 };
 
-const markerZoom = (zoom) =>{
+export const markerZoom = (zoom) =>{
 		switch(true){
 			case zoom < 11: return 45;
 			case zoom >= 11 && zoom < 14: return 50;
@@ -302,7 +302,7 @@ const markerZoom = (zoom) =>{
 		}
 };
 
-const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
+export const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
 	position: {
 		lat: qhawax.lat,
 		lng: qhawax.lon,

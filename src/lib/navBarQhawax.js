@@ -2,7 +2,7 @@ import { navbar, navbarDrone } from '../html/navBar.js';
 
 import { goTo } from './viewController.js';
 
-const navBarQhawax = (element, display) => {
+export const navBarQhawax = (element, display) => {
   const menuNavBar = document.querySelector('header');
 
   menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : navbar;
@@ -34,4 +34,3 @@ const navBarQhawax = (element, display) => {
   });
 };
 
-export { navBarQhawax };

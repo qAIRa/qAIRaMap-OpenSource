@@ -20,9 +20,13 @@ import {
 import { firstMap } from '../src/lib/mapAssets.js';
 import { initialize } from "@googlemaps/jest-mocks";
 import {droneSelection} from '../src/html/freeMapDrone.js'
+import { enableFetchMocks } from 'jest-fetch-mock';
+
+enableFetchMocks()
 
 beforeEach(() => {
     initialize();
+    fetch.resetMocks()
   })
 
 test('call toast only once', () => {
@@ -64,6 +68,10 @@ test('color of the circle', () => {
   })
 
   test('create the options', () => {
+    fetch.mockResponses([
+      JSON.stringify({name:'qH006', comercial_name:'Wakanda'},{name:'qH007', comercial_name:'Metropolis'}),
+      {status:200}
+    ])
     document.body.innerHTML=droneSelection;
   expect(createOption(document,firstMap)).toStrictEqual(Promise.resolve({}));
   })
@@ -94,3 +102,22 @@ test('create new polyline', () => {
     const constructor = new google.maps.Marker();
   expect(newMarkerDrone({name:'qH006', position:'{"lat":-12,"lng":-77}'}, firstMap)).toStrictEqual(constructor);
   })
+
+  test('draw a circle', () => {
+    fetch.mockResponses([
+		JSON.stringify({"pollutant": 21.261,"timestamp_zone": "Mon, 08 Feb 2021 21:21:30 GMT","lat":-12, "lon":-77, "comercial_name":"Wakanda" },{"pollutant": 21.261,"timestamp_zone": "Mon, 08 Feb 2021 21:21:30 GMT","lat":-12, "lon":-77, "comercial_name":"Wakanda" }),
+		{status:200}
+	])
+    expect(drawCirclesPollutant(document, firstMap)).toStrictEqual(Promise.resolve({}));
+    })
+   
+test('request drones', () => {
+  fetch.mockResponses([
+		JSON.stringify( {"area_name":"Residential Zone","comercial_name":"Wakanda Awakening","eca_noise_id":2,"id":179,"lat":-12.3578897,"lon":-76.7912213,"main_inca":-2.0,"mode":"Calibration","name":"qH006","qhawax_id":179,"qhawax_type":"AEREAL","state":"OFF"},{"area_name":"Special Protection Zone","comercial_name":"Aereo Prueba","eca_noise_id":1,"id":184,"lat":-11.998472864017,"lon":-76.9984387510529,"main_inca":-1.0,"mode":"Customer","name":"qH058","qhawax_id":184,"qhawax_type":"AEREAL","state":"OFF"}),
+		{status:200}
+	])
+  const map = new google.maps.Map(document.querySelector('#map'), {
+	});
+  expect(requestDrones(map, document)).toStrictEqual(Promise.resolve({}));
+  })
+

@@ -6,11 +6,6 @@ beforeEach(() => {
  
   })
 
-// global.fetch = jest.fn(() =>
-//   Promise.resolve({
-//     json: () => Promise.resolve({ rates: { CAD: 1.42 } }),
-//   })
-// );
 
 const data = {
 CO: 613.882,
@@ -130,6 +125,10 @@ const element =`
 test('request: dashboard page', () => {
   document.body.innerHTML = element;
   require('../build/js/materialize.min.js')
+  fetch.mockResponses([
+		JSON.stringify( {"area_name":"Residential Zone","comercial_name":"Wakanda Awakening","eca_noise_id":2,"id":179,"lat":-12.3578897,"lon":-76.7912213,"main_inca":-2.0,"mode":"Calibration","name":"qH006","qhawax_id":179,"qhawax_type":"AEREAL","state":"OFF"},{"area_name":"Special Protection Zone","comercial_name":"Aereo Prueba","eca_noise_id":1,"id":184,"lat":-11.998472864017,"lon":-76.9984387510529,"main_inca":-1.0,"mode":"Customer","name":"qH058","qhawax_id":184,"qhawax_type":"AEREAL","state":"OFF"}),
+		{status:200}
+	])
   expect(request(HTMLDivElement).toString()).toBe('[object Promise]');
 })
 

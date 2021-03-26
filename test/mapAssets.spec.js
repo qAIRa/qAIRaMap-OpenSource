@@ -9,8 +9,10 @@ import {
 	ECAlimits,//ok
 	incaValues,//ok
 	setPannelData,
+	forEachPannel,
 	setInfowindow,
-	json
+	firstMap,
+	markerZoom
 } from '../src/lib/mapAssets';
 import { viewMap } from '../src/html/freeMap.js';
 import { initialize } from "@googlemaps/jest-mocks";
@@ -172,6 +174,7 @@ test('ECAlimits', () =>{
 	expect(ECAlimits('SO2')).toStrictEqual(250);
 	expect(ECAlimits('PM25')).toStrictEqual(50);
 	expect(ECAlimits('PM10')).toStrictEqual(100);
+	expect(ECAlimits('')).toStrictEqual(undefined);
 });
 
 
@@ -214,7 +217,6 @@ test('drawQhawaxMap', () => {
   })
 
   test('draw charts', async() => {
-	document.body.innerHTML = viewMap;
 	const qhawax_id = 'qH004';
 	const sensor = 'CO';
 	fetch.mockResponses([
@@ -222,13 +224,30 @@ test('drawQhawaxMap', () => {
 		{status:200}
 	])
 	document.body.innerHTML=viewMap;	
+	global.ECAlimits=10000
   expect(drawChart(sensor, qhawax_id)).toStrictEqual(Promise.resolve({}));
   })
   
   test('qairito', () => {
-	document.body.innerHTML = viewMap;
   expect(qairito(50)).toStrictEqual({q:'/img/qairito/qairito_buena.gif',b:'/img/backgrounds/qairito_green.png'});
   expect(qairito(100)).toStrictEqual({q:'/img/qairito/qairito_moderada.gif',b:'/img/backgrounds/qairito_yellow.png'});
   expect(qairito(500)).toStrictEqual({q:'/img/qairito/qairito_mala.gif',b:'/img/backgrounds/qairito_orange.png'});
   expect(qairito(600)).toStrictEqual({q:'/img/qairito/qairito_cuidado.gif',b:'/img/backgrounds/qairito_red.png'});
+  })
+  
+  test('set infowindow', () => {
+	document.body.innerHTML = viewMap;
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:-1}, firstMap).message).toStrictEqual('Wakanda: Module qH006 Off.');
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:0}, firstMap).message).toStrictEqual('Wakanda: Module qH006 waiting for valid data.');
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:1}, firstMap).message).toStrictEqual('Wakanda: Module qH006 waiting for average data.');
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:-2}, firstMap).message).toStrictEqual('Wakanda: Module qH006 in maintenance.');
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:50}, firstMap)).toStrictEqual(undefined);
+  expect(setInfowindow({name:'qH006', comercial_name:'Wakanda', main_inca:''}, firstMap).message).toStrictEqual(' Failed to get data.');
+  })
+
+  test('marker zoom', () => {
+  expect(markerZoom(8)).toStrictEqual(45);
+  expect(markerZoom(12)).toStrictEqual(50);
+  expect(markerZoom(15)).toStrictEqual(70);
+  expect(markerZoom('hi')).toStrictEqual(undefined);
   })

@@ -62,8 +62,55 @@ const resp = {
 
 test('requestQhawaxs', () =>{
   document.body.innerHTML = viewDownload;
+  fetch.mockResponses([
+		JSON.stringify( {
+                    CO_ug_m3: null,
+                    H2S_ug_m3: 613.723,
+                    NO2_ug_m3: null,
+                    O3_ug_m3: null,
+                    PM10: 0,
+                    PM25: 0,
+                    SO2_ug_m3: null,
+                    SPL: 81.757,
+                    UV: 0,
+                    humidity: 72.656,
+                    lat: -12.072736,
+                    lon: -77.0826870000001,
+                    pressure: 1005.406,
+                    temperature: 24.367,
+                    timestamp_zone: "Mon, 04 Jan 2021 15:00:00 GMT"
+                  }),
+		{status:200}
+	])
 	expect(requestQhawaxs(document).toString()).toBe('[object Promise]');
 });
+
+test('requestQhawaxs', () =>{
+  document.body.innerHTML = viewDownload;
+  fetch.mockResponses([
+		JSON.stringify( {
+                    CO_ug_m3: null,
+                    H2S_ug_m3: 613.723,
+                    NO2_ug_m3: null,
+                    O3_ug_m3: null,
+                    PM10: 0,
+                    PM25: 0,
+                    SO2_ug_m3: null,
+                    SPL: 81.757,
+                    UV: 0,
+                    humidity: 72.656,
+                    lat: -12.072736,
+                    lon: -77.0826870000001,
+                    pressure: 1005.406,
+                    temperature: 24.367,
+                    timestamp_zone: "Mon, 04 Jan 2021 15:00:00 GMT"
+                  }),
+		{status:200}
+	])
+	expect(requestDownload(document).toString()).toBe('[object Promise]');
+});
+
+
 // fetch.mockResponseOnce(JSON.stringify({ data: 'calls download data'}))
 // fetch.mockResponseOnce('downloadData', ('qH004','04-01-2021 15:00:00', '04-01-2021 18:00:00') => {
 //   return {
