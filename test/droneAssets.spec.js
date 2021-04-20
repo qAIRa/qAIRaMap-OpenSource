@@ -21,12 +21,16 @@ import { firstMap } from '../src/lib/mapAssets.js';
 import { initialize } from "@googlemaps/jest-mocks";
 import {droneSelection} from '../src/html/freeMapDrone.js'
 import { enableFetchMocks } from 'jest-fetch-mock';
+// import io from 'socket.io';
+
+
 
 enableFetchMocks()
 
 beforeEach(() => {
     initialize();
     fetch.resetMocks()
+    jest.restoreAllMocks();
   })
 
 test('call toast only once', () => {
@@ -121,3 +125,17 @@ test('request drones', () => {
   expect(requestDrones(map, document)).toStrictEqual(Promise.resolve({}));
   })
 
+  // test('takeoff', () => {
+  //   jest.mock('socket.io', () => {
+  //     const socket = {
+  //       on: jest.fn()
+  //     };
+  //     return jest.fn(() => socket);
+  //   });
+  //   const socket = io();
+  //   const drone = { name: 'qH006'}
+  //   expect(socket.on).toBeCalledWith(`${drone.name}_takeoff`);
+  //   const logSpy = jest.spyOn(console, 'log');
+  //   expect(logSpy).toBeCalledWith('do something');
+  // expect(takeoff(drone, document)).toBe('');
+  // })

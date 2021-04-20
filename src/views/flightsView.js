@@ -11,7 +11,7 @@ const options ={
   format: 'dd-mm-yyyy',
 }
 
-const initDatePicker = (element) =>{
+export const initDatePicker = (element) =>{
       options.maxDate = new Date();
       options.onClose = () => {
         selectedParameters.initDate = datePicker[0].value+time_start;
@@ -21,7 +21,7 @@ const initDatePicker = (element) =>{
       M.Datepicker.init(datePicker, options);
 }
 
-const flightRequest = async(init, end, element) => {
+export const flightRequest = async(init, end, element) => {
   const flights = await requestFlightList(init, end);
   const formFlight = element.querySelector('.form-flights');
   if (flights.length===0){
@@ -50,7 +50,7 @@ const flightRequest = async(init, end, element) => {
     };
 };
 
-const flightsView = () => {
+export const flightsView = () => {
   const flightElem = document.createElement('div');
   flightElem.classList.add('row')
   navBarQhawax(flightElem, flightViewElem);
@@ -64,4 +64,3 @@ const flightsView = () => {
   return flightElem;
 };
 
-export { flightsView }

@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "jest --coverage",
 		"test:watch": "jest --watch",
-		"test:silent":"jest --reporters jest-silent-reporter",
+		"test:silent": "jest --reporters jest-silent-reporter",
 		"test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
 		"serve": "webpack-dev-server -p",
 		"webpack": "webpack -d --watch",
@@ -40,8 +40,8 @@
 			"/coverage/"
 		],
 		"globalSetup": "./global-setup.js",
-		"globals":{
-			"io":"globals"
+		"globals": {
+			"io": "globals"
 		}
 	},
 	"repository": {
@@ -55,32 +55,32 @@
 	},
 	"homepage": "https://github.com/qAIRa/qAIRaMap-OpenSource#readme",
 	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@googlemaps/jest-mocks": "0.1.1",
-		"babel-jest": "^26.6.3",
+		"@babel/runtime": "^7.11.2",
+		"@googlemaps/jest-mocks": "0.0.3",
+		"babel-jest": "^26.0.1",
 		"core-util-is": "^1.0.2",
-		"date-fns": "^2.19.0",
-		"jest-silent-reporter": "^0.5.0",
+		"date-fns": "^2.17.0",
+		"jest-silent-reporter": "^0.4.0",
 		"streamsaver": "^2.0.5",
-		"webpack": "^4.46.0",
-		"webpack-cli": "^4.5.0",
-		"webpack-dev-server": "^3.11.2"
+		"webpack": "^4.41.6",
+		"webpack-cli": "^3.3.11",
+		"webpack-dev-server": "^3.11.0"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.13.10",
-		"@babel/core": "^7.13.10",
-		"@babel/plugin-transform-modules-commonjs": "^7.13.8",
-		"@babel/plugin-transform-runtime": "^7.13.10",
-		"@babel/preset-env": "^7.13.12",
+		"@babel/cli": "^7.11.5",
+		"@babel/core": "^7.9.0",
+		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
+		"@babel/plugin-transform-runtime": "^7.11.0",
+		"@babel/preset-env": "^7.11.5",
 		"@babel/register": "^7.11.5",
 		"babel-core": "^6.26.3",
 		"coveralls": "^3.1.0",
-		"eslint": "^7.22.0",
-		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-plugin-import": "^2.22.1",
+		"eslint": "^7.8.1",
+		"eslint-config-airbnb-base": "^14.2.0",
+		"eslint-plugin-import": "^2.22.0",
 		"identity-obj-proxy": "^3.0.0",
-		"jest": "^26.6.3",
-		"jest-cli": "^26.6.3",
+		"jest": "^25.5.4",
+		"jest-cli": "^26.4.2",
 		"jest-fetch-mock": "^3.0.3"
 	}
 }

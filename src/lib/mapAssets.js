@@ -239,7 +239,7 @@ const forEachInfograph = (infoGraph)=>{
 	})
 }
 
-const forEachPannel = (qhawax_inca_list,qhawax) => {
+const forEachPannel = (qhawax_inca_list,qhawax, pannelAll,overMapQ) => {
 	qhawax_inca_list.forEach(qhawax_inca => {
 		if (qhawax.name===qhawax_inca.qhawax_name) {
 			pannelAll.classList.remove('none')
@@ -272,7 +272,7 @@ export const setPannelData = async(qhawax, map) => {
 	overMapQ.classList.remove('none')
 	overMap.classList.add('none')
 	await noParametersRequest('last_gas_inca_data/')
-		.then(qhawax_inca_list => forEachPannel(qhawax_inca_list,qhawax))
+		.then(qhawax_inca_list => forEachPannel(qhawax_inca_list,qhawax,pannelAll,overMapQ))
 		google.maps.event.addListener(map, 'click', () => {
 			pannelAll.setAttribute('class','none')
 			overMap.classList.remove('none')
