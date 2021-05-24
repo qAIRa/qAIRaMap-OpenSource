@@ -1,4 +1,4 @@
-import { requestQhawaxFlight, requestTelemetryFlight } from '../requests/get.js';
+import { requestQhawaxFlight, requestTelemetryFlight, requestQhawaxTrip } from '../requests/get.js';
 import { newMarkerDrone, newPolyline, addLine, removeLine, newCircle, circlesArray, indexedData} from '../lib/droneAssets.js';
 import { toast, newDateLocal } from './helpers.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
@@ -140,6 +140,27 @@ export const downloadDrone = async(flight) => {
    }
 }
 
+export const downloadMobile = async(flight) => {
+  let filename =  `${flight.name+ '-'+ flight.comercial_name}`
+  const data = await requestQhawaxTrip(flight.name, flight.start, flight.end); 
+  if(data.length>0){
+    const csvContent = json2csv(data, csvFields);
+    download(csvContent, filename)
+  }
+   else{
+    toast(`There are no measurements for ${flight.name} on sensor ${flight.sensor}`,'grey darken-1 rounded')
+   }
+}
+export const simulateTrip = (flight,map, element)=>{
+  const downloadBtn = element.querySelector('#dwn-btn');
+  const restartBtn = element.querySelector('#restart-btn');
+
+  restartBtn.addEventListener('click',e=>location.reload())
+  downloadBtn.addEventListener('click',e=>downloadDrone(flight))
+    setTimeout(()=>{
+        toast(`The trip of the qHAWAX mobile ${flight.name} has start`,'orange darken-1 rounded')
+    },2000)
+}
 
 
 export const simulateFlight = (flight,map, element)=>{

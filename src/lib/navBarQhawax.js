@@ -1,11 +1,11 @@
-import { navbar, navbarDrone } from '../html/navBar.js';
+import { navbar, navbarDrone, navbarMobileQ } from '../html/navBar.js';
 
 import { goTo } from './viewController.js';
 
 export const navBarQhawax = (element, display) => {
   const menuNavBar = document.querySelector('header');
 
-  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : navbar;
+  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : (window.location.hash).slice(-7) === 'MobileQ'? navbarMobileQ: navbar;
   element.innerHTML = display;
 
   const dropMenu = document.querySelectorAll('.dropdown-trigger');
@@ -28,6 +28,8 @@ export const navBarQhawax = (element, display) => {
     case 'graphics-menu': case 'graphics-menu-mob': btn.addEventListener('click', () => goTo('graphics')); break;
     // case 'graphics-menu-drone': case 'graphics-menu-mob-drone': btn.addEventListener('click', () => goTo('graphicsDrone')); break;
     case 'flight-menu': case 'flight-menu-mob': btn.addEventListener('click', () => goTo('flightsDrone')); break;
+    case 'trip-menu': case 'trip-menu-mob': btn.addEventListener('click', () => goTo('tripMobileQ')); break;
+    case 'return-menu-mobileQ': case 'return-menu-mob-mobileQ': btn.addEventListener('click', () => goTo('mapMobileQ')); break;
     default:
       break;
     }

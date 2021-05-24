@@ -62,6 +62,30 @@ qAIRa
 </div>
 </div>
 
+
+<div class="card_item hoverable z-depth-5" id="qhawax_mobile_map">
+<div class="card_inner">
+<div class="card_top">
+<img src="img/qhawax_movil.png" alt="qHAWAX" style="width:auto ; height:180px;" />
+</div>
+<div class="card_bottom">
+<div class="card_category">
+Mobile qHAWAX
+</div>
+<div class="card_info">
+<p class="title">Description</p>
+<p>
+Map with mobile qHAWAX modules for monitoring air quality.
+</p>
+</div>
+<div class="card_creator">
+qAIRa
+</div>
+</div>
+</div>
+</div>
+
+
 </div>
 </div>
 

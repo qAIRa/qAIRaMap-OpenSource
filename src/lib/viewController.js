@@ -6,8 +6,12 @@ import { landPage } from '../views/landpageView.js';
 import { viewFreeDrone } from '../views/freeMapDroneView.js';
 import {flightsView} from '../views/flightsView.js';
 import { simulationView} from '../views/simulationDrone.js';
+import { simulationMobileView} from '../views/simulationMobile.js';
+import { viewFreeMobile} from '../views/freeMapMobile.js';
+import {tripMobileView} from '../views/tripMobileView.js';
 
 const flight = JSON.parse(sessionStorage.getItem('flight'));
+const trip = JSON.parse(sessionStorage.getItem('trip'));
 
 const changeView = (router) => {
   const container = document.getElementById('content-page');
@@ -17,6 +21,8 @@ const changeView = (router) => {
     return container.appendChild(viewFreeMap());
   case '#/mapDrone':
     return container.appendChild(viewFreeDrone());
+  case '#/mapMobileQ':
+    return container.appendChild(viewFreeMobile());
   case '#/download':
     return container.appendChild(downloadView());
   case '#/downloadDrone':
@@ -29,6 +35,10 @@ const changeView = (router) => {
     return container.appendChild(flightsView());
   case '#/simulationDrone':
     return container.appendChild(simulationView(flight));
+  case '#/tripMobileQ':
+    return container.appendChild(tripMobileView());
+  case '#/simulationMobileQ':
+    return container.appendChild(simulationMobileView(trip));
   default:
     return container.appendChild(landPage());
   }

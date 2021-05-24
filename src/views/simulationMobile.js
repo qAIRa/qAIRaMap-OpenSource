@@ -1,24 +1,24 @@
 import { navBarQhawax } from '../lib/navBarQhawax.js';
-import { viewDrones } from '../html/freeMapDrone.js';
+import { viewMobileQ } from '../html/freeMapMobileQ.js';
 import {simulationSelection, simulationBtns} from '../html/simulation.js';
 import { firstMap} from '../lib/mapAssets.js';
-import { simulateTrip} from '../lib/simulationAssets.js';
+import { simulateFlight} from '../lib/simulationAssets.js';
 
 
-const simulationView = (trip) => {
+export const simulationMobileView = (flight) => {
+    console.log(flight);
   const mapElem = document.createElement('div');
-  navBarQhawax(mapElem, viewDrones);
+  navBarQhawax(mapElem, viewMobileQ);
 
   const wrapper = mapElem.querySelector('#wrapper_map')
   wrapper.insertAdjacentHTML('afterbegin',simulationBtns)
   wrapper.insertAdjacentHTML('afterbegin',simulationSelection)
 
   const map = firstMap(mapElem,'map')
-  simulateTrip(trip,map, mapElem)
+  simulateFlight(flight,map, mapElem)
 
 
   
   return mapElem;
   };
   
-  export { simulationView }

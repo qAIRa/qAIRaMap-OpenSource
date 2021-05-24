@@ -102,6 +102,15 @@ const duration = (flight)=>{
 	const s= time.seconds!==0?addZero(time.seconds)+'':'00';
 	return h+m+s;
 }
+const durationMobile = (trip)=>{
+	const start = newDate(trip.trip_start)
+	const end = newDate(trip.trip_end)
+	const time = intervalToDuration({start:new Date(start), end:new Date(end)})
+	const h = time.hours!==0?addZero(time.hours)+':':'00:';
+	const m =time.minutes!==0?addZero(time.minutes)+':':'00:';
+	const s= time.seconds!==0?addZero(time.seconds)+'':'00';
+	return h+m+s;
+}
 
 export {
     addZero,
@@ -117,6 +126,7 @@ export {
 	limits,
 	toast,
 	duration, 
+	durationMobile,
 	notNull,
 	newDateLocal
 };

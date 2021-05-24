@@ -122,4 +122,35 @@ const navbarDrone = `
 </ul>
 `;
 
-export {navbar, navbarDrone}
+
+const navbarMobileQ = `
+<div class="navbar-fixed">
+<nav id="nav-menu-bar" style="padding: 0px 10px;">
+<div id="nav-wrapper-menu-bar" class="nav-wrapper">
+<ul id="menu-left-bar" class="left hide-on-med-and-down">
+<li class="menu-btn" id="home-menu"><a >Home</a></li>
+<li class="menu-btn" id="return-menu-mobileQ"><a >Map</a></li>
+</ul> 
+<a href="https://www.qairadrones.com" class="brand-logo center"id="brand-logo-menu-bar">
+<img src="/img/logo-white.png" alt="logo qAIRa"id="logo-menu-qAIRa"style="max-width: 4.5em; max-height: 2em"/>
+</a>
+<ul id="menu-list-bar" class="right hide-on-med-and-down">
+<!--<li class="menu-btn" id="download-menu-drone"><a>Download</a></li>-->
+<li class="menu-btn" id="trip-menu"><a>All Trips</a></li>
+<!--<li class="menu-btn" id="graphics-menu-drone"><a>Graphics</a></li>-->
+</ul>
+<a href="#" id="menu-trigger" class="sidenav-trigger" data-target="mobile-nav" ><i class="material-icons">menu</i></a>
+</div>
+</nav>
+</div>
+
+<!-- Mobile menu -->
+<ul id="mobile-nav" class="sidenav">
+<li class="menu-btn" id="home-menu-mobile"><a>Home</a></li>
+<li class="menu-btn" id="return-menu-mob-mobileQ"><a>Map</a></li>
+<!--<li class="menu-btn" id="download-mob-menu-drone"><a>Download</a></li>-->
+<li class="menu-btn" id="trip-menu-mob"><a>All Trips</a></li>
+<!--<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>-->
+</ul>
+`;
+export {navbar, navbarDrone, navbarMobileQ}
