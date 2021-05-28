@@ -2,7 +2,7 @@ import { requestQhawaxFlight, requestTelemetryFlight, requestQhawaxTrip } from '
 import { newMarkerDrone, newPolyline, addLine, removeLine, newCircle, circlesArray, indexedData} from '../lib/droneAssets.js';
 import { toast, newDateLocal } from './helpers.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
-import { infoWindowT} from './infowindow.js';
+import { infoWindowM} from './infowindow.js';
 import { intervalToDuration } from 'date-fns';
 let flagMarker = false
 let flagToast = false
@@ -87,7 +87,7 @@ export const drawTelemetry = async(flight, map, element)=> {
     const polyline = newPolyline(flightPlanCoordinates)
     map.markers[0].setPosition(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
     addLine(polyline,map)
-    map.infowindows[0].setContent(infoWindowT(t,flight,timer))
+    map.infowindows[0].setContent(infoWindowM(t,flight,timer))
     map.infowindows[0].open(map, map.markers[0]);
     polylinesArray.push(polyline)
     bounds.extend(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))

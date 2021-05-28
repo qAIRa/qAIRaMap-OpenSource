@@ -32,10 +32,9 @@ export const flightRequest = async(init, end, element) => {
       flights.forEach(f => element.innerHTML += card(f));
         
       const newSearchBtn =  element.querySelector('#new-search-btn')
-      newSearchBtn.addEventListener('click', e=> goTo('flightsDrone'))
+      newSearchBtn.addEventListener('click', e=> goTo('tripMobileQ'))
       const simulationBtnArray= element.querySelectorAll('.simulation-btn')
       simulationBtnArray.forEach(btn =>{
-        console.log(btn);
         btn.addEventListener('click',e=>{
           sessionStorage.setItem('trip',JSON.stringify({
             'name': btn.id,

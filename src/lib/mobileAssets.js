@@ -1,9 +1,45 @@
-import { noParametersRequest, lastStartTrip } from '../requests/get.js';
+import { noParametersRequest, lastStartTrip, getInTripSensor } from '../requests/get.js';
 import {socket} from '../index.js';
 import { toast } from '../lib/helpers.js';
-import { addLine, removeLine, newPolyline, drawCirclesPollutant} from './droneAssets.js';
+import { addLine, removeLine, newPolyline, activateDrawBtn, newCircle} from './droneAssets.js';
+import { intervalToDuration } from 'date-fns';
+import {infoWindowM} from '../lib/infowindow.js';
 
+let latlngLine = {};
+let circlesArray = [];
+let flag = false;
 
+const callSocketSensors = (params, map) =>  {
+  
+  socket.on(`${params.name}_${params.sensor}_valid`, async data => {
+    await noParametersRequest('mobile_log_info_during_trip')
+      .then(e=>e.forEach(q_mobile=>{
+        if (params.sensor===data.sensor && q_mobile.name===params.name) return newCircle(data,map)
+        
+      }))
+      .catch(e=>null)
+    
+  })
+  
+}
+
+const drawCirclesPollutant = async(params,map)=> {
+  const data = await getInTripSensor(params)
+ 
+  circlesArray.forEach(c=>removeLine(c))
+ if(data.length>0){
+   const center = data.reduce((acc,el,i)=>({
+     ...acc,
+     [i]:{'center':{'lat':el.lat,'lng':el.lon},[params.sensor]:el.pollutant,'sensor':params.sensor}
+    }),[])
+    Object.values(center).forEach(c=>newCircle(c,map))
+   callSocketSensors(params, map)
+ }
+  else{
+   toast(`There are no measurements for ${params.name} on sensor ${params.sensor}`,'grey darken-1 rounded')
+  }
+ 
+ }
 export const newMarkerMobile = (q_mobile,map)=>new google.maps.Marker({
     position: JSON.parse(q_mobile.position),
     map: map,
@@ -16,8 +52,9 @@ export const newMarkerMobile = (q_mobile,map)=>new google.maps.Marker({
 
 export const createOption = async (selection)=>{
   selection.innerHTML='<option value="" disabled selected>qHAWAX Mobile</option>'
-  await noParametersRequest('measurements_by_pollutant_during_trip')
+  await noParametersRequest('mobile_log_info_during_trip')
   .then(e=>e.forEach(q_mobile=>{
+ 
     const option = document.createElement('option');
     option.setAttribute('value', q_mobile.name);
     option.innerText =	q_mobile.name+' :'+q_mobile.comercial_name ;
@@ -29,16 +66,17 @@ export const createOption = async (selection)=>{
 export const startTrip = (q_mobile, selection)=>{
 
   socket.on(`${q_mobile.name}_startTrip`, data => {
+    
     toast(`${q_mobile.name}: The Mobile qHAWAX ${q_mobile.comercial_name} started to record valid data.`,'orange darken-1 rounded');
     createOption(selection)
   })
 
 };
 
-export const finishTrip = (drone, selection)=>{
+export const finishTrip = (q_mobile, selection)=>{
 
-  socket.on(`${drone.name}_finishTrip`, data => {
-    toast(`${drone.name}: The Andean Drone ${drone.comercial_name} has landed now.`,'white-text blue darken-1 rounded');
+  socket.on(`${q_mobile.name}_finishTrip`, data => {
+    toast(`${q_mobile.name}: The Andean Drone ${q_mobile.comercial_name} has landed now.`,'white-text blue darken-1 rounded');
     circlesArray.forEach(c=>removeLine(c))
     createOption(selection)
   })
@@ -53,24 +91,26 @@ export const callSocketTrip = (q_mobile, map, selection) => {
   const marker=map.markers.find(el=>el.id===q_mobile.name+'_marker')
   const infowindow = map.infowindows.find(el=>el.id===q_mobile.name+'_infowindow')
   // const bounds = new google.maps.LatLngBounds();
-    
 		socket.on(`${q_mobile.name}_mobile`, async data => {
+     
       const start = await lastStartTrip(q_mobile.name)
-      const timer=intervalToDuration({start:new Date(typeof start==='string'?new Date():start.start_flight),end:new Date()})
+      
+      const timer=intervalToDuration({start:new Date(typeof start==='string'?new Date():start.start_trip),end:new Date()})
       latlngLine = {
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lon),
       };
-            await noParametersRequest('measurements_by_pollutant_during_trip')
+            await noParametersRequest('mobile_log_info_during_trip')
             .then(e=>e.forEach(q_mobile=>{
+     
               if (data.ID===q_mobile.name) {
-                console.log(data.ID,data.lat, data.lon);
+                
                 flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
                 const polyline = newPolyline(flightPlanCoordinates)
               
                 addLine(polyline,map)
                 polylinesArray.push(polyline)
-                console.log(polylinesArray);
+               
               }
             }))
             .catch(e=>null)
@@ -80,11 +120,12 @@ export const callSocketTrip = (q_mobile, map, selection) => {
         // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
         // map.fitBounds(bounds);
         socket.on(`${q_mobile.name}_finishTrip`, data => {
-          console.log(data);//condition with landing data by drone????
+         
+   
           polylinesArray.forEach(p=>{
             removeLine(p);
             polylinesArray = polylinesArray.filter(item => item !== p);
-            console.log('polylinesArray',polylinesArray);
+            
             
             
           })
@@ -115,6 +156,7 @@ export const selectMobileTrip = async(element, map) =>{
     flag = false;
     drawCirclesPollutant(params,map)
     circlesArray.forEach(c=>removeLine(c)) 
+  
   })
 
 }

@@ -130,4 +130,14 @@ export const getInFlightSensor = async(data)=>{
   }
 }
 
+export const getInTripSensor = async(data)=>{
+  try{
+    const response = await fetch(`${APISource}measurements_by_pollutant_during_trip/?name=${data.name}&pollutant=${data.sensor}`)
+    if(response.status===500)return [];
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
+}
+
 

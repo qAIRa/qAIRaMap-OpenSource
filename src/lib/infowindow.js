@@ -33,26 +33,30 @@ export const infoWindowM = (data, q_mobile, timer)=>`
 <caption>${q_mobile.name}: ${q_mobile.comercial_name}</caption>
 <thead>
   <tr>
-    <th class="tg-wa1i">Height</th>
-    <th class="tg-wa1i">Distance</th>
+    <th class="tg-wa1i">CO<br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">CO<sub>2</sub><br>(ppm</sup>)</th>
+    <th class="tg-wa1i">NO<sub>2</sub><br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">O<sub>3</sub><br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">H<sub>2</sub>S<br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">SO<sub>2</sub><br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">PM<sub>2,5</sub><br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">PM<sub>10</sub><br>(&micro;g/m<sup>3</sup>)</th>
+    <th class="tg-wa1i">VOC<br>(&micro;g/m<sup>3</sup>)</th>
     <th class="tg-wa1i">Time min</th>
-    <th class="tg-wa1i">Speed</th>
-    <th class="tg-wa1i">Voltage</th>
-    <th class="tg-wa1i">Current</th>
-    <th class="tg-wa1i">GPS fix type</th>
-    <th class="tg-wa1i">Satellites</th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td class="tg-6k50">${data.alt}</td>
-    <td class="tg-6k50">${data.dist_home}</td>
+    <td class="tg-6k50">${data.CO_ug_m3}</td>
+    <td class="tg-6k50">${data.CO2}</td>
+    <td class="tg-6k50">${data.NO2_ug_m3}</td>
+    <td class="tg-6k50">${data.O3_ug_m3}</td>
+    <td class="tg-6k50">${data.H2S_ug_m3}</td>
+    <td class="tg-6k50">${data.SO2_ug_m3}</td>
+    <td class="tg-6k50">${data.PM25}</td>
+    <td class="tg-6k50">${data.PM10}</td>
+    <td class="tg-6k50">${data.VOC}</td>
     <td class="tg-6k50">${timer.minutes}:${timer.seconds}</td>
-    <td class="tg-6k50">${data.airspeed}</td>
-    <td class="tg-6k50">${data.voltage}</td>
-    <td class="tg-6k50">${data.current}</td>
-    <td class="tg-6k50">${data.fix_type}</td>
-    <td class="tg-6k50">${data.num_gps}</td>
   </tr>
 </tbody>
 </table>

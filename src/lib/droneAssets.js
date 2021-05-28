@@ -171,13 +171,13 @@ export const callSocketFlight = (drone, map, selection) => {
             await noParametersRequest('flight_log_info_during_flight')
             .then(e=>e.forEach(drone=>{
               if (data.ID===drone.name) {
-                console.log(data.ID,data.lat, data.lon);
+                // console.log(data.ID,data.lat, data.lon);
                 flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
                 const polyline = newPolyline(flightPlanCoordinates)
               
                 addLine(polyline,map)
                 polylinesArray.push(polyline)
-                console.log(polylinesArray);
+                // console.log(polylinesArray);
               }
             }))
             .catch(e=>null)
@@ -187,11 +187,11 @@ export const callSocketFlight = (drone, map, selection) => {
         // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
         // map.fitBounds(bounds);
         socket.on(`${drone.name}_landing`, data => {
-          console.log(data);//condition with landing data by drone????
+          // console.log(data);//condition with landing data by drone????
           polylinesArray.forEach(p=>{
             removeLine(p);
             polylinesArray = polylinesArray.filter(item => item !== p);
-            console.log('polylinesArray',polylinesArray);
+            // console.log('polylinesArray',polylinesArray);
             
             
           })
