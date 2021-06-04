@@ -467,6 +467,11 @@ td{
 	table-layout: fixed;
 	font-size: small;
 }
+.info-mobile{
+	width: 390px;
+	table-layout: fixed;
+	font-size: small;
+}
 
 .inca-title {
 	font-size: large;
@@ -847,6 +852,10 @@ i.icon-green {
 	}
 	.pannel-inca {
 		margin: 6px 0px 0px 3px;
+	}
+
+	.info-mobile{
+		width: 260px;
 	}
 	#graphicValues{
 		padding: 0;

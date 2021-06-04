@@ -1,13 +1,27 @@
 import { noParametersRequest, lastStartTrip, getInTripSensor } from '../requests/get.js';
 import {socket} from '../index.js';
 import { toast } from '../lib/helpers.js';
-import { addLine, removeLine, newPolyline, activateDrawBtn, newCircle} from './droneAssets.js';
+import { addLine, removeLine, newPolyline, activateDrawBtn, circleColor} from './droneAssets.js';
 import { intervalToDuration } from 'date-fns';
 import {infoWindowM} from '../lib/infowindow.js';
 
 let latlngLine = {};
 let circlesArray = [];
 let flag = false;
+
+const newCircle = (center,map)=> {
+  const pollutantCircle = new google.maps.Circle({
+    strokeColor: circleColor(center),
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: circleColor(center),
+    fillOpacity: 0.35,
+    map,
+    center: center.center,
+    radius: 20,
+  });
+circlesArray.push(pollutantCircle)
+}
 
 const callSocketSensors = (params, map) =>  {
   
@@ -36,7 +50,7 @@ const drawCirclesPollutant = async(params,map)=> {
    callSocketSensors(params, map)
  }
   else{
-   toast(`There are no measurements for ${params.name} on sensor ${params.sensor}`,'grey darken-1 rounded')
+   toast(`No hay mediciones para ${params.name} en el sensor ${params.sensor}`,'grey darken-1 rounded')
   }
  
  }
@@ -51,7 +65,7 @@ export const newMarkerMobile = (q_mobile,map)=>new google.maps.Marker({
   });
 
 export const createOption = async (selection)=>{
-  selection.innerHTML='<option value="" disabled selected>qHAWAX Mobile</option>'
+  selection.innerHTML='<option value="" disabled selected>qHAWAX Móvil</option>'
   await noParametersRequest('mobile_log_info_during_trip')
   .then(e=>e.forEach(q_mobile=>{
  
@@ -67,7 +81,7 @@ export const startTrip = (q_mobile, selection)=>{
 
   socket.on(`${q_mobile.name}_startTrip`, data => {
     
-    toast(`${q_mobile.name}: The Mobile qHAWAX ${q_mobile.comercial_name} started to record valid data.`,'orange darken-1 rounded');
+    toast(`${q_mobile.name}: El qHAWAX Móvil ${q_mobile.comercial_name} ha empezado a registrar data válida.`,'orange darken-1 rounded');
     createOption(selection)
   })
 
@@ -166,7 +180,7 @@ export const selectMobileTrip = async(element, map) =>{
 export const requestMobileQ = async (map, element) => {
     const mobile_list = await noParametersRequest('AllMobileQhawaxsInMap/');
     if (mobile_list.length===0) {
-        toast('No mobile qHAWAX available','grey darken-1 rounded')
+        toast('No hay qHAWAX Móviles disponibles','grey darken-1 rounded')
     } else {
         mobile_list.forEach((q_mobile) => {
               q_mobile.position=JSON.stringify({'lat':parseFloat(q_mobile.lat),'lng':parseFloat(q_mobile.lon)});
@@ -178,11 +192,22 @@ export const requestMobileQ = async (map, element) => {
               const bounds = new google.maps.LatLngBounds();
               map.markers.forEach(m=> bounds.extend(m.getPosition()))
               map.fitBounds(bounds)
+            
+              // if(q_mobile.name==='qH022'){
+              //   const marker=map.markers.find(el=>el.id===q_mobile.name+'_marker')
+              //   const infowindow = map.infowindows.find(el=>el.id===q_mobile.name+'_infowindow')
+                
+              //   infowindow.setContent(infoWindowM({'CO_ug_m3':1,'CO2':1,'NO2_ug_m3':1},q_mobile,{'minutes':2,'seconds':2}))
+              //   infowindow.open(map, marker);
+              //   console.log(marker, infowindow);
+              // }
+
               startTrip(q_mobile, element.querySelector('#selectDrone'))
               callSocketTrip(q_mobile,map, element.querySelector('#selectDrone'))
               ;})
               selectMobileTrip(element,map)
-              
+             
     }
    
   };
+  

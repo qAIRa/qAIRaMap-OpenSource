@@ -5,7 +5,7 @@ export const viewMobileQ=`
 <div class="animate__animated animate__swing none " id="over_map_qairito"></div>
 <div class="animate__animated animate__swing " id="over_map_drones_colors">
 <table class="centered">
-<thead><th class="inca-color1">Low</th><th class="inca-color1">Moderate</th><th class="inca-color1">High</th><th class="inca-color1">Very High</th></thead>
+<thead><th class="inca-color1">Bajo</th><th class="inca-color1">Moderado</th><th class="inca-color1">Alto</th><th class="inca-color1">Muy Alto</th></thead>
 <tbody><tr>
 <td bgcolor="#009966" class="inca-color"></td>
 <td bgcolor="#ffde33" class="inca-color"></td>
@@ -21,7 +21,7 @@ export const mobileSelection =`
 <div class="animate__animated animate__zoomIn z-depth-5 over_map_droneselection row">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectDrone">
-<option value="" disabled selected>qHAWAX Mobile</option>
+<option value="" disabled selected>qHAWAX Móvil</option>
 </select>
 <select class="browser-default col s6" name="" id="selectSensor">
 <option value="" disabled selected>Sensor</option>
@@ -35,7 +35,7 @@ export const mobileSelection =`
 <option value="PM10">PM<sub>10</sub><sub>(ug/m3)</sub></option>
 <option value="VOC">VOC<sub>(ug/m3)</sub></option>
 </select>
-<button id="draw-btn" class="btn waves-effect waves-light col s4 offset-s4 disabled" >Draw
+<button id="draw-btn" class="btn waves-effect waves-light col s4 offset-s4 disabled" >Dibujar
 <i class="material-icons right">send</i>
 </button>
 </div>

@@ -4,15 +4,15 @@ import { format } from 'date-fns';
 
 const tripViewElem = `
 <form class="form-flights container">
-<h5 class="center-align">Please select a period to list the trips</h5><br>
+<h5 class="center-align">Por favor seleccione un periodo para listar los viajes</h5><br>
 <div class="container">
 <div class="row center-align">
 <div class="col s6">
-<label for="initDate">Initial Date</label>
+<label for="initDate">Fecha inicial</label>
 <input type="text" class="datepicker center-align" name="initDate">
 </div>
 <div class="col s6">
-<label for="endDate">Final Date</label>
+<label for="endDate">Fecha final</label>
 <input type="text" class="datepicker center-align" name="endDate">
 </div>
 </div>
@@ -20,7 +20,7 @@ const tripViewElem = `
 <div class="container">
 <div class="row">
 <div class="center-align">
-<button id="submit-btn" class="btn waves-effect waves-light" >Show trips
+<button id="submit-btn" class="btn waves-effect waves-light" >Mostrar Viajes
 <i class="material-icons right">send</i>
 </button>
 </div>
@@ -41,11 +41,11 @@ const card = (trip)=>`
 <caption>${trip.details}</caption>
 <caption>${format(newDateLocal(trip.trip_start),'dd/MM/yyyy')}</caption>
 <tr>
-<td>Start time</td>
+<td>Inicio</td>
 <td>${format(newDateLocal(trip.trip_start),'HH:mm:ss')}</td>
 </tr>
 <tr>
-<td>End time</td>
+<td>Término</td>
 <td>${format(newDateLocal(trip.trip_end),'HH:mm:ss')}</td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@ data-end="${trip.trip_end}"
 data-comercialname="${trip.comercial_name}"
 data-lat="${trip.last_latitude_position}"
 data-lng="${trip.last_longitude_position}"
->SIMULATION
+>SIMULAR
 <i class="material-icons right">send</i>
 </button>
 </div>

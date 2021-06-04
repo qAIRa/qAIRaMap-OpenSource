@@ -148,7 +148,7 @@ export const downloadMobile = async(flight) => {
     download(csvContent, filename)
   }
    else{
-    toast(`There are no measurements for ${flight.name} on sensor ${flight.sensor}`,'grey darken-1 rounded')
+    toast(`No hay medidas para ${flight.name} en el sensor ${flight.sensor}`,'grey darken-1 rounded')
    }
 }
 export const simulateTrip = (flight,map, element)=>{
@@ -158,7 +158,7 @@ export const simulateTrip = (flight,map, element)=>{
   restartBtn.addEventListener('click',e=>location.reload())
   downloadBtn.addEventListener('click',e=>downloadDrone(flight))
     setTimeout(()=>{
-        toast(`The trip of the qHAWAX mobile ${flight.name} has start`,'orange darken-1 rounded')
+        toast(`El viaje del qHAWAX Móvil ${flight.name} ha empezado.`,'orange darken-1 rounded')
     },2000)
 }
 

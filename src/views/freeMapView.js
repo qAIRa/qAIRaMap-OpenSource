@@ -4,12 +4,17 @@ import { viewMap } from '../html/freeMap.js';
 import { noParametersRequest} from '../requests/get.js';
 import { toast } from '../lib/helpers.js';
 
-const request = async (map) => {
+const request = async (map, mapElem) => {
  await noParametersRequest('AllQhawaxInMap/')
- .then(q=>q.forEach((qhawax) => {
-  if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
-    drawQhawaxMap(map, qhawax);
-}))
+ .then(q=>
+  {if(q===[]){
+      q.forEach((qhawax) => {
+        if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
+          drawQhawaxMap(map, qhawax);
+      })
+  }else{
+  return toast('We are sorry. There are no devices installed at the moment','orange darken-1 rounded')
+ }})
 };
 
 const viewFreeMap = () => {
@@ -21,7 +26,7 @@ const viewFreeMap = () => {
 
   const map = firstMap(mapElem, 'map')
 
-  request(map);
+  request(map, mapElem);
 
   mapElem.querySelector('#over_map').addEventListener('mouseenter',(e)=>{
 		M.Toast.dismissAll();

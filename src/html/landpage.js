@@ -70,12 +70,12 @@ qAIRa
 </div>
 <div class="card_bottom">
 <div class="card_category">
-Mobile qHAWAX
+qHAWAX Móvil
 </div>
 <div class="card_info">
 <p class="title">Description</p>
 <p>
-Map with mobile qHAWAX modules for monitoring air quality.
+Mapa con qHAWAX Móviles para monitorear la calidad del aire.
 </p>
 </div>
 <div class="card_creator">
