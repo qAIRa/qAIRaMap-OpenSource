@@ -90,7 +90,7 @@ export const startTrip = (q_mobile, selection)=>{
 export const finishTrip = (q_mobile, selection)=>{
 
   socket.on(`${q_mobile.name}_finishTrip`, data => {
-    toast(`${q_mobile.name}: The Andean Drone ${q_mobile.comercial_name} has landed now.`,'white-text blue darken-1 rounded');
+    toast(`${q_mobile.name}: El qHAWAX Móvil ${q_mobile.comercial_name} terminó su viaje.`,'white-text blue darken-1 rounded');
     circlesArray.forEach(c=>removeLine(c))
     createOption(selection)
   })
