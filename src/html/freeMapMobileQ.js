@@ -26,14 +26,12 @@ export const mobileSelection =`
 <select class="browser-default col s6" name="" id="selectSensor">
 <option value="" disabled selected>Sensor</option>
 <option value="CO">CO<sub>(ug/m3)</sub></option>
-<option value="CO2">CO<sub>2</sub><sub>(ppm)</sub></option>
 <option value="NO2">NO<sub>2</sub><sub>(ug/m3)</sub></option>
 <option value="O3">O<sub>3</sub><sub>(ug/m3)</sub></option>
 <option value="H2S">H<sub>2</sub>S<sub>(ug/m3)</sub></option>
 <option value="SO2">SO<sub>2</sub><sub>(ug/m3)</sub></option>
 <option value="PM25">PM<sub>2,5</sub><sub>(ug/m3)</sub></option>
 <option value="PM10">PM<sub>10</sub><sub>(ug/m3)</sub></option>
-<option value="VOC">VOC<sub>(ug/m3)</sub></option>
 </select>
 <button id="draw-btn" class="btn waves-effect waves-light col s4 offset-s4 disabled" >Dibujar
 <i class="material-icons right">send</i>
