@@ -25,7 +25,7 @@ export const flightRequest = async(init, end, element) => {
   const flights = await requestTripList(init, end);
   const formFlight = element.querySelector('.form-flights');
   if (flights.length===0){
-    toast(`There are no trips in the period selected.`,'green darken-1 rounded')
+    toast(`No hay viajes en el periodo seleccionado.`,'green darken-1 rounded')
   }else{
       formFlight.classList.add('none')
       element.innerHTML += newSearch_btn;
