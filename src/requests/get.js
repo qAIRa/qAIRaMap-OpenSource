@@ -86,7 +86,7 @@ export const requestQhawaxFlight = async(name, init, end)=>{
 
 export const requestQhawaxTrip = async(name, init, end)=>{
   try{
-    const response = await fetch(`${APISource}processed_measurements_mobile_qhawax?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+    const response = await fetch(`${APISource}valid_processed_measurements_mobile_qhawax?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
     return await response.json();
   }catch(e){
     handleError(e)
