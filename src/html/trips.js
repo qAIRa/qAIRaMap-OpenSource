@@ -39,7 +39,7 @@ const card = (trip)=>`
 <div class="card-content">
 <table>
 <caption>${trip.details}</caption>
-<caption>${format(newDateLocal(trip.trip_start),'dd/MM/yyyy')}</caption>
+<caption>${trip.trip_start.slice(0,10).replaceAll('-','/')}</caption>
 <tr>
 <td>Inicio</td>
 <td>${format(newDateLocal(trip.trip_start),'HH:mm:ss')}</td>

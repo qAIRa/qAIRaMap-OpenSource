@@ -27,12 +27,12 @@ export const limitColor = (value,low,moderate,high) => {
 export const circleColor = (params) => {
   switch (params.sensor) {
     case 'CO':return limitColor(params['CO'],50,100,150)
-    case 'O3':return limitColor(params['O3'],50,100,150)
-    case 'SO2':return limitColor(params['SO2'],50,100,150)
-    case 'H2S':return limitColor(params['H2S'],50,100,150)
+    case 'O3':return limitColor(params['O3'],50,100,175)
+    case 'SO2':return limitColor(params['SO2'],50,100,625)
+    case 'H2S':return limitColor(params['H2S'],50,100,1000)
     case 'NO2':return limitColor(params['NO2'],50,100,150)
-    case 'PM10':return limitColor(params['PM10'],50,100,150)
-    case 'PM25':return limitColor(params['PM25'],50,100,150)
+    case 'PM10':return limitColor(params['PM10'],50,100,167)
+    case 'PM25':return limitColor(params['PM25'],50,100,500)
     default: return'#FFFFFF'
   }
 }
