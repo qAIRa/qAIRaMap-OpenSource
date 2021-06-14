@@ -336,6 +336,17 @@ main {
     width: max-content;
     max-width: 60%;
 }
+#over_map_mobile_colors{
+	position: absolute;
+    top: 0.5em;
+    right: 4em;
+    font-family: inherit;
+    background-color: rgb(255, 255, 255, 0.6);
+    border: 1px solid #999;
+    text-align: center;
+    width: max-content;
+    max-width: 30%;
+}
 
 #over_map_qairito {
 	position: absolute;
@@ -477,12 +488,25 @@ td{
 	font-size: large;
 	margin:10px;
 }
+.table-inca-color-mob{
+	table-layout: fixed;
+}
 .inca-color {
     height: 0.5em;
 	padding: 0;
 	border-radius: 0;
 }
+.inca-color-mob {
+    height: 1.5em;
+	padding: 0;
+	border-radius: 0;
+}
 .inca-color1 {
+    margin: 0;
+	padding: 0.1em;
+	font-weight: 100;
+}
+.inca-color1-mob {
     margin: 0;
 	padding: 0.1em;
 	font-weight: 100;
@@ -829,6 +853,9 @@ i.icon-green {
 	.inca-color1 {
 		font-size: x-small;
 	}
+	.inca-color1-mob {
+		font-size: x-small;
+	}
 	.inca-title {
 		font-size: small;
 		margin: 6px;
@@ -842,6 +869,11 @@ i.icon-green {
 	#over_map_drones_colors{
 		top:4em;
 		left:0.7em;
+	}
+	#over_map_mobile_colors{
+		top:4em;
+		left:0.7em;
+    	max-width: 50%;
 	}
 	/* #over_map_drones{
 		width: 332px;

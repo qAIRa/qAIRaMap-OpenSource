@@ -3,14 +3,14 @@ export const viewMobileQ=`
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
 <div class="animate__animated animate__swing none " id="over_map_qairito"></div>
-<div class="animate__animated animate__swing " id="over_map_drones_colors">
-<table class="centered">
-<thead><th class="inca-color1">Bajo</th><th class="inca-color1">Moderado</th><th class="inca-color1">Alto</th><th class="inca-color1">Muy Alto</th></thead>
+<div class="animate__animated animate__swing " id="over_map_mobile_colors">
+<table class="centered table-inca-color-mob">
+<thead><th class="inca-color1-mob">Bajo</th><th class="inca-color1-mob">Moderado</th><th class="inca-color1-mob">Alto</th><th class="inca-color1-mob">Muy Alto</th></thead>
 <tbody><tr>
-<td bgcolor="#009966" class="inca-color"></td>
-<td bgcolor="#ffde33" class="inca-color"></td>
-<td bgcolor="#ff9933" class="inca-color"></td>
-<td bgcolor="#cc0033" class="inca-color"></td></tr>
+<td bgcolor="#009966" class="inca-color-mob"></td>
+<td bgcolor="#ffde33" class="inca-color-mob"></td>
+<td bgcolor="#ff9933" class="inca-color-mob"></td>
+<td bgcolor="#cc0033" class="inca-color-mob"></td></tr>
 </tbody>
 </table>
 </div>
