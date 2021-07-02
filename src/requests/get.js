@@ -84,9 +84,18 @@ export const requestQhawaxFlight = async(name, init, end)=>{
   }
 }
 
-export const requestQhawaxTrip = async(name, init, end)=>{
+// export const requestQhawaxTrip = async(name, init, end)=>{
+//   try{
+//     const response = await fetch(`${APISource}valid_processed_measurements_mobile_qhawax?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+//     return await response.json();
+//   }catch(e){
+//     handleError(e)
+//   }
+// }
+
+export const requestQhawaxTrip = async(name, turn, trip_id)=>{
   try{
-    const response = await fetch(`${APISource}valid_processed_measurements_mobile_qhawax?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)
+    const response = await fetch(`${APISource}mobile_log_info_by_qhawax_name_turn_and_id?name=${name}&turn=${turn}&id=${trip_id}`)
     return await response.json();
   }catch(e){
     handleError(e)

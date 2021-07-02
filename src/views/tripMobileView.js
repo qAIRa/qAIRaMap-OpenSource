@@ -30,18 +30,37 @@ export const flightRequest = async(init, end, element) => {
       formFlight.classList.add('none')
       element.innerHTML += newSearch_btn;
       flights.forEach(f => element.innerHTML += card(f));
-        
+
       const newSearchBtn =  element.querySelector('#new-search-btn')
       newSearchBtn.addEventListener('click', e=> goTo('tripMobileQ'))
       const simulationBtnArray= element.querySelectorAll('.simulation-btn')
+      const turnSelectBtnArray= element.querySelectorAll('.select-turn')
+
+      turnSelectBtnArray.forEach(sel =>{
+        sel.addEventListener('change',e =>{
+          simulationBtnArray.forEach(btn =>{
+            if(Number(btn.id.split('_').pop())===Number(sel.id)){
+              btn.dataset.turn = e.target.value
+            }
+             if (typeof btn.dataset.turn === 'string') {
+               btn.classList.remove('disabled')
+             } else {
+              btn.classList.add('disabled')
+             }
+          })
+        })
+      })
+
       simulationBtnArray.forEach(btn =>{
         btn.addEventListener('click',e=>{
           sessionStorage.setItem('trip',JSON.stringify({
-            'name': btn.id,
+            'name': btn.id.split("_")[0],
             'comercial_name':btn.dataset.comercialname,
             'start': btn.dataset.start,
             'end': btn.dataset.end,
-            'position':JSON.stringify({'lat':parseFloat(btn.dataset.lat),'lng':parseFloat(btn.dataset.lng)})
+            'position':JSON.stringify({'lat':parseFloat(btn.dataset.lat),'lng':parseFloat(btn.dataset.lng)}),
+            'trip_id':btn.dataset.tripid,
+            'turn': btn.dataset.turn
           }));
           goTo('simulationMobileQ')
 

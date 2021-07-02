@@ -53,15 +53,26 @@ const card = (trip)=>`
 <td>${durationMobile(trip)}</td>
 </tr>
 </table>
+<div class="input-field col s12">
+<select class="browser-default select-turn" id="${trip.trip_id}">
+<option value="" disabled selected>Escoja el turno</option>
+<option value="1">Turno 8am a 10am</option>
+<option value="2">Turno 10am a 12pm</option>
+<option value="3">Turno 14pm a 16pm</option>
+<option value="4">Turno 16pm a 18pm</option>
+</select>
 </div>
+</div>
+
 <div class="card-action">
 <div class="center-align">
-<button id="${trip.qhawax_name}" class="btn waves-effect waves-light simulation-btn"
+<button id="${trip.qhawax_name}_${trip.trip_id}" class="btn waves-effect waves-light simulation-btn disabled"
 data-start="${trip.trip_start}"
 data-end="${trip.trip_end}"
 data-comercialname="${trip.comercial_name}"
 data-lat="${trip.last_latitude_position}"
 data-lng="${trip.last_longitude_position}"
+data-tripid="${trip.trip_id}"
 >SIMULAR
 <i class="material-icons right">send</i>
 </button>

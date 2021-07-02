@@ -5,7 +5,7 @@ import { firstMap} from '../lib/mapAssets.js';
 import { simulateTrip} from '../lib/simulationMobileAssets.js';
 
 
-export const simulationMobileView = (flight) => {
+export const simulationMobileView = (trip) => {
   const mapElem = document.createElement('div');
   navBarQhawax(mapElem, viewMobileQ);
 
@@ -14,7 +14,7 @@ export const simulationMobileView = (flight) => {
   wrapper.insertAdjacentHTML('afterbegin',simulationSelectionMobile)
 
   const map = firstMap(mapElem,'map')
-  simulateTrip(flight,map, mapElem)
+  simulateTrip(trip,map, mapElem)
 
   return mapElem;
   };

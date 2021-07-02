@@ -12,24 +12,17 @@ let flagMarker = false
 let polylinesArray = [];
 let circlesArray = [];
 const csvFields = [
-    'CO (ppm)',
     'CO (ug/m3)',
-    'H2S (ppm)',
+    'CO2 (ppm)',
     'H2S (ug/m3)',
-    'Temperatura Interna (C)',
-    'NO2 (ppm)',
     'NO2 (ug/m3)',
-    'O3 (ppm)',
     'O3 (ug/m3)',
     'PM10 (ug/m3)',
     'PM2.5 (ug/m3)',
-    'SO2 (ppm)',
     'SO2 (ug/m3)',
-    'Humedad (%)',
+    'VOC (ug/m3)',
     'Latitud',
     'Longitud',
-    'Presión (Pa)',
-    'Temperatura (C)',
     'Fecha',
   ];
 
@@ -73,7 +66,7 @@ export const callOnceMarker = (flag0, trip, map) => {
    }),[])
 
   export const drawSensorValues = async (trip,map) => {
-    const data = await requestQhawaxTrip(trip.name, trip.start, trip.end); 
+    const data = await requestQhawaxTrip(trip.name, trip.turn, trip.trip_id); 
     if(data.length>0){
       const center = indexed(data, trip)
       Object.values(center).forEach(c=>c[trip.sensor]<0||c[trip.sensor]===null||c[trip.sensor]===undefined?CallOnceToast(flagToast,c[trip.sensor]):newCircle(c,map))
@@ -110,8 +103,7 @@ export const drawTrip = async(trip, map, element)=> {
     const flightPlanCoordinates = [];
     const start = new Date(newDateLocal(trip.start));
     const end = new Date(newDateLocal(trip.end));
-    const data = await requestQhawaxTrip(trip.name, trip.start, trip.end); 
-
+    const data = await requestQhawaxTrip(trip.name, trip.turn, trip.trip_id); 
     const numberOfWaypoints = data.length-1;
     const bounds = new google.maps.LatLngBounds();
     if(data.length>0){
@@ -143,8 +135,8 @@ export const drawTrip = async(trip, map, element)=> {
   };
 
   export const downloadMobile = async(trip) => {
-    let filename =  `${trip.name+ '-'+ trip.comercial_name}`
-    const data = await requestQhawaxTrip(trip.name, trip.start, trip.end); 
+    let filename =  `${trip.name+ '-'+ trip.comercial_name+ '-turno-'+trip.turn+'-dia-'+trip.start.split(' ')[0]}`
+    const data = await requestQhawaxTrip(trip.name, trip.turn, trip.trip_id); 
     if(data.length>0){
       const csvContent = json2csv(data, csvFields);
       download(csvContent, filename)
