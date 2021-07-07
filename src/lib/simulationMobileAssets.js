@@ -13,14 +13,12 @@ let polylinesArray = [];
 let circlesArray = [];
 const csvFields = [
     'CO (ug/m3)',
-    'CO2 (ppm)',
     'H2S (ug/m3)',
     'NO2 (ug/m3)',
     'O3 (ug/m3)',
     'PM10 (ug/m3)',
     'PM2.5 (ug/m3)',
     'SO2 (ug/m3)',
-    'VOC (ug/m3)',
     'Latitud',
     'Longitud',
     'Fecha',
