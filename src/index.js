@@ -9,6 +9,7 @@ const SocketSource = 'https://openqairamapnapi.qairadrones.com/';
 
 window.onload = () => {
   document.getElementById('loader').classList.add('hide');
+  document.cookie = 'SameSite=None; Secure';
   window.onhashchange = changeView(window.location.hash);
 };
 

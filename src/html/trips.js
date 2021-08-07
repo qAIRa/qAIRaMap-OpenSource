@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 const tripViewElem = `
 <form class="form-flights container">
 <h5 class="center-align">Por favor seleccione un periodo para listar los viajes</h5><br>
-<div class="container">
+
 <div class="row center-align">
 <div class="col s6">
 <label for="initDate">Fecha inicial</label>
@@ -16,7 +16,7 @@ const tripViewElem = `
 <input type="text" class="datepicker center-align" name="endDate">
 </div>
 </div>
-</div>
+
 <div class="container">
 <div class="row">
 <div class="center-align">

@@ -11,15 +11,28 @@ const json2csv = (jsonData, jsonFields) => {
   return csvStr;
 };
 
-const download = (csvcontent, fileName) => {
-	const uInt8 = new TextEncoder().encode(csvcontent)
-	const fileStream = streamSaver.createWriteStream(`${fileName}.csv`, {
-		// size: uInt8.byteLength, // (optional filesize) Will show progress
-		// writableStrategy: undefined, // (optional)
-		// readableStrategy: undefined  // (optional)
-	  })
-		new Response(csvcontent).body.pipeTo(fileStream)
+// const download = (csvcontent, fileName) => {
+// 	console.log(csvcontent);
+// 	const uInt8 = new TextEncoder().encode(csvcontent)
+	
+// 	const fileStream = streamSaver.createWriteStream(`${fileName}.csv`, {
+// 		size: uInt8.byteLength, // (optional filesize) Will show progress
+// 		writableStrategy: undefined, // (optional)
+// 		readableStrategy: undefined  // (optional)
+// 	  })
+// 		new Response(csvcontent).body.pipeTo(fileStream)
 
+// }
+
+const download = (csvcontent, fileName) =>{
+	var downloadLink = document.createElement("a");
+        var blob = new Blob(["\ufeff", csvcontent]);
+        var url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = `${fileName}.csv`;  //Name the file here
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
 }
 
 export { json2csv, download };

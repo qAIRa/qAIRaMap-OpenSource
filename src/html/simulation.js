@@ -18,6 +18,19 @@ export const simulationSelection =`
 </div>
 </div>
 `
+export const simulationTurns = `
+<div class="animate__animated animate__slideInRight z-depth-5 over_map_droneselection_turn row">
+<div class="col s12">
+<select class="browser-default center-align" name="" id="selectTurn">
+<option value="" disabled selected>Simular otro turno</option>
+<option value="1">Turno 8am a 10am</option>
+<option value="2">Turno 10am a 12pm</option>
+<option value="3">Turno 14pm a 16pm</option>
+<option value="4">Turno 16pm a 18pm</option>
+</select>
+</div>
+</div>
+`
 
 export const simulationSelectionMobile =`
 <div class="animate__animated animate__slideInRight z-depth-5 over_map_droneselection row none">

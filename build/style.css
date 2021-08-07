@@ -425,6 +425,20 @@ main {
 	display: flex;
 }
 
+.over_map_droneselection_turn {
+	position: absolute;
+	z-index: 5;
+	background-color: #fff;
+	border: 1px solid #999;
+	text-align: center;
+	width: 190px;
+	padding: 0;
+	bottom: 0;
+	right: 4em;
+	border-radius: 20px;
+	display: flex;
+}
+
 .over_map_simulation{
 	position: absolute;
 	z-index: 5;
@@ -854,7 +868,7 @@ i.icon-green {
 		font-size: x-small;
 	}
 	.inca-color1-mob {
-		font-size: x-small;
+		font-size: xx-small;
 	}
 	.inca-title {
 		font-size: small;
@@ -881,6 +895,17 @@ i.icon-green {
 	} */
 	.over_map_droneselection{
 		width: 250px;
+	}
+
+	.over_map_droneselection_turn{
+		width: 250px;
+		bottom: 4em;
+    	left: 0.7em;
+	}
+	.inca-color-mob {
+		height: 0.8em;
+		padding: 0;
+		border-radius: 0;
 	}
 	.pannel-inca {
 		margin: 6px 0px 0px 3px;

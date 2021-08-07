@@ -24,6 +24,14 @@ const csvFields = [
     'Fecha',
   ];
 
+  export const update =(value)=>{
+    let prevData = JSON.parse(sessionStorage.getItem('trip'));
+    Object.keys(value).forEach(function(val, key){
+         prevData[val] = value[val];
+    })
+    sessionStorage.setItem('trip', JSON.stringify(prevData));
+  }
+
   const newCircle = (center,map)=> {
     const pollutantCircle = new google.maps.Circle({
       strokeColor: circleColor(center),
@@ -83,8 +91,10 @@ export const stopTrip = (trip, map, element) => {
     // setTimeout(()=>map.infowindows[0].close(),2000)
     selection.classList.remove('none')
     trip.sensor=selectionSensor.value
+    update({sensor:selectionSensor.value})
     selectionSensor.addEventListener('change',e=>{
       trip.sensor=e.target.value;
+      update({sensor:e.target.value})
     })
   
     drawBtn.addEventListener('click',e=>{
@@ -144,13 +154,24 @@ export const drawTrip = async(trip, map, element)=> {
      }
   }
 
+
+
 export const simulateTrip = (trip,map, element)=>{
     const downloadBtn = element.querySelector('#dwn-btn');
     const restartBtn = element.querySelector('#restart-btn');
+    const turnSelect = element.querySelector('#selectTurn');
+    turnSelect.value=trip.turn
   
+    
+    drawTrip(trip, map, element);
+    turnSelect.addEventListener('change',e=>{
+      trip.turn=e.target.value
+      update({turn: e.target.value})
+      drawTrip(trip, map, element);
+    })
+
     restartBtn.addEventListener('click',e=>location.reload())
     downloadBtn.addEventListener('click',e=>downloadMobile(trip))
-    drawTrip(trip, map, element);
       // setTimeout(()=>{
       //     toast(`The trip of the Mobile qHAWAX ${trip.name} has start`,'orange darken-1 rounded')
       //     drawTrip(trip, map, element);
