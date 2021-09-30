@@ -29,7 +29,7 @@ Feel welcome to join our [forum](https://unicef-if.discourse.group/c/projects/qa
 Clone or download the project to the device where it will be used.
 
 ```
-git clone https://github.com/qAIRa/qAIRaMap-Opensoure.git
+git clone https://github.com/qAIRa/qAIRaMap-OpenSource.git
 ```
 
 ### Prerequisites
