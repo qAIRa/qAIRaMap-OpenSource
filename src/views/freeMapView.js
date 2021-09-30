@@ -7,8 +7,11 @@ import { toast } from '../lib/helpers.js';
 const request = async (map, mapElem) => {
  await noParametersRequest('AllQhawaxInMap/')
  .then(q=>
-  {if(q===[]){
+  {
+    if(q!=[]){
+
       q.forEach((qhawax) => {
+        console.log(qhawax);
         if(qhawax.lat!==null && qhawax.qhawax_type!=='AEREAL')
           drawQhawaxMap(map, qhawax);
       })
