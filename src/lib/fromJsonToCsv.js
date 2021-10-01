@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 
 const json2csv = (jsonData, jsonFields) => {
   let csvStr = `${jsonFields.join(',')}\n`;
-  for (let i = 0; i < jsonData.length; i++) {
+  for (let i = 0; i < jsonData.length; i += 1) {
     jsonData[i].timestamp_zone = format(new Date(jsonData[i].timestamp_zone), 'yyyy-MM-dd HH:mm:ss');
     csvStr += `${Object.getOwnPropertyNames(jsonData[i]).map((e) => jsonData[i][e]).join(',')}\n`;
   }
