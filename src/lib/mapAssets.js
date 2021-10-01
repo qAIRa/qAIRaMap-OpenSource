@@ -69,10 +69,30 @@ export const ECAlimits = sensor => {
 	}
 };
 
-export const drawChart = async (sensor, qhawax_id) => {
-	const chart = document.querySelector('#graphicValues');
-	const layout = {
+const timeOfDayFormat = {
+	title: {
+		text: 'Time of the day',
+		font: {
+			family: 'Courier New, monospace',
+			size: 12,
+			color: '#7f7f7f',
+		},
+	},
+}
 
+const concentrationFormat = {
+	title: {
+		text: 'Concentration <sub>(µg/m3)</sub>',
+		font: {
+			family: 'Courier New, monospace',
+			size: 12,
+			color: '#7f7f7f',
+		},
+	},
+}
+
+const getChartLayout = (sensor) => (
+	{
 		autosize: false,
 		width:
 			window.innerWidth >= 800
@@ -82,37 +102,22 @@ export const drawChart = async (sensor, qhawax_id) => {
 		title: `${qhawax_id}: Concentration of ${sensor}<br> from the last 24 hours <sub>(µg/m3)</sub>`,
 		showlegend: true,
 		colorway: ['#0000FF', '#FF0000'],
-		legend:{
+		legend: {
 			orientation:'h',
 			y:window.innerWidth >= 800? -0.1:2,
-				},
-		xaxis: {
-			title: {
-				text: 'Time of the day',
-				font: {
-					family: 'Courier New, monospace',
-					size: 12,
-					color: '#7f7f7f',
-				},
-			},
 		},
-		yaxis: {
-			title: {
-				text: 'Concentration <sub>(µg/m3)</sub>',
-				font: {
-					family: 'Courier New, monospace',
-					size: 12,
-					color: '#7f7f7f',
-				},
-			},
-		},
-	};
+		xaxis: timeOfDayFormat,
+		yaxis: concentrationFormat,
+	}
+)
+
+const formatAverageMeasurementData = (sensor, jsonData) => {
 	let data = [];
-	const json = await requestAverageMeasurement(qhawax_id,sensor)
 	let yValues = [];
 	let xValues = [];
 	let yECA = [];
-	Object.entries(json).forEach(d => {
+
+	Object.entries(jsonData).forEach(d => {
 		yValues.push(d[1].sensor);
 		xValues.push(format(new Date(d[1].timestamp_zone), 'HH')+'H');
 		yECA.push(ECAlimits(sensor));
@@ -133,6 +138,15 @@ export const drawChart = async (sensor, qhawax_id) => {
 			}),
 		];
 	});
+
+	return data;
+}
+
+export const drawChart = async (sensor, qhawax_id) => {
+	const chart = document.querySelector('#graphicValues');
+	const layout = getChartLayout(sensor);
+	const json = await requestAverageMeasurement(qhawax_id, sensor)
+	const data = formatAverageMeasurementData(sensor, json)
 
 	Plotly.newPlot(chart, data, layout, configuration);
 };
