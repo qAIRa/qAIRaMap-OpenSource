@@ -284,13 +284,14 @@ export const setInfowindow = (qhawax, map)=>{
 	let html = `${qhawax.comercial_name}: Module ${qhawax.name}`;
 	const classes ='grey darken-1 rounded';
 	switch (qhawax.main_inca) {
-		case -1:html+= ` Off.`; return toast(html, classes);
-		case  0:html+= ` waiting for valid data.`; return toast(html, classes);
-		case  1:html+= ` waiting for average data.`; return toast(html, classes);
-		case -2:html+= ` in maintenance.`;return toast(html, classes);
-		case 50: case 100: case 500: case 600:setPannelData(qhawax,map);break;
-		default:html= ` Failed to get data.`; return toast(html, classes);
+				case -1:html+= ` Off.`; break;
+				case  0:html+= ` waiting for valid data.`; break;
+				case  1:html+= ` waiting for average data.`; break;
+				case -2:html+= ` in maintenance.`;break;
+				case 50: case 100: case 500: case 600:setPannelData(qhawax,map);return;
+		default:html= ` Failed to get data.`;
 	}
+	return toast(html,classes);
 };
 
 export const markerZoom = (zoom) =>{
