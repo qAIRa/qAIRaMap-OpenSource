@@ -5,10 +5,6 @@ import { socket } from '../index.js';
 import { addZero } from '../lib/helpers.js';
 import { configuration } from '../lib/graphAssets.js';
 
-
-
-
-
 const dateFormat = (timestamp)=>{
 	const date = new Date(Date.parse(timestamp));
 	return (
@@ -20,7 +16,6 @@ const dateFormat = (timestamp)=>{
 	);
 
 }
-
 
 const requestOptions = async(element) => {
 	await noParametersRequest('AllQhawaxInMap/')
@@ -102,8 +97,6 @@ const requestOptions = async(element) => {
 	})
 	return traces;
 };
-
-
 
 const viewGraphics = () => {
 
