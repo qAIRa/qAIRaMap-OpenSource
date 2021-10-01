@@ -32,9 +32,9 @@ const notNull = (value) => (value === null || value < 0 ? '-' : value);
 
 // style="border:1px double ${ cellColor('CO',data.CO_ug_m3)};
 // bgcolor=${ cellColor('SO2',data.SO2_ug_m3)}
-export const infoWindowM = (data, q_mobile, timer) => `
+export const infoWindowM = (data, qMobile, timer) => `
 <table class="tg stripped centered info-mobile">
-<caption>${q_mobile.name}: ${q_mobile.comercial_name}</caption>
+<caption>${qMobile.name}: ${qMobile.comercial_name}</caption>
 <thead>
   <tr>
     <th class="tg-wa1i">CO<br>(&micro;g/m<sup>3</sup>)</th>
