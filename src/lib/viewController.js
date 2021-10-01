@@ -13,40 +13,31 @@ import { tripMobileView } from '../views/tripMobileView.js';
 const flight = JSON.parse(sessionStorage.getItem('flight'));
 const trip = JSON.parse(sessionStorage.getItem('trip'));
 
-const changeView = (router) => {
+const ROUTES = {
+  mapQhawax: viewFreeMap,
+  mapDrone: viewFreeDrone,
+  mapMobileQ: viewFreeMobile,
+  download: downloadView,
+  downloadDrone :downloadView,
+  dashboard: viewDashboard,
+  graphics :viewGraphics,
+  flightsDrone: flightsView,
+  simulationDrone: simulationView,
+  tripMobileQ: tripMobileView,
+  simulationMobileQ: simulationMobileView,
+  '/': landPage,
+};
+
+const loadView = (route) => {
   const container = document.getElementById('content-page');
+  const view = ROUTES[route] || ROUTES['/'];
   container.innerHTML = '';
-  switch (router) {
-  case '#/mapQhawax':
-    return container.appendChild(viewFreeMap());
-  case '#/mapDrone':
-    return container.appendChild(viewFreeDrone());
-  case '#/mapMobileQ':
-    return container.appendChild(viewFreeMobile());
-  case '#/download':
-    return container.appendChild(downloadView());
-  case '#/downloadDrone':
-    return container.appendChild(downloadView());
-  case '#/dashboard':
-    return container.appendChild(viewDashboard());
-  case '#/graphics':
-    return container.appendChild(viewGraphics());
-  case '#/flightsDrone':
-    return container.appendChild(flightsView());
-  case '#/simulationDrone':
-    return container.appendChild(simulationView(flight));
-  case '#/tripMobileQ':
-    return container.appendChild(tripMobileView());
-  case '#/simulationMobileQ':
-    return container.appendChild(simulationMobileView(trip));
-  default:
-    return container.appendChild(landPage());
-  }
+  return container.appendChild(view());
+}
+
+const goTo = (route) => {
+  loadView(route);
+  window.history.pushState({ route }, `${route}`, route === '/' ? route : `/${route}`);
 };
 
-const goTo = (location) => {
-  window.location.assign(`..#/${location}`);
-  window.location.reload();
-};
-
-export { changeView, goTo };
+export { loadView, goTo };

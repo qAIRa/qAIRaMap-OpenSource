@@ -1,4 +1,4 @@
-import { changeView } from './lib/viewController.js';
+import { loadView } from './lib/viewController.js';
 
 const APISource = 'https://openqairamapnapi.qairadrones.com/api/';
 const SocketSource = 'https://openqairamapnapi.qairadrones.com/';
@@ -9,8 +9,10 @@ const SocketSource = 'https://openqairamapnapi.qairadrones.com/';
 window.onload = () => {
   document.getElementById('loader').classList.add('hide');
   document.cookie = 'SameSite=None; Secure';
-  window.onhashchange = changeView(window.location.hash);
+  loadView('/');
 };
+
+window.addEventListener('popstate', event => loadView(event.state.route));
 
 export {
   APISource,

@@ -1,4 +1,4 @@
-import { changeView , goTo} from '../src/lib/viewController.js';
+import { loadView , goTo} from '../src/lib/viewController.js';
 import { initialize} from "@googlemaps/jest-mocks";
 import { downloadView } from '../src/views/downloadView.js';
 import { viewDashboard } from '../src/views/dashboardView.js';
@@ -27,13 +27,11 @@ test('Add view', () => {
       <div id="content-page"></div>
     `;
     global.M = require('../build/js/materialize.min.js');
-    const container = document.getElementById('content-page')
-    
-    // expect(changeView('#/')).toStrictEqual(container.appendChild(viewFreeMap()))
-    expect(changeView('#/download')).toStrictEqual(container.appendChild(downloadView()))
-    expect(changeView('#/dashboard')).toStrictEqual(container.appendChild(viewDashboard()))
-    expect(changeView('#/graphics')).toStrictEqual(container.appendChild(viewGraphics()))
-    // expect(changeView('')).toStrictEqual(container.appendChild(viewFreeMap()))
+    const container = document.getElementById('content-page');
+
+    expect(loadView('download')).toStrictEqual(container.appendChild(downloadView()))
+    expect(loadView('dashboard')).toStrictEqual(container.appendChild(viewDashboard()))
+    expect(loadView('graphics')).toStrictEqual(container.appendChild(viewGraphics()))
 
   });
 
