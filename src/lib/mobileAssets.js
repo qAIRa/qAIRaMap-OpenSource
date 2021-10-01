@@ -97,54 +97,48 @@ export const finishTrip = (q_mobile, selection)=>{
   
 };
 
+async function createSocketTimer(q_mobile_name) {
+  const startTripDate = await lastStartTrip(q_mobile_name)
+  const start = typeof startTripDate === 'string'? new Date() : start.start_trip
+  return intervalToDuration({ start, end: new Date() })
+}
+
+async function updateFlightPlanCoordinates(map, flightPlanCoordinates, polylinesArray, data) {
+  await noParametersRequest('mobile_log_info_during_trip')
+  .then(res => res.forEach(q_mobile => {
+    if (data.ID === q_mobile.name) {
+      flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
+      const polyline = newPolyline(flightPlanCoordinates)
+      addLine(polyline, map)
+      polylinesArray.push(polyline)
+    }
+  }))
+  .catch(err => null)
+}
 
 export const callSocketTrip = (q_mobile, map, selection) => {
   let flightPlanCoordinates = [];
   let polylinesArray = [];
-
-  const marker=map.markers.find(el=>el.id===q_mobile.name+'_marker')
-  const infowindow = map.infowindows.find(el=>el.id===q_mobile.name+'_infowindow')
-  // const bounds = new google.maps.LatLngBounds();
-		socket.on(`${q_mobile.name}_mobile`, async data => {
-     
-      const start = await lastStartTrip(q_mobile.name)
-      
-      const timer=intervalToDuration({start:new Date(typeof start==='string'?new Date():start.start_trip),end:new Date()})
+  const q_mobile_name = q_mobile.name
+  const marker=map.markers.find(el=>el.id===`${q_mobile_name}_marker`)
+  const infowindow = map.infowindows.find(el=>el.id===`${q_mobile_name}_infowindow`)
+		socket.on(`${q_mobile_name}_mobile`, async data => {      
+      const timer = createSocketTimer(q_mobile_name)
       latlngLine = {
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lon),
       };
-            await noParametersRequest('mobile_log_info_during_trip')
-            .then(e=>e.forEach(q_mobile=>{
-     
-              if (data.ID===q_mobile.name) {
-                
-                flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-                const polyline = newPolyline(flightPlanCoordinates)
-              
-                addLine(polyline,map)
-                polylinesArray.push(polyline)
-               
-              }
-            }))
-            .catch(e=>null)
-        marker.setPosition(latlngLine)
-        infowindow.setContent(infoWindowM(data,q_mobile,timer))
-        infowindow.open(map, marker);
-        // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
-        // map.fitBounds(bounds);
-        socket.on(`${q_mobile.name}_finishTrip`, data => {
-         
-   
-          polylinesArray.forEach(p=>{
-            removeLine(p);
-            polylinesArray = polylinesArray.filter(item => item !== p);
-            
-            
-            
-          })
-        });
+      
+      updateFlightPlanCoordinates(map, flightPlanCoordinates, polylinesArray, data)
 
+      marker.setPosition(latlngLine)
+      infowindow.setContent(infoWindowM(data,q_mobile,timer))
+      infowindow.open(map, marker);
+
+      socket.on(`${q_mobile_name}_finishTrip`, data => {
+        polylinesArray.forEach(polyline=>removeLine(polyline))
+        polylinesArray = []
+      });
     })
     finishTrip(q_mobile,selection)
     infowindow.close()
