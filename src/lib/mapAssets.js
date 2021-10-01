@@ -246,7 +246,6 @@ const forEachInfograph = (infoGraph)=>{
 		ig.addEventListener('click', e=>{
 		const qhawax_id = e.target.dataset.infograph;
 		const qhawax_sensor = e.target.dataset.label;
-		console.log("qhawax_id: ", qhawax_id)
 		drawChart(qhawax_sensor, qhawax_id);
 		})
 	})
@@ -329,7 +328,6 @@ export const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
 });
 
 export const drawQhawaxMap = (map, qhawax) => {
-	console.log("drawQhawaxMap: ", qhawax)
 	const previous_marker_index = map.markers.findIndex(marker => marker.id === qhawax.name);
 	map.addListener('zoom_changed', () => {
 		const zoom = map.getZoom();
