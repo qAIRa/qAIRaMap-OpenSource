@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 import { changeView } from './lib/viewController.js';
 
 const APISource = 'https://openqairamapnapi.qairadrones.com/api/';
