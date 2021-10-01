@@ -122,7 +122,6 @@ const navbarDrone = `
 </ul>
 `;
 
-
 const navbarMobileQ = `
 <div class="navbar-fixed">
 <nav id="nav-menu-bar" style="padding: 0px 10px;">
@@ -153,4 +152,4 @@ const navbarMobileQ = `
 <!--<li class="menu-btn" id="graphics-menu-mob-drone"><a>Graphics</a></li>-->
 </ul>
 `;
-export {navbar, navbarDrone, navbarMobileQ}
+export { navbar, navbarDrone, navbarMobileQ };

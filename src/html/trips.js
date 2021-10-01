@@ -1,5 +1,5 @@
-import {durationMobile, newDateLocal } from "../lib/helpers.js";
 import { format } from 'date-fns';
+import { durationMobile, newDateLocal } from '../lib/helpers.js';
 // format(new Date(jsonData[i].timestamp_zone), 'dd/MM/yyyy HH:mm:ss');
 
 const tripViewElem = `
@@ -28,7 +28,7 @@ const tripViewElem = `
 </form>
 `;
 
-const card = (trip)=>`
+const card = (trip) => `
 <div class="col s12 m7 l4">
 <div class="card horizontal drone-card">
 <div class="card-image drone-img">
@@ -39,14 +39,14 @@ const card = (trip)=>`
 <div class="card-content">
 <table>
 <caption>${trip.details}</caption>
-<caption>${trip.trip_start.slice(0,10).replaceAll('-','/')}</caption>
+<caption>${trip.trip_start.slice(0, 10).replaceAll('-', '/')}</caption>
 <tr>
 <td>Inicio</td>
-<td>${format(newDateLocal(trip.trip_start),'HH:mm:ss')}</td>
+<td>${format(newDateLocal(trip.trip_start), 'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>Término</td>
-<td>${format(newDateLocal(trip.trip_end),'HH:mm:ss')}</td>
+<td>${format(newDateLocal(trip.trip_end), 'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>Total (min)</td>
@@ -82,7 +82,7 @@ data-tripid="${trip.trip_id}"
 </div>
 </div>`;
 
-const newSearch_btn =`
+const newSearch_btn = `
 <div class="center-align">
 <button id="new-search-btn" class="btn waves-effect waves-light" style="
 margin-top: 1em;
@@ -90,6 +90,6 @@ margin-bottom: 1em;">New Search
 <i class="material-icons right">send</i>
 </button>
 </div>
-`
+`;
 
-export { tripViewElem, card, newSearch_btn}
+export { tripViewElem, card, newSearch_btn };

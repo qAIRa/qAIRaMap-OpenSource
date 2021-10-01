@@ -1,4 +1,4 @@
-export const viewDrones=`
+export const viewDrones = `
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
@@ -15,9 +15,9 @@ export const viewDrones=`
 </table>
 </div>
 </div>
-`
+`;
 
-export const droneSelection =`
+export const droneSelection = `
 <div class="animate__animated animate__zoomIn z-depth-5 over_map_droneselection row">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectDrone">
@@ -40,6 +40,4 @@ export const droneSelection =`
 </button>
 </div>
 </div>
-`
-
-
+`;

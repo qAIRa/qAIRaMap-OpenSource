@@ -91,4 +91,4 @@ qAIRa
 
 `;
 
-export {landbar, landpage}
+export { landbar, landpage };

@@ -1,5 +1,5 @@
-import {duration, newDateLocal } from "../lib/helpers.js";
 import { format } from 'date-fns';
+import { duration, newDateLocal } from '../lib/helpers.js';
 // format(new Date(jsonData[i].timestamp_zone), 'dd/MM/yyyy HH:mm:ss');
 
 const flightViewElem = `
@@ -28,7 +28,7 @@ const flightViewElem = `
 </form>
 `;
 
-const card = (flight)=>`
+const card = (flight) => `
 <div class="col s12 m7 l4">
 <div class="card horizontal drone-card">
 <div class="card-image drone-img">
@@ -39,14 +39,14 @@ const card = (flight)=>`
 <div class="card-content">
 <table>
 <caption>${flight.flight_detail}</caption>
-<caption>${format(newDateLocal(flight.flight_start),'dd/MM/yyyy')}</caption>
+<caption>${format(newDateLocal(flight.flight_start), 'dd/MM/yyyy')}</caption>
 <tr>
 <td>Start time</td>
-<td>${format(newDateLocal(flight.flight_start),'HH:mm:ss')}</td>
+<td>${format(newDateLocal(flight.flight_start), 'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>End time</td>
-<td>${format(newDateLocal(flight.flight_end),'HH:mm:ss')}</td>
+<td>${format(newDateLocal(flight.flight_end), 'HH:mm:ss')}</td>
 </tr>
 <tr>
 <td>Total (min)</td>
@@ -71,7 +71,7 @@ data-lng="${flight.last_longitude_position}"
 </div>
 </div>`;
 
-const newSearch_btn =`
+const newSearch_btn = `
 <div class="center-align">
 <button id="new-search-btn" class="btn waves-effect waves-light" style="
 margin-top: 1em;
@@ -79,6 +79,6 @@ margin-bottom: 1em;">New Search
 <i class="material-icons right">send</i>
 </button>
 </div>
-`
+`;
 
-export { flightViewElem, card, newSearch_btn}
+export { flightViewElem, card, newSearch_btn };

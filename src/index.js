@@ -1,6 +1,5 @@
 import { changeView } from './lib/viewController.js';
 
-
 const APISource = 'https://openqairamapnapi.qairadrones.com/api/';
 const SocketSource = 'https://openqairamapnapi.qairadrones.com/';
 // const APISource = 'http://0.0.0.0:5000/api/'
@@ -13,8 +12,8 @@ window.onload = () => {
   window.onhashchange = changeView(window.location.hash);
 };
 
-
-export { APISource,
-   SocketSource, 
+export {
+  APISource,
+  SocketSource,
   //  socket
-  };
+};

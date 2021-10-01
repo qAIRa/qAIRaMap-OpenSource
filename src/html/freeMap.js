@@ -1,4 +1,4 @@
- export const viewMap = `   
+export const viewMap = `   
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
