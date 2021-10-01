@@ -1,6 +1,6 @@
 import { notNull } from '../lib/helpers.js';
 
-const infowindow =`
+const infowindow = `
 <div class="col s12">
 <ul class="tabs">
 <li class="tab col s2"><a class="active" href="#test1">INCA</a></li>
@@ -16,7 +16,7 @@ const infowindow =`
 
 `;
 
-const pannelInca = (inca, color)=> `
+const pannelInca = (inca, color) => `
 <table class="responsive-table stripped centered pannel-inca">
 <thead>
 <tr>
@@ -45,7 +45,7 @@ const pannelInca = (inca, color)=> `
 </table>
 `;
 
-const pannelRealTime = (socket)=> `
+const pannelRealTime = (socket) => `
 <table class="responsive-table stripped centered pannel-inca">
 <thead>
 <th>${window.innerWidth > 768 ? 'Carbon monoxide (CO)' : 'CO'}<sub>(&microg/m<sup>3</sup>)</sub></th>
@@ -71,7 +71,7 @@ const pannelRealTime = (socket)=> `
 </table>
 `;
 
-const pannelMeteo = (zone,meteo,uv)=> `
+const pannelMeteo = (zone, meteo, uv) => `
 <p>Zone Type: ${zone.zone}</p>
 <table class="responsive-table stripped centered pannel-inca">
 <thead>
@@ -95,7 +95,7 @@ const pannelMeteo = (zone,meteo,uv)=> `
 </table>
 `;
 
-const pannelGraphics = (qhawax)=> `
+const pannelGraphics = (qhawax) => `
 <p>Graphics from the last 24 hours. Click en <i class="tiny material-icons">remove_red_eye</i></p>
 <table class="responsive-table stripped centered pannel-inca">
 <thead id="graph-head">
@@ -122,11 +122,10 @@ const pannelGraphics = (qhawax)=> `
 </table>
 `;
 
-
 export {
-infowindow,
-pannelGraphics,
-pannelInca,
-pannelMeteo,
-pannelRealTime
+  infowindow,
+  pannelGraphics,
+  pannelInca,
+  pannelMeteo,
+  pannelRealTime,
 };

@@ -1,4 +1,4 @@
-export const simulationSelection =`
+export const simulationSelection = `
 <div class="animate__animated animate__slideInRight z-depth-5 over_map_droneselection row none">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectSensor">
@@ -17,7 +17,7 @@ export const simulationSelection =`
 </button>
 </div>
 </div>
-`
+`;
 export const simulationTurns = `
 <div class="animate__animated animate__slideInRight z-depth-5 over_map_droneselection_turn row">
 <div class="col s12">
@@ -30,9 +30,9 @@ export const simulationTurns = `
 </select>
 </div>
 </div>
-`
+`;
 
-export const simulationSelectionMobile =`
+export const simulationSelectionMobile = `
 <div class="animate__animated animate__slideInRight z-depth-5 over_map_droneselection row none">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectSensor">
@@ -49,7 +49,7 @@ export const simulationSelectionMobile =`
 </button>
 </div>
 </div>
-`
+`;
 
 export const simulationBtns = `
 <div class="animate__animated animate__slideInRight over_map_simulation row">
@@ -60,7 +60,7 @@ export const simulationBtns = `
 <i class="material-icons right">send</i>
 </button>
 </div>
-`
+`;
 
 export const simulationBtnsMobile = `
 <div class="animate__animated animate__slideInRight over_map_simulation row">
@@ -71,4 +71,4 @@ export const simulationBtnsMobile = `
 <i class="material-icons right">send</i>
 </button>
 </div>
-`
+`;

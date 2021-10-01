@@ -1,4 +1,4 @@
-export const viewMobileQ=`
+export const viewMobileQ = `
 <div class="wrapper_map" id="wrapper_map">
 <div class="animate__animated animate__fadeInDown" id="map"></div>
 <div class="animate__animated animate__zoomIn z-depth-4 none" id="over_map_infowindow"></div>
@@ -15,9 +15,9 @@ export const viewMobileQ=`
 </table>
 </div>
 </div>
-`
+`;
 
-export const mobileSelection =`
+export const mobileSelection = `
 <div class="animate__animated animate__zoomIn z-depth-5 over_map_droneselection row">
 <div class="col s12">
 <select class="browser-default col s6" name="" id="selectDrone">
@@ -38,6 +38,4 @@ export const mobileSelection =`
 </button>
 </div>
 </div>
-`
-
-
+`;

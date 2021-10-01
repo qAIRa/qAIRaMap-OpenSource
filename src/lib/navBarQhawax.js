@@ -5,7 +5,7 @@ import { goTo } from './viewController.js';
 export const navBarQhawax = (element, display) => {
   const menuNavBar = document.querySelector('header');
 
-  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : (window.location.hash).slice(-7) === 'MobileQ'? navbarMobileQ: navbar;
+  menuNavBar.innerHTML = (window.location.hash).slice(-5) === 'Drone' ? navbarDrone : (window.location.hash).slice(-7) === 'MobileQ' ? navbarMobileQ : navbar;
   element.innerHTML = display;
 
   const dropMenu = document.querySelectorAll('.dropdown-trigger');
@@ -35,4 +35,3 @@ export const navBarQhawax = (element, display) => {
     }
   });
 };
-

@@ -4,11 +4,11 @@ import { viewDashboard } from '../views/dashboardView.js';
 import { viewGraphics } from '../views/graphicsView.js';
 import { landPage } from '../views/landpageView.js';
 import { viewFreeDrone } from '../views/freeMapDroneView.js';
-import {flightsView} from '../views/flightsView.js';
-import { simulationView} from '../views/simulationDrone.js';
-import { simulationMobileView} from '../views/simulationMobile.js';
-import { viewFreeMobile} from '../views/freeMapMobile.js';
-import {tripMobileView} from '../views/tripMobileView.js';
+import { flightsView } from '../views/flightsView.js';
+import { simulationView } from '../views/simulationDrone.js';
+import { simulationMobileView } from '../views/simulationMobile.js';
+import { viewFreeMobile } from '../views/freeMapMobile.js';
+import { tripMobileView } from '../views/tripMobileView.js';
 
 const flight = JSON.parse(sessionStorage.getItem('flight'));
 const trip = JSON.parse(sessionStorage.getItem('trip'));

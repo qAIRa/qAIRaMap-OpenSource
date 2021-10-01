@@ -1,4 +1,4 @@
-export const infoWindowT = (telemetry, drone, timer)=>`
+export const infoWindowT = (telemetry, drone, timer) => `
 <table class="tg">
 <caption>${drone.name}: ${drone.comercial_name}</caption>
 <thead>
@@ -28,13 +28,11 @@ export const infoWindowT = (telemetry, drone, timer)=>`
 </table>
 `;
 
-const notNull = (value) => {
-  return value===null||value<0?'-':value;
-}
+const notNull = (value) => (value === null || value < 0 ? '-' : value);
 
 // style="border:1px double ${ cellColor('CO',data.CO_ug_m3)};
 // bgcolor=${ cellColor('SO2',data.SO2_ug_m3)}
-export const infoWindowM = (data, q_mobile, timer)=>`
+export const infoWindowM = (data, q_mobile, timer) => `
 <table class="tg stripped centered info-mobile">
 <caption>${q_mobile.name}: ${q_mobile.comercial_name}</caption>
 <thead>
