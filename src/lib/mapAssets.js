@@ -69,7 +69,7 @@ export const ECAlimits = sensor => {
 	}
 };
 
-const timeOfDayFormat = {
+const timeOfDayTitle = {
 	title: {
 		text: 'Time of the day',
 		font: {
@@ -80,7 +80,7 @@ const timeOfDayFormat = {
 	},
 }
 
-const concentrationFormat = {
+const concentrationTitle = {
 	title: {
 		text: 'Concentration <sub>(µg/m3)</sub>',
 		font: {
@@ -91,7 +91,7 @@ const concentrationFormat = {
 	},
 }
 
-const getChartLayout = (sensor) => (
+const getChartLayout = (qhawax_id, sensor) => (
 	{
 		autosize: false,
 		width:
@@ -106,13 +106,12 @@ const getChartLayout = (sensor) => (
 			orientation:'h',
 			y:window.innerWidth >= 800? -0.1:2,
 		},
-		xaxis: timeOfDayFormat,
-		yaxis: concentrationFormat,
+		xaxis: timeOfDayTitle,
+		yaxis: concentrationTitle,
 	}
 )
 
 const formatAverageMeasurementData = (sensor, jsonData) => {
-	let data = [];
 	let yValues = [];
 	let xValues = [];
 	let yECA = [];
@@ -121,30 +120,29 @@ const formatAverageMeasurementData = (sensor, jsonData) => {
 		yValues.push(d[1].sensor);
 		xValues.push(format(new Date(d[1].timestamp_zone), 'HH')+'H');
 		yECA.push(ECAlimits(sensor));
-		let trace1 = {};
-		let trace2 = {};
-		data = [
-			(trace1 = {
-				y: yValues,
-				x: xValues,
-				name: `${sensor} (µg/m3)`,
-				type: 'scatter',
-			}),
-			(trace2 = {
-				y: yECA,
-				x: xValues,
-				name: 'Limit ECA',
-				type: 'scatter',
-			}),
-		];
 	});
 
-	return data;
+	const chartData = [
+		{
+			y: yValues,
+			x: xValues,
+			name: `${sensor} (µg/m3)`,
+			type: 'scatter',
+		},
+		{
+			y: yECA,
+			x: xValues,
+			name: 'Limit ECA',
+			type: 'scatter',
+		},
+	];
+
+	return chartData;
 }
 
 export const drawChart = async (sensor, qhawax_id) => {
 	const chart = document.querySelector('#graphicValues');
-	const layout = getChartLayout(sensor);
+	const layout = getChartLayout(qhawax_id, sensor);
 	const json = await requestAverageMeasurement(qhawax_id, sensor)
 	const data = formatAverageMeasurementData(sensor, json)
 
@@ -248,6 +246,7 @@ const forEachInfograph = (infoGraph)=>{
 		ig.addEventListener('click', e=>{
 		const qhawax_id = e.target.dataset.infograph;
 		const qhawax_sensor = e.target.dataset.label;
+		console.log("qhawax_id: ", qhawax_id)
 		drawChart(qhawax_sensor, qhawax_id);
 		})
 	})
@@ -330,6 +329,7 @@ export const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
 });
 
 export const drawQhawaxMap = (map, qhawax) => {
+	console.log("drawQhawaxMap: ", qhawax)
 	const previous_marker_index = map.markers.findIndex(marker => marker.id === qhawax.name);
 	map.addListener('zoom_changed', () => {
 		const zoom = map.getZoom();
