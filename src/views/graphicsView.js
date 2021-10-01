@@ -34,48 +34,32 @@ const requestOptions = async(element) => {
 	  }))
 };
 
+let yAxis = {
+	temperature : {value:[],name: 'Temperature (C)'},
+	pressure : {value:[],name: 'Pressure (hPa)'},
+	humidity : {value:[],name: 'Humidity (%)'},
+	 CO : {value:[],name: 'CO (ppb)'},
+	 CO_ug_m3 : {value:[],name: 'CO (ug/m3)'},
+	 H2S : {value:[],name: 'H2S (ppb)'},
+	 H2S_ug_m3 : {value:[],name: 'H2S (ug/m3)'},
+	 NO2 : {value:[],name: 'NO2 (ppb)'},
+	 NO2_ug_m3 : {value:[],name: 'NO2 (ug/m3)'},
+	 O3 : {value:[],name: 'O3 (ppb)'},
+	 O3_ug_m3 : {value:[],name: 'O3 (ug/m3)'},
+	 SO2 : {value:[],name: 'SO2 (ppb)'},
+	 SO2_ug_m3 : {value:[],name: 'SO2 (ug/m3)'},
+	 PM1 : {value:[],name: 'PM1 (ug/m3)'},
+	 PM10 : {value:[],name: 'PM10 (ug/m3)'},
+	 PM25 : {value:[],name: 'PM2,5 (ug/m3)'},
+	 spl : {value:[],name: 'Noise (dB)'},
+	 UV : {value:[],name: 'UV'},
+	 UVA : {value:[],name: 'UVA (mW/m2)'},
+	 UVB : {value:[],name: 'UVB (mW/m2)'},
+}
 
- const createTraces = async (time, qhawax) => {
-	let trace={}
-    let chart={}
-    let layout={}
-	let traces = [];
+ const setCharts = () => {
 	const charts = document.getElementById('charts')
     charts.innerHTML=''
-
-	let yAxis = {
-		temperature : {value:[],name: 'Temperature (C)'},
-		pressure : {value:[],name: 'Pressure (hPa)'},
-		humidity : {value:[],name: 'Humidity (%)'},
-		 CO : {value:[],name: 'CO (ppb)'},
-		 CO_ug_m3 : {value:[],name: 'CO (ug/m3)'},
-		 H2S : {value:[],name: 'H2S (ppb)'},
-		 H2S_ug_m3 : {value:[],name: 'H2S (ug/m3)'},
-		 NO2 : {value:[],name: 'NO2 (ppb)'},
-		 NO2_ug_m3 : {value:[],name: 'NO2 (ug/m3)'},
-		 O3 : {value:[],name: 'O3 (ppb)'},
-		 O3_ug_m3 : {value:[],name: 'O3 (ug/m3)'},
-		 SO2 : {value:[],name: 'SO2 (ppb)'},
-		 SO2_ug_m3 : {value:[],name: 'SO2 (ug/m3)'},
-		 PM1 : {value:[],name: 'PM1 (ug/m3)'},
-		 PM10 : {value:[],name: 'PM10 (ug/m3)'},
-		 PM25 : {value:[],name: 'PM2,5 (ug/m3)'},
-		 spl : {value:[],name: 'Noise (dB)'},
-		 UV : {value:[],name: 'UV'},
-		 UVA : {value:[],name: 'UVA (mW/m2)'},
-		 UVB : {value:[],name: 'UVB (mW/m2)'},
-	}
-	 let x = [];
-	 await requestGraphicsData(qhawax, time)
-	 .then(g=>g.forEach(d => {
-		x.push(dateFormat(d.timestamp_zone))
-		Object.entries(yAxis).forEach(([key, value]) => {
-			yAxis[key].value.push(d[key])
-		})
-		
-	}))
-	 
-
 	Object.entries(yAxis).forEach(([key, value]) => {
 		const chart = document.createElement('div')
 		const br = document.createElement('br')
@@ -84,7 +68,13 @@ const requestOptions = async(element) => {
 		chart.setAttribute('id',key)
 		chart.setAttribute('class','container')
 	 })
+ } 
 
+ const setTraces = (x) => {
+	let trace={}
+    let chart={}
+    let layout={}
+	let traces = [];
 	Object.entries(yAxis).forEach(([key, value]) => {
 		traces=[
 			trace= {
@@ -95,30 +85,51 @@ const requestOptions = async(element) => {
 			},
 			chart= document.getElementById(key),
 			layout= { title: yAxis[key].name, showlegend: false },
-
 		]
-	
 		Plotly.newPlot(traces[1], [traces[0]], traces[2], configuration);
 	})
-	return traces;
+
+ }
+
+ const createTraces = async (time, qhawax) => {
+	 let x = [];
+	 await requestGraphicsData(qhawax, time)
+	 .then(g=>g.forEach(d => {
+		x.push(dateFormat(d.timestamp_zone))
+		Object.entries(yAxis).forEach(([key, value]) => {
+			yAxis[key].value.push(d[key])
+		})
+	}))
+
+	setCharts();
+	return setTraces(x);
 };
 
+const sensors = [
+	'temperature',
+	'pressure',
+	'humidity',
+	'CO',
+	'CO_ug_m3',
+	'H2S',
+	'H2S_ug_m3',
+	'NO2',
+	'NO2_ug_m3',
+	'O3',
+	'O3_ug_m3',
+	'SO2',
+	'SO2_ug_m3',
+	'PM1',
+	'PM10',
+	'PM25',
+	'spl',
+	'UV',
+	'UVA',
+	'UVB'
+];
 
 
-const viewGraphics = () => {
-
-	const graphElem = document.createElement('div');
-	graphElem.setAttribute('class', 'container');
-  navBarQhawax(graphElem, chartView);
-	
-
-	const graphBtn = graphElem.querySelector('#graphicBtn');
-
-	const selection = graphElem.querySelectorAll('select');
-	M.FormSelect.init(selection);
-
-	 requestOptions(graphElem);
-
+const setGraphBtn = (graphBtn, selection) => {
 	let selectedQhawax = '';
 	selection[0].onchange = () => {	selectedQhawax = selection[0].value.toString();};
 	let selectedTime = Number;
@@ -126,26 +137,6 @@ const viewGraphics = () => {
 	
 	graphBtn.addEventListener('click', () => {
 		createTraces(selectedTime, selectedQhawax);
-		let sensors=['temperature',
-			'pressure',
-			'humidity',
-			'CO',
-			'CO_ug_m3',
-			'H2S',
-			'H2S_ug_m3',
-			'NO2',
-			'NO2_ug_m3',
-			'O3',
-			'O3_ug_m3',
-			'SO2',
-			'SO2_ug_m3',
-			'PM1',
-			'PM10',
-			'PM25',
-			'spl',
-			'UV',
-			'UVA',
-			'UVB']
 		socket.on(`${selectedQhawax}_processed`, res => {
 			if (res.ID === selectedQhawax) {
 				let index=0;
@@ -157,11 +148,24 @@ const viewGraphics = () => {
 							{ y: [[res[s]]], x: [[dateFormat(res.timestamp_zone)]] },[0]);
 						index++;
 					}
-					
 				});
 			}
 		});
 	});
+}
+
+const viewGraphics = () => {
+	const graphElem = document.createElement('div');
+	graphElem.setAttribute('class', 'container');
+  	navBarQhawax(graphElem, chartView);
+	
+	const graphBtn = graphElem.querySelector('#graphicBtn');
+	const selection = graphElem.querySelectorAll('select');
+	M.FormSelect.init(selection);
+
+	 requestOptions(graphElem);
+
+	 setGraphBtn(graphBtn, selection);
 
 	return graphElem;
 };
