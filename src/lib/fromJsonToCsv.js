@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { addZero } from './helpers.js';
 
 const json2csv = (jsonData, jsonFields) => {
   let csvStr = `${jsonFields.join(',')}\n`;
@@ -11,15 +10,15 @@ const json2csv = (jsonData, jsonFields) => {
 };
 
 // const download = (csvcontent, fileName) => {
-// 	console.log(csvcontent);
-// 	const uInt8 = new TextEncoder().encode(csvcontent)
+// console.log(csvcontent);
+// const uInt8 = new TextEncoder().encode(csvcontent)
 
-// 	const fileStream = streamSaver.createWriteStream(`${fileName}.csv`, {
-// 		size: uInt8.byteLength, // (optional filesize) Will show progress
-// 		writableStrategy: undefined, // (optional)
-// 		readableStrategy: undefined  // (optional)
-// 	  })
-// 		new Response(csvcontent).body.pipeTo(fileStream)
+// const fileStream = streamSaver.createWriteStream(`${fileName}.csv`, {
+// size: uInt8.byteLength, // (optional filesize) Will show progress
+// writableStrategy: undefined, // (optional)
+// readableStrategy: undefined  // (optional)
+//   })
+// new Response(csvcontent).body.pipeTo(fileStream)
 
 // }
 
