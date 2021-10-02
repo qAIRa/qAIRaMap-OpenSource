@@ -572,6 +572,7 @@ td{
 	content: 'Grupo Qaira SAC';
 	animation: spinQaira 12s linear infinite;
 }
+
 .spinQairaMobile::after {
 	content: 'Grupo Qaira SAC';
 	animation: spinQaira 12s linear infinite;
