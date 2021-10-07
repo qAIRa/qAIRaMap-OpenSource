@@ -102,6 +102,15 @@ export const requestQhawaxTrip = async(name, turn, trip_id)=>{
   }
 }
 
+export const requestQhawaxTripDownload = async(name, turn, trip_id)=>{
+  try{
+    const response = await fetch(`${APISource}mobile_data_by_qhawax_name_turn_and_id?name=${name}&turn=${turn}&id=${trip_id}`)
+    return await response.json();
+  }catch(e){
+    handleError(e)
+  }
+}
+
 export const requestTelemetryFlight = async(name, init, end)=>{
   try{
     const response = await fetch(`${APISource}telemetry_andean_drone?qhawax_name=${name}&initial_timestamp=${init}&final_timestamp=${end}`)

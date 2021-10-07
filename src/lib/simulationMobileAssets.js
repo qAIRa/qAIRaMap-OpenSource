@@ -1,4 +1,4 @@
-import { requestQhawaxTrip } from '../requests/get.js';
+import { requestQhawaxTrip, requestQhawaxTripDownload } from '../requests/get.js';
 import { toast, newDateLocal } from './helpers.js';
 import { newMarkerMobile} from '../lib/mobileAssets.js';
 import { intervalToDuration } from 'date-fns';
@@ -144,7 +144,7 @@ export const drawTrip = async(trip, map, element)=> {
 
   export const downloadMobile = async(trip) => {
     let filename =  `${trip.name+ '-'+ trip.comercial_name+ '-turno-'+trip.turn+'-dia-'+trip.start.split(' ')[0]}`
-    const data = await requestQhawaxTrip(trip.name, trip.turn, trip.trip_id); 
+    const data = await requestQhawaxTripDownload(trip.name, trip.turn, trip.trip_id); 
     if(data.length>0){
       const csvContent = json2csv(data, csvFields);
       download(csvContent, filename)
