@@ -114,11 +114,14 @@ export const latLng = (data)=>{
 }
 
 export const callSocketTrip = (q_mobile, map, selection) => {
+
   let flightPlanCoordinates = [];
   let polylinesArray = [];
   const marker = map.markers.find(el => el.id === q_mobile.name + '_marker')
+
   const infowindow = map.infowindows.find(el => el.id === q_mobile.name + '_infowindow')
   socket.on(`${q_mobile.name}_mobile`, async data => {
+    console.log(data);
     const start = await lastStartTrip(q_mobile.name)
     const timer = intervalToDuration({ start: new Date(typeof start === 'string' ? new Date() : start.start_trip), end: new Date() })
     const latlngLine = latLng(data)
@@ -132,7 +135,8 @@ export const callSocketTrip = (q_mobile, map, selection) => {
         }
       }))
       .catch(e => null)
-    infowindow.setContent(infoWindowM(data, q_mobile, timer)).open(map, marker.setPosition(latlngLine));
+      infowindow.setContent(infoWindowM(data,q_mobile,timer))
+      infowindow.open(map, marker);
     finishPolylinesTrip(q_mobile, polylinesArray);
   })
   finishTrip(q_mobile, selection)
@@ -190,7 +194,6 @@ export const requestMobileQ = async (map, element) => {
               //   infowindow.open(map, marker);
               //   console.log(marker, infowindow);
               // }
-
               startTrip(q_mobile, element.querySelector('#selectDrone'))
               callSocketTrip(q_mobile,map, element.querySelector('#selectDrone'))
               ;})
