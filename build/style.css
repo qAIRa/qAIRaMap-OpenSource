@@ -572,6 +572,7 @@ td{
 	content: 'Grupo Qaira SAC';
 	animation: spinQaira 12s linear infinite;
 }
+
 .spinQairaMobile::after {
 	content: 'Grupo Qaira SAC';
 	animation: spinQaira 12s linear infinite;
@@ -681,7 +682,7 @@ textarea.materialize-textarea {
 }
 
 .tabs .tab a:hover, .tabs .tab a.active {
-    background-color: transparent;
+    background-color: rgba(38, 166, 153, 0.329);
     color: var(--blue);
 }
 .tabs .tab a {
