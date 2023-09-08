@@ -4,22 +4,20 @@ import { toast } from '../lib/helpers.js';
 import { addLine, removeLine, newPolyline, activateDrawBtn, circleColor} from './droneAssets.js';
 import { intervalToDuration } from 'date-fns';
 import {infoWindowM} from '../lib/infowindow.js';
+import L from 'leaflet';
 
 let circlesArray = [];
 let flag = false;
 
-const newCircle = (center,map)=> {
-  const pollutantCircle = new google.maps.Circle({
-    strokeColor: circleColor(center),
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
+const newCircle = (center, map) => {
+  const pollutantCircle = L.circle(center.center, {
+    color: circleColor(center),
+    weight: 2,
     fillColor: circleColor(center),
     fillOpacity: 0.35,
-    map,
-    center: center.center,
-    radius: 20,
-  });
-circlesArray.push(pollutantCircle)
+    radius: 20
+  }).addTo(map);
+  circlesArray.push(pollutantCircle)
 }
 
 const callSocketSensors = (params, map) =>  {
@@ -53,15 +51,22 @@ const drawCirclesPollutant = async(params,map)=> {
   }
  
  }
-export const newMarkerMobile = (q_mobile,map)=>new google.maps.Marker({
-    position: JSON.parse(q_mobile.position),
-    map: map,
-    icon: {
-    url: 'img/qhawax_movil.png',
-    scaledSize: new google.maps.Size(80, 80),
-    },
-    id: q_mobile.name + '_marker',
-  });
+
+ export const newMarkerMobile = (q_mobile, map) => {
+  if (!q_mobile.lat || !q_mobile.lon) {
+      console.error("Latitud o longitud faltante para q_mobile:", q_mobile.name);
+      return null; // Si falta latitud o longitud, no creamos el marcador.
+  }
+
+  return L.marker([q_mobile.lat, q_mobile.lon], {
+      icon: L.icon({
+          iconUrl: 'img/qhawax_movil.png',
+          iconSize: [80, 80]
+      }),
+      id: q_mobile.name + '_marker'
+  }).addTo(map);
+}
+
 
 export const createOption = async (selection)=>{
   selection.innerHTML='<option value="" disabled selected>qHAWAX Móvil</option>'
@@ -114,92 +119,101 @@ export const latLng = (data)=>{
 }
 
 export const callSocketTrip = (q_mobile, map, selection) => {
-
   let flightPlanCoordinates = [];
-  let polylinesArray = [];
-  const marker = map.markers.find(el => el.id === q_mobile.name + '_marker')
 
-  const infowindow = map.infowindows.find(el => el.id === q_mobile.name + '_infowindow')
+  console.log("map markers: ", map.markers);
+  const marker = map.markers.find(el => el.options.id === q_mobile.name + '_marker');
+
+  const popup = L.popup().setContent(q_mobile.name);
+
   socket.on(`${q_mobile.name}_mobile`, async data => {
-    console.log(data);
-    const start = await lastStartTrip(q_mobile.name)
-    const timer = intervalToDuration({ start: new Date(typeof start === 'string' ? new Date() : start.start_trip), end: new Date() })
-    const latlngLine = latLng(data)
-    await noParametersRequest('mobile_log_info_during_trip')
-      .then(e => e.forEach(q_mobile => {
-        if (data.ID === q_mobile.name) {
-          flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-          const polyline = newPolyline(flightPlanCoordinates)
-          addLine(polyline, map)
-          polylinesArray.push(polyline)
-        }
-      }))
-      .catch(e => null)
-      infowindow.setContent(infoWindowM(data,q_mobile,timer))
-      infowindow.open(map, marker);
-    finishPolylinesTrip(q_mobile, polylinesArray);
-  })
-  finishTrip(q_mobile, selection)
-  infowindow.close()
-}
-export const selectMobileTrip = async(element, map) =>{
-  let params = {}
-  const selectionName= element.querySelector('#selectDrone');
-  const selectionSensor= element.querySelector('#selectSensor');
+      console.log(data);
+      const start = await lastStartTrip(q_mobile.name);
+      const timer = intervalToDuration({ start: new Date(typeof start === 'string' ? new Date() : start.start_trip), end: new Date() });
+      const latlngLine = [data.lat, data.lon];
+
+      await noParametersRequest('mobile_log_info_during_trip')
+          .then(e => e.forEach(q_mobile => {
+              if (data.ID === q_mobile.name) {
+                  flightPlanCoordinates.push([data.lat, data.lon]);
+                  const polyline = L.polyline(flightPlanCoordinates).addTo(map);
+              }
+          }))
+          .catch(e => null);
+
+      popup.setContent(infoWindowM(data, q_mobile, timer));  // Asumo que infoWindowM retorna contenido HTML o texto.
+      marker.bindPopup(popup).openPopup();
+
+      // Asumiendo que finishPolylinesTrip también se adaptará.
+      finishPolylinesTrip(q_mobile);
+  });
+
+  // Supongo que finishTrip también será adaptado.
+  finishTrip(q_mobile, selection);
+  marker.closePopup();
+};
+
+export const selectMobileTrip = async(element, map) => {
+  let params = {};
+  const selectionName = element.querySelector('#selectDrone');
+  const selectionSensor = element.querySelector('#selectSensor');
   const drawBtn = element.querySelector('#draw-btn');
-  createOption (selectionName)
+  createOption(selectionName);
   
-  selectionName.addEventListener('change',e=>{
-    params.name=e.target.value;
-    activateDrawBtn(drawBtn, params)
-  })
+  selectionName.addEventListener('change', e => {
+      params.name = e.target.value;
+      activateDrawBtn(drawBtn, params);
+  });
 
-  selectionSensor.addEventListener('change',e=>{
-    params.sensor=e.target.value;
-    activateDrawBtn(drawBtn, params)
-  })
+  selectionSensor.addEventListener('change', e => {
+      params.sensor = e.target.value;
+      activateDrawBtn(drawBtn, params);
+  });
 
-  drawBtn.addEventListener('click',e=>{
-    flag = false;
-    drawCirclesPollutant(params,map)
-    circlesArray.forEach(c=>removeLine(c)) 
-  
-  })
-
-}
-
-
+  drawBtn.addEventListener('click', e => {
+      flag = false;
+      drawCirclesPollutant(params, map);
+      circlesArray.forEach(c => removeLine(c));  // Asumiendo que removeLine también será adaptado.
+  });
+};
 
 export const requestMobileQ = async (map, element) => {
-    const mobile_list = await noParametersRequest('AllMobileQhawaxsInMap/');
-    if (mobile_list.length===0) {
-        toast('No hay qHAWAX Móviles disponibles','grey darken-1 rounded')
-    } else {
-        mobile_list.forEach((q_mobile) => {
-              q_mobile.position=JSON.stringify({'lat':parseFloat(q_mobile.lat),'lng':parseFloat(q_mobile.lon)});
-              const marker = newMarkerMobile(q_mobile,map)
-              const infowindow = new google.maps.InfoWindow({id:q_mobile.name+'_infowindow'});
-              map.infowindows.push(infowindow)
-              map.markers.push(marker)
-             
-              const bounds = new google.maps.LatLngBounds();
-              map.markers.forEach(m=> bounds.extend(m.getPosition()))
-              map.fitBounds(bounds)
-            
-              // if(q_mobile.name==='qH022'){
-              //   const marker=map.markers.find(el=>el.id===q_mobile.name+'_marker')
-              //   const infowindow = map.infowindows.find(el=>el.id===q_mobile.name+'_infowindow')
-                
-              //   infowindow.setContent(infoWindowM({'CO_ug_m3':1,'CO2':1,'NO2_ug_m3':1},q_mobile,{'minutes':2,'seconds':2}))
-              //   infowindow.open(map, marker);
-              //   console.log(marker, infowindow);
-              // }
-              startTrip(q_mobile, element.querySelector('#selectDrone'))
-              callSocketTrip(q_mobile,map, element.querySelector('#selectDrone'))
-              ;})
-              selectMobileTrip(element,map)
-             
-    }
-   
-  };
+  const mobile_list = await noParametersRequest('AllMobileQhawaxsInMap/');
+  if (mobile_list.length === 0) {
+      toast('No hay qHAWAX Móviles disponibles', 'grey darken-1 rounded');
+  } else {
+      // Inicializar los arrays si no existen.
+      map.markers = map.markers || [];
+      map.infowindows = map.infowindows || [];
+
+      // Crear un arreglo de LatLng para ajustar el mapa posteriormente.
+      let latLngs = [];
+
+      mobile_list.forEach((q_mobile) => {
+          const marker = newMarkerMobile(q_mobile, map);
+          if (!marker) return; // Si no se pudo crear el marcador, simplemente regresamos.
+
+          // Crear y configurar el popup para el marcador.
+          const popup = L.popup().setContent(q_mobile.name);
+          marker.bindPopup(popup);
+
+          // Agregar el marcador y la ventana emergente a sus respectivas listas.
+          map.markers.push(marker);
+          map.infowindows.push(popup); 
+
+          // Agregar al arreglo de LatLng.
+          latLngs.push([q_mobile.lat, q_mobile.lon]);
+
+          startTrip(q_mobile, element.querySelector('#selectDrone'));
+          callSocketTrip(q_mobile, map, element.querySelector('#selectDrone'));
+      });
+
+      // Ajustar el mapa para que muestre todos los marcadores.
+      const bounds = L.latLngBounds(latLngs);
+      map.fitBounds(bounds);
+      if (map.getZoom() > 13) map.setZoom(13);
+  }
+};
+
+
   

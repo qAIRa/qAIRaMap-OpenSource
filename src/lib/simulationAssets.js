@@ -4,6 +4,8 @@ import { toast, newDateLocal } from './helpers.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { infoWindowM} from './infowindow.js';
 import { intervalToDuration } from 'date-fns';
+import L from 'leaflet';
+
 let flagMarker = false
 let flagToast = false
 let polylinesArray = [];
@@ -19,14 +21,11 @@ export const CallOnceToast = (flag0, value) => {
 
 export const callOnceMarker = (flag0, flight, map) => {
   if (!flag0) {
-    flagMarker=!flag0;
-    const marker = newMarkerDrone(flight,map)
-    const infowindow = new google.maps.InfoWindow({id:flight.name+'_infowindow'});
-    map.infowindows.push(infowindow)
-    map.markers.push(marker)
-    const bounds = new google.maps.LatLngBounds();
-    map.markers.forEach(m=> bounds.extend(m.getPosition()))
-    map.fitBounds(bounds);
+      flagMarker = !flag0;
+      const marker = newMarkerDrone(flight, map);
+      const bounds = L.latLngBounds();
+      map.markers.forEach(m => bounds.extend(m.getLatLng()));
+      map.fitBounds(bounds);
   }
   return flag0;
 }
@@ -69,33 +68,24 @@ export const stopFlight = (flight, map, element) => {
   // setTimeout(polylinesArray.forEach(p=>{removeLine(p);infowindow.close()}) , 10000)
 };
 
-export const drawTelemetry = async(flight, map, element)=> {
+export const drawTelemetry = async (flight, map, element) => {
   const flightPlanCoordinates = [];
-  const start = new Date(newDateLocal(flight.start));
-  const end = new Date(newDateLocal(flight.end));
-  const telemetry = await requestTelemetryFlight(flight.name, flight.start, flight.end); 
-  const numberOfWaypoints = telemetry.length-1;
-  const bounds = new google.maps.LatLngBounds();
-  telemetry.forEach( (t,i)=> 
-   {
-  
-    flight.position = JSON.stringify({'lat':parseFloat(t.lat),'lng':parseFloat(t.lon)})
-    callOnceMarker(flagMarker,flight, map)
-    setTimeout(()=>{
-    const timer=intervalToDuration({start:start,end:end})
-    flightPlanCoordinates.push(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-    const polyline = newPolyline(flightPlanCoordinates)
-    map.markers[0].setPosition(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-    addLine(polyline,map)
-    map.infowindows[0].setContent(infoWindowM(t,flight,timer))
-    map.infowindows[0].open(map, map.markers[0]);
-    polylinesArray.push(polyline)
-    bounds.extend(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-    map.fitBounds(bounds);
-    if(numberOfWaypoints===i) return stopFlight(flight,map,element)
-  },i*1000)
-})
+  const telemetry = await requestTelemetryFlight(flight.name, flight.start, flight.end);
+  const numberOfWaypoints = telemetry.length - 1;
+  telemetry.forEach((t, i) => {
+      setTimeout(() => {
+          flight.position = JSON.stringify({ 'lat': parseFloat(t.lat), 'lng': parseFloat(t.lon) });
+          callOnceMarker(flagMarker, flight, map);
+          const timer = intervalToDuration({ start: new Date(newDateLocal(flight.start)), end: new Date(newDateLocal(flight.end)) });
+          flightPlanCoordinates.push(L.latLng(t.lat, t.lon));
+          const polyline = newPolyline(flightPlanCoordinates);
+          addLine(polyline, map);
+          polylinesArray.push(polyline);
+          if (numberOfWaypoints === i) return stopFlight(flight, map, element);
+      }, i * 1000);
+  });
 };
+
 const csvFields = [
   'CO (ppm)',
   'CO2 (ppm)',
@@ -151,26 +141,26 @@ export const downloadMobile = async(flight) => {
     toast(`No hay medidas para ${flight.name} en el sensor ${flight.sensor}`,'grey darken-1 rounded')
    }
 }
-export const simulateTrip = (flight,map, element)=>{
+export const simulateTrip = (flight, map, element) => {
   const downloadBtn = element.querySelector('#dwn-btn');
   const restartBtn = element.querySelector('#restart-btn');
 
-  restartBtn.addEventListener('click',e=>location.reload())
-  downloadBtn.addEventListener('click',e=>downloadDrone(flight))
-    setTimeout(()=>{
-        toast(`El viaje del qHAWAX Móvil ${flight.name} ha empezado.`,'orange darken-1 rounded')
-    },2000)
+  restartBtn.addEventListener('click', e => location.reload())
+  downloadBtn.addEventListener('click', e => downloadDrone(flight))
+  setTimeout(() => {
+      toast(`El viaje del qHAWAX Móvil ${flight.name} ha empezado.`, 'orange darken-1 rounded')
+  }, 2000)
 }
 
 
-export const simulateFlight = (flight,map, element)=>{
+export const simulateFlight = (flight, map, element) => {
   const downloadBtn = element.querySelector('#dwn-btn');
   const restartBtn = element.querySelector('#restart-btn');
 
-  restartBtn.addEventListener('click',e=>location.reload())
-  downloadBtn.addEventListener('click',e=>downloadDrone(flight))
-    setTimeout(()=>{
-        toast(`The flight of the Andean drone ${flight.name} has start`,'orange darken-1 rounded')
-        drawTelemetry(flight, map, element);
-    },2000)
+  restartBtn.addEventListener('click', e => location.reload())
+  downloadBtn.addEventListener('click', e => downloadDrone(flight))
+  setTimeout(() => {
+      toast(`The flight of the Andean drone ${flight.name} has start`, 'orange darken-1 rounded')
+      drawTelemetry(flight, map, element);
+  }, 2000)
 }

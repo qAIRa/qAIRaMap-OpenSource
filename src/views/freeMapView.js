@@ -28,7 +28,7 @@ const viewFreeMap = () => {
 	M.Modal.init(modals);
 
   const map = firstMap(mapElem, 'map')
-
+  
   request(map, mapElem);
 
   mapElem.querySelector('#over_map').addEventListener('mouseenter',(e)=>{

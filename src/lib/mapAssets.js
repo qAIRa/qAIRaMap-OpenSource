@@ -15,6 +15,9 @@ import {
  } from '../lib/helpers.js';
  import { format } from 'date-fns';
 import { pannelInca, pannelMeteo, pannelRealTime, pannelGraphics, infowindow } from '../html/infowindow.js';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css'
+
 const myStyles =[
 	{
 	  "featureType": "road.arterial",
@@ -36,16 +39,27 @@ const myStyles =[
         ]
     }
   ];
-export const firstMap =(element, containerID) => new google.maps.Map(element.querySelector(`#${containerID}`), {
-	mapTypeId: google.maps.MapTypeId.ROADMAP,
-	center: { lat: -12.1215361, lng: -77.0463574},
-	maxZoom: 18,
-	styles: myStyles,
-	markers:[],
-	latitude:[],
-	longitude:[],
-	infowindows:[],
-  });
+
+  export const firstMap = (element, containerID) => {
+    const curLocation = [-12.1215361, -77.0463574];
+    let map = L.map(element.querySelector(`#${containerID}`)).setView(curLocation, 13);
+    const osmUrl1 = 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}';
+    L.tileLayer(osmUrl1, {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    map.attributionControl.setPrefix(false);
+
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 10);  // Añade un pequeño retraso para permitir que el DOM se renderice completamente.
+
+	map.infowindows = [];
+  	map.markers = [];
+
+    return map;
+};
+
 
 
 export const ECAlimits = sensor => {
@@ -302,40 +316,44 @@ export const markerZoom = (zoom) =>{
 		}
 };
 
-export const newMarkerLeaf = (qhawax,map) =>new google.maps.Marker({
-	position: {
-		lat: qhawax.lat,
-		lng: qhawax.lon,
-	},
-	map: map,
-	icon: {
-		url: qhawaxLeaf(qhawax.main_inca),
-		scaledSize: new google.maps.Size(35, 35),
-	},
-	id: qhawax.name,
-});
+export const newMarkerLeaf = (qhawax, map) => {
+    return L.marker([qhawax.lat, qhawax.lon], {
+        title: qhawax.name,  //  "tooltip"
+        icon: L.icon({
+            iconUrl: qhawaxLeaf(qhawax.main_inca),
+            iconSize: [50, 50]
+        }),
+        id: qhawax.name  // propiedad 'id' en 'options'
+    }).addTo(map);
+};
+
 
 export const drawQhawaxMap = (map, qhawax) => {
-	const previous_marker_index = map.markers.findIndex(marker => marker.id === qhawax.name);
-	map.addListener('zoom_changed', () => {
-		const zoom = map.getZoom();
-		map.markers.forEach(marker => {	marker.icon.scaledSize.width = markerZoom(zoom);marker.icon.scaledSize.height = markerZoom(zoom);});
-	});
+    // Buscando el marcador existente
+    const previous_marker_index = map.markers.findIndex(marker => marker.options.id === qhawax.name);
 
-	if (previous_marker_index != -1) {map.markers[previous_marker_index].setMap(null);map.markers.splice(previous_marker_index, 1);}
-	
-	const qhawax_marker = newMarkerLeaf(qhawax,map)
-	qhawax_marker.addListener('click', () => {setInfowindow(qhawax, map)});
-	qhawax_marker.addListener('mouseover', () => {
-		M.Toast.dismissAll();
-		toast(`${qhawax_marker.id}: "${qhawax.comercial_name}"`,'green darken-1 rounded')
-	});
+    // Si el marcador ya existe, eliminarlo
+    if (previous_marker_index != -1) {
+        map.removeLayer(map.markers[previous_marker_index]);
+        map.markers.splice(previous_marker_index, 1);
+	}
 
-	map.markers.push(qhawax_marker);
-	const bounds = new google.maps.LatLngBounds();
-	map.markers.forEach(m=> bounds.extend(m.getPosition()))
-	map.fitBounds(bounds);
-	const zoom = map.getZoom();
-	map.setZoom(zoom > 13 ? 13 : zoom);
+    let qhawax_marker = newMarkerLeaf(qhawax, map);
+
+    // Escuchas de eventos
+    qhawax_marker.on('click', () => { setInfowindow(qhawax, map) });
+    qhawax_marker.on('mouseover', () => {
+        M.Toast.dismissAll();
+        toast(`${qhawax_marker.options.id}: "${qhawax.comercial_name}"`, 'green darken-1 rounded');
+    });
+
+    // Agregar el marcador a la lista de marcadores
+    map.markers.push(qhawax_marker);
+
+    // Ajustar el mapa para que muestre todos los marcadores
+    const bounds = L.latLngBounds(map.markers.map(marker => marker.getLatLng()));
+    map.fitBounds(bounds);
+    if (map.getZoom() > 13) map.setZoom(13);
 };
+
 
