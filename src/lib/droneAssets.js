@@ -3,6 +3,7 @@ import { lastStartFlight, getInFlightSensor, noParametersRequest } from '../requ
 import { toast } from '../lib/helpers.js';
 import { intervalToDuration } from 'date-fns';
 import {socket} from '../index.js';
+import L from 'leaflet';
 
 let flag = false;
 
@@ -62,18 +63,15 @@ export const createOption = async (selection)=>{
 
 export let circlesArray = [];
 
-export const newCircle = (center,map)=> {
-  const pollutantCircle = new google.maps.Circle({
-    strokeColor: circleColor(center),
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
+export const newCircle = (center, map) => {
+  const pollutantCircle = L.circle(center.center, {
+    color: circleColor(center),
+    weight: 2,
     fillColor: circleColor(center),
     fillOpacity: 0.35,
-    map,
-    center: center.center,
-    radius: 20,
-  });
-circlesArray.push(pollutantCircle)
+    radius: 20
+  }).addTo(map);
+  circlesArray.push(pollutantCircle)
 }
 
 export const callSocketSensors = (params, map) =>  {
@@ -146,60 +144,50 @@ export const landing = (drone, selection)=>{
   
 };
 
- export const newPolyline = (flightPlanCoordinates)=>new google.maps.Polyline({
-  path: flightPlanCoordinates,
-  strokeColor: "#000000",
-  strokeOpacity: 1.0,
-  strokeWeight: 2
+export const newPolyline = (flightPlanCoordinates) => {
+  return L.polyline(flightPlanCoordinates, {
+    color: "#000000",
+    weight: 2
   });
+}
 
 export const callSocketFlight = (drone, map, selection) => {
   let flightPlanCoordinates = [];
   let polylinesArray = [];
 
-  const marker=map.markers.find(el=>el.id===drone.name+'_marker')
-  const infowindow = map.infowindows.find(el=>el.id===drone.name+'_infowindow')
-  // const bounds = new google.maps.LatLngBounds();
-    
-		socket.on(`${drone.name}_telemetry`, async data => {
-      const start = await lastStartFlight(drone.name)
-      const timer=intervalToDuration({start:new Date(typeof start==='string'?new Date():start.start_flight),end:new Date()})
-      latlngLine = {
-        lat: parseFloat(data.lat),
-        lng: parseFloat(data.lon),
-      };
-            await noParametersRequest('flight_log_info_during_flight')
-            .then(e=>e.forEach(drone=>{
-              if (data.ID===drone.name) {
-                // console.log(data.ID,data.lat, data.lon);
-                flightPlanCoordinates.push(new google.maps.LatLng(data.lat, data.lon))
-                const polyline = newPolyline(flightPlanCoordinates)
-              
-                addLine(polyline,map)
-                polylinesArray.push(polyline)
-                // console.log(polylinesArray);
-              }
-            }))
-            .catch(e=>null)
-        marker.setPosition(latlngLine)
-        infowindow.setContent(infoWindowT(data,drone,timer))
-        infowindow.open(map, marker);
-        // bounds.extend(new google.maps.LatLng(data.lat, data.lon))
-        // map.fitBounds(bounds);
-        socket.on(`${drone.name}_landing`, data => {
-          // console.log(data);//condition with landing data by drone????
-          polylinesArray.forEach(p=>{
-            removeLine(p);
-            polylinesArray = polylinesArray.filter(item => item !== p);
-            // console.log('polylinesArray',polylinesArray);
-            
-            
-          })
-        });
+  const marker = map.markers.find(el => el.options.id === drone.name + '_marker');
+  const popup = map.infowindows.find(el => el.options.id === drone.name + '_popup');
 
-    })
-   landing(drone,selection)
-   infowindow.close()
+  socket.on(`${drone.name}_telemetry`, async data => {
+      const start = await lastStartFlight(drone.name);
+      const timer = intervalToDuration({ start: new Date(typeof start === 'string' ? new Date() : start.start_flight), end: new Date() });
+
+      let latlng = [data.lat, data.lon];
+
+      await noParametersRequest('flight_log_info_during_flight')
+          .then(e => e.forEach(drone => {
+              if (data.ID === drone.name) {
+                  flightPlanCoordinates.push(latlng);
+                  const polyline = L.polyline(flightPlanCoordinates);
+                  addLine(polyline, map);
+                  polylinesArray.push(polyline);
+              }
+          }))
+          .catch(e => null);
+
+      marker.setLatLng(latlng);
+      popup.setContent(infoWindowT(data, drone, timer));
+      marker.bindPopup(popup).openPopup();
+
+      socket.on(`${drone.name}_landing`, data => {
+          polylinesArray.forEach(p => {
+              removeLine(p);
+              polylinesArray = polylinesArray.filter(item => item !== p);
+          });
+      });
+  });
+  landing(drone, selection);
+  marker.closePopup();
 }
 
 export const takeoff = (drone, selection)=>{
@@ -211,41 +199,40 @@ export const takeoff = (drone, selection)=>{
 
 };
 
-export const newMarkerDrone = (drone,map)=>new google.maps.Marker({
-  position: JSON.parse(drone.position),
-  map: map,
-  icon: {
-  url: 'img/andeanDrone.png',
-  scaledSize: new google.maps.Size(80, 80),
-  },
-  id: drone.name + '_marker',
-});
+export const newMarkerDrone = (drone, map) => {
+  const marker = L.marker([drone.lat, drone.lon], {
+      icon: L.icon({
+          iconUrl: 'img/andeanDrone.png',
+          iconSize: [80, 80]
+      }),
+      id: drone.name + '_marker'
+  }).addTo(map);
+  const popup = L.popup({ id: drone.name + '_popup' });
+  map.infowindows.push(popup);
+  return marker;
+}
 
 export const requestDrones = async (map, element) => {
   const drone_list = await noParametersRequest('AllDronesInMap/');
-  if (drone_list.length>=1){
-    drone_list.forEach((a_drone) => {
-    a_drone.position=JSON.stringify({'lat':parseFloat(a_drone.lat),'lng':parseFloat(a_drone.lon)});
-    const marker = newMarkerDrone(a_drone,map)
-    const infowindow = new google.maps.InfoWindow({id:a_drone.name+'_infowindow'});
-    map.infowindows.push(infowindow)
-    map.markers.push(marker)
-   
-    const bounds = new google.maps.LatLngBounds();
-    map.markers.forEach(m=> bounds.extend(m.getPosition()))
-    map.fitBounds(bounds);
+  if (drone_list.length >= 1) {
+      let bounds = L.latLngBounds();
 
-    takeoff(a_drone, element.querySelector('#selectDrone'))
-    callSocketFlight(a_drone,map, element.querySelector('#selectDrone'))
-    
-    });
-    selectDroneFlight(element,map)
-    
+      drone_list.forEach((a_drone) => {
+          const marker = newMarkerDrone(a_drone, map);
+          map.markers.push(marker);
+          bounds.extend([a_drone.lat, a_drone.lon]);
 
-  }else {
-    toast(`There are no Andean Drones available at the moment.`,'grey darken-1 rounded')
+          takeoff(a_drone, element.querySelector('#selectDrone'));
+          callSocketFlight(a_drone, map, element.querySelector('#selectDrone'));
+      });
+
+      map.fitBounds(bounds);
+      if (map.getZoom() > 13) map.setZoom(13);
+
+      selectDroneFlight(element, map);
+  } else {
+      toast(`There are no Andean Drones available at the moment.`, 'grey darken-1 rounded');
   }
- 
 };
 
 

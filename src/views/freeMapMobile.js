@@ -11,6 +11,7 @@ const viewFreeMobile = () => {
   wrapper.insertAdjacentHTML('afterbegin', mobileSelection);
 
   const map = firstMap(mapElem, 'map');
+
   requestMobileQ(map, mapElem);
 
   return mapElem;

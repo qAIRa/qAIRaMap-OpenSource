@@ -6,6 +6,7 @@ import { addLine, removeLine, newPolyline, circleColor} from './droneAssets.js';
 import { infoWindowM} from './infowindow.js';
 import { json2csv, download } from '../lib/fromJsonToCsv.js';
 import { goTo } from './viewController.js';
+import L from 'leaflet';
 
 let flagToast = false
 let flagMarker = false
@@ -32,19 +33,15 @@ const csvFields = [
     sessionStorage.setItem('trip', JSON.stringify(prevData));
   }
 
-  const newCircle = (center,map)=> {
-    const pollutantCircle = new google.maps.Circle({
-      strokeColor: circleColor(center),
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: circleColor(center),
-      fillOpacity: 0.35,
-      map,
-      center: center.center,
-      radius: 20,
-    });
-  circlesArray.push(pollutantCircle)
-  }
+  const newCircle = (center, map) => {
+    const pollutantCircle = L.circle(center.center, {
+        color: circleColor(center),
+        fillColor: circleColor(center),
+        fillOpacity: 0.35,
+        radius: 20
+    }).addTo(map);
+    circlesArray.push(pollutantCircle);
+  };
 
   const CallOnceToast = (flag0, value) => {
     if (!flag0) {
@@ -53,19 +50,18 @@ const csvFields = [
     }
     return flag0;
   }
-export const callOnceMarker = (flag0, trip, map) => {
+  export const callOnceMarker = (flag0, trip, map) => {
     if (!flag0) {
-      flagMarker=!flag0;
-      const marker = newMarkerMobile(trip,map)
-      // const infowindow = new google.maps.InfoWindow({id:trip.name+'_infowindow'});
-      // map.infowindows.push(infowindow)
-      map.markers.push(marker)
-      const bounds = new google.maps.LatLngBounds();
-      map.markers.forEach(m=> bounds.extend(m.getPosition()))
-      map.fitBounds(bounds);
+        flagMarker = !flag0;
+        const marker = newMarkerMobile(trip, map); // Ensure this function creates a Leaflet marker
+        map.markers.push(marker);
+        const bounds = L.latLngBounds();
+        map.markers.forEach(m => bounds.extend(m.getLatLng()));
+        map.fitBounds(bounds);
     }
     return flag0;
-  }
+  };
+
   const indexed = (data, trip)=>data.reduce((acc,el,i)=>({
     ...acc,
     [i]:{'center':{'lat':el.lat,'lng':el.lon},[trip.sensor]:el[trip.sensor],'sensor':trip.sensor}
@@ -113,26 +109,29 @@ export const drawTrip = async(trip, map, element)=> {
     const end = new Date(newDateLocal(trip.end));
     const data = await requestQhawaxTrip(trip.name, trip.turn, trip.trip_id); 
     const numberOfWaypoints = data.length-1;
-    const bounds = new google.maps.LatLngBounds();
-    if(data.length>0){
-      data.forEach( (t,i)=> 
-     {
     
-      trip.position = JSON.stringify({'lat':parseFloat(t.lat),'lng':parseFloat(t.lon)})
-      callOnceMarker(flagMarker,trip, map)
-      // setTimeout(()=>{
-      const timer=intervalToDuration({start:start,end:end})
-      flightPlanCoordinates.push(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-      const polyline = newPolyline(flightPlanCoordinates)
-      map.markers[0].setPosition(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-      addLine(polyline,map)
-      // map.infowindows[0].setContent(infoWindowM(t,trip,timer))
-      // map.infowindows[0].open(map, map.markers[0]);
-      polylinesArray.push(polyline)
-      bounds.extend(new google.maps.LatLng({'lat':t.lat,'lng':t.lon}))
-      map.fitBounds(bounds);
-      if(numberOfWaypoints===i) return stopTrip(trip,map,element)//CHECK
-    // },i*1000)
+    const bounds = L.latLngBounds();
+    if(data.length>0){
+      data.forEach( (t,i)=> {
+        trip.position = JSON.stringify({'lat':parseFloat(t.lat),'lng':parseFloat(t.lon)})
+        callOnceMarker(flagMarker,trip, map)
+        
+        // setTimeout(()=>{
+        const timer=intervalToDuration({start:start,end:end})
+        flightPlanCoordinates.push(L.latLng(t.lat, t.lon));
+        const polyline = newPolyline(flightPlanCoordinates);
+        map.markers[0].setLatLng([t.lat, t.lon]);
+        addLine(polyline,map)
+
+        // If you want popups (similar to infowindows) in Leaflet:
+        // const popup = L.popup().setContent(infoWindowM(t, trip, timer));
+        // map.markers[0].bindPopup(popup).openPopup();
+        
+        polylinesArray.push(polyline)
+        bounds.extend([t.lat, t.lon]);
+        map.fitBounds(bounds);
+        if(numberOfWaypoints===i) return stopTrip(trip, map, element);//CHECK
+      // },i*1000)
   })
     }
      else{
@@ -156,24 +155,26 @@ export const drawTrip = async(trip, map, element)=> {
 
 
 
-export const simulateTrip = (trip,map, element)=>{
+  export const simulateTrip = (trip, map, element) => {
     const downloadBtn = element.querySelector('#dwn-btn');
     const restartBtn = element.querySelector('#restart-btn');
     const turnSelect = element.querySelector('#selectTurn');
-    turnSelect.value=trip.turn
+    turnSelect.value = trip.turn;
   
-    
     drawTrip(trip, map, element);
-    turnSelect.addEventListener('change',e=>{
-      trip.turn=e.target.value
-      update({turn: e.target.value})
-      drawTrip(trip, map, element);
-    })
+    turnSelect.addEventListener('change', e => {
+        trip.turn = e.target.value;
+        update({ turn: e.target.value });
+        drawTrip(trip, map, element);
+    });
 
-    restartBtn.addEventListener('click',e=>location.reload())
-    downloadBtn.addEventListener('click',e=>downloadMobile(trip))
-      // setTimeout(()=>{
-      //     toast(`The trip of the Mobile qHAWAX ${trip.name} has start`,'orange darken-1 rounded')
-      //     drawTrip(trip, map, element);
-      // },2000)
-  }
+    restartBtn.addEventListener('click', e => location.reload());
+    downloadBtn.addEventListener('click', e => downloadMobile(trip));
+
+    // setTimeout(()=>{
+    //     toast(`The trip of the Mobile qHAWAX ${trip.name} has start`,'orange darken-1 rounded')
+    //     drawTrip(trip, map, element);
+    // },2000)
+  };
+
+  
